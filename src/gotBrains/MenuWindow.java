@@ -16,8 +16,10 @@ public class MenuWindow extends JPanel implements ActionListener {
 	private JButton btnScrabble = new JButton("SCRABBLE");
 	private JButton btnSimonSays = new JButton("SIMON SAYS");
 	private JButton btnMathGame = new JButton("MATH GAME");
+	private Controller controller;
 
-	public MenuWindow() {
+	public MenuWindow(Controller controller) {
+		this.controller = controller;
 		setLayout(null);
 		setPreferredSize(new Dimension(800, 600));
 //		try {
@@ -28,29 +30,29 @@ public class MenuWindow extends JPanel implements ActionListener {
 //			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 //			gainControl.setValue(-20.0f);
 //			clip.start();
-//			clip.loop(3);
+//			clip.loop(10);
 //		} catch (Exception e) {
 //			System.out.println(e);
 //		}
-		
+
 		add(btnScrabble);
 		btnScrabble.setOpaque(false);
 		btnScrabble.setContentAreaFilled(false);
 		btnScrabble.setBounds(340, 300, 110, 30);
 		btnScrabble.addActionListener(this);
-		
+
 		add(btnSimonSays);
 		btnSimonSays.setOpaque(false);
 		btnSimonSays.setContentAreaFilled(false);
 		btnSimonSays.setBounds(340, 340, 110, 30);
 		btnSimonSays.addActionListener(this);
-		
+
 		add(btnMathGame);
 		btnMathGame.setOpaque(false);
 		btnMathGame.setContentAreaFilled(false);
 		btnMathGame.setBounds(340, 380, 110, 30);
 		btnMathGame.addActionListener(this);
-		
+
 		add(btnQuit);
 		btnQuit.setOpaque(false);
 		btnQuit.setContentAreaFilled(false);
@@ -60,24 +62,19 @@ public class MenuWindow extends JPanel implements ActionListener {
 
 	protected void paintComponent(Graphics g) {
 		ImageIcon background = new ImageIcon("images/openingWindowBackground.png");
-	    super.paintComponent(g);
-	        g.drawImage(background.getImage(), 0, 0, null);
+		super.paintComponent(g);
+		g.drawImage(background.getImage(), 0, 0, null);
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==btnQuit) {
+		if (e.getSource() == btnQuit) {
 			System.exit(0);
-		} else if(e.getSource()==btnScrabble) {
-			
-		} else if(e.getSource()==btnSimonSays) {
-			
-		} else if(e.getSource()==btnMathGame) {
-			
+		} else if (e.getSource() == btnScrabble) {
+			controller.startScrabble();
+		} else if (e.getSource() == btnSimonSays) {
+			controller.startSimonSays();
+		} else if (e.getSource() == btnMathGame) {
+			controller.startMathGame();
 		}
-		
-		
-		
-		
-		
 	}
 }
