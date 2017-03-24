@@ -10,9 +10,12 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class SimonSaysWindow extends JPanel implements ActionListener {
-	
-	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
-	private JButton btnMenu = new JButton("MAIN MENU");
+	private ImageIcon iconQuit = new ImageIcon("images/quitButton.png");
+	private ImageIcon iconQuitHover = new ImageIcon("images/quitButtonHover.png");
+	private ImageIcon iconMenu = new ImageIcon("images/menuButton.png");
+	private ImageIcon iconMenuHover = new ImageIcon("images/menuButtonHover.png");
+	private JButton btnQuit = new JButton(iconQuit);
+	private JButton btnMenu = new JButton(iconMenu);
 	private Controller controller;
 
 	public SimonSaysWindow(Controller controller) {
@@ -26,12 +29,15 @@ public class SimonSaysWindow extends JPanel implements ActionListener {
 		btnQuit.setBorderPainted(false);
 		btnQuit.setBounds(762, -2, 40, 35);
 		btnQuit.addActionListener(this);
+		btnQuit.setRolloverIcon(iconQuitHover);
 
 		add(btnMenu);
 		btnMenu.setOpaque(false);
 		btnMenu.setContentAreaFilled(false);
-		btnMenu.setBounds(0, 0, 100, 30);
+		btnMenu.setBorderPainted(false);
+		btnMenu.setBounds(-2, -2, 120, 30);
 		btnMenu.addActionListener(this);
+		btnMenu.setRolloverIcon(iconMenuHover);
 	}
 
 	protected void paintComponent(Graphics g) {
