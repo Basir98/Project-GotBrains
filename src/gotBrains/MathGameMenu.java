@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class MathGameWindow extends JPanel implements ActionListener {
+public class MathGameMenu extends JPanel implements ActionListener {
 	private ImageIcon iconQuit = new ImageIcon("images/quitButton.png");
 	private ImageIcon iconQuitHover = new ImageIcon("images/quitButtonHover.png");
 	private ImageIcon iconMenu = new ImageIcon("images/menuButton.png");
@@ -21,7 +21,7 @@ public class MathGameWindow extends JPanel implements ActionListener {
 	private JButton btnStartHard = new JButton("Hard");
 	private Controller controller;
 
-	public MathGameWindow(Controller controller) {
+	public MathGameMenu(Controller controller) {
 		this.controller = controller;
 		setLayout(null);
 		setPreferredSize(new Dimension(800, 600));
@@ -33,7 +33,7 @@ public class MathGameWindow extends JPanel implements ActionListener {
 		btnQuit.setBounds(762, -2, 40, 35);
 		btnQuit.addActionListener(this);
 		btnQuit.setRolloverIcon(iconQuitHover);
-
+		
 		add(btnMenu);
 		btnMenu.setOpaque(false);
 		btnMenu.setContentAreaFilled(false);
@@ -75,6 +75,12 @@ public class MathGameWindow extends JPanel implements ActionListener {
 			controller.showMenu();
 		} else if (e.getSource() == btnQuit) {
 			System.exit(0);
+		} else if(e.getSource() == btnStartEasy) {
+			controller.startMathGame("easy");
+		} else if(e.getSource() == btnStartMedium) {
+			controller.startMathGame("medium");
+		} else if(e.getSource() == btnStartHard) {
+			controller.startMathGame("hard");
 		}
 	}
 

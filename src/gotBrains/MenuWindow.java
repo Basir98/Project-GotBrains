@@ -70,11 +70,11 @@ public class MenuWindow extends JPanel implements ActionListener {
 		if (e.getSource() == btnQuit) {
 			System.exit(0);
 		} else if (e.getSource() == btnScrabble) {
-			controller.startScrabble();
+			controller.showScrabbleWindow();
 		} else if (e.getSource() == btnSimonSays) {
-			controller.startSimonSays();
+			controller.showSimonSaysWindow();
 		} else if (e.getSource() == btnMathGame) {
-			controller.startMathGame();
+			controller.showMathGameWindow();
 		}
 	}
 }

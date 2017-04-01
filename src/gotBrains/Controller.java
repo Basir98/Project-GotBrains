@@ -18,7 +18,8 @@ public class Controller {
 	private MenuWindow menuWindow;
 	private ScrabbleWindow scrabbleWindow;
 	private SimonSaysWindow simonSaysWindow;
-	private MathGameWindow mathGameWindow;
+	private MathGameMenu mathGameMenu;
+	private MathGameGame mathGameGame;
 	CardLayout cl = new CardLayout();
 	
 	public Controller(JFrame frame) {
@@ -31,12 +32,14 @@ public class Controller {
 		menuWindow = new MenuWindow(this);
 		scrabbleWindow = new ScrabbleWindow(this);
 		simonSaysWindow = new SimonSaysWindow(this);
-		mathGameWindow = new MathGameWindow(this);
+		mathGameMenu = new MathGameMenu(this);
+		mathGameGame = new MathGameGame(this);
 		
 		panelContainer.add(menuWindow, "menuWindow");
 		panelContainer.add(scrabbleWindow, "scrabbleWindow");
 		panelContainer.add(simonSaysWindow, "simonSaysWindow");
-		panelContainer.add(mathGameWindow, "mathGameWindow");
+		panelContainer.add(mathGameMenu, "mathGameWindow");
+		panelContainer.add(mathGameGame, "mathGameGame");
 		cl.show(panelContainer, "menuWindow");
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,19 +54,24 @@ public class Controller {
 		
 	}
 	
-	public void startScrabble() {
+	public void showScrabbleWindow() {
 		cl.show(panelContainer, "scrabbleWindow");
-
+		
 	}
 	
-	public void startSimonSays() {
+	public void showSimonSaysWindow() {
 		cl.show(panelContainer, "simonSaysWindow");
-
+		
 	}
 	
-	public void startMathGame() {
+	public void showMathGameWindow() {
 		cl.show(panelContainer, "mathGameWindow");
-
+		
+	}
+	
+	public void startMathGame(String difficulty) {
+		mathGameGame.setDifficulty(difficulty);
+		cl.show(panelContainer, "mathGameGame");
 	}
 	
 	public void showMenu() {
