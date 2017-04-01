@@ -16,6 +16,9 @@ public class MathGameWindow extends JPanel implements ActionListener {
 	private ImageIcon iconMenuHover = new ImageIcon("images/menuButtonHover.png");
 	private JButton btnQuit = new JButton(iconQuit);
 	private JButton btnMenu = new JButton(iconMenu);
+	private JButton btnStartEasy = new JButton("Easy");
+	private JButton btnStartMedium = new JButton("Medium");
+	private JButton btnStartHard = new JButton("Hard");
 	private Controller controller;
 
 	public MathGameWindow(Controller controller) {
@@ -38,6 +41,27 @@ public class MathGameWindow extends JPanel implements ActionListener {
 		btnMenu.setBounds(-2, -2, 120, 30);
 		btnMenu.addActionListener(this);
 		btnMenu.setRolloverIcon(iconMenuHover);
+		
+		add(btnStartEasy);
+		btnStartEasy.setOpaque(false);
+		btnStartEasy.setContentAreaFilled(true);
+		btnStartEasy.setBorderPainted(true);
+		btnStartEasy.setBounds(290, 400, 80, 30);
+		btnStartEasy.addActionListener(this);
+		
+		add(btnStartMedium);
+		btnStartMedium.setOpaque(false);
+		btnStartMedium.setContentAreaFilled(true);
+		btnStartMedium.setBorderPainted(true);
+		btnStartMedium.setBounds(375, 400, 80, 30);
+		btnStartMedium.addActionListener(this);
+		
+		add(btnStartHard);
+		btnStartHard.setOpaque(false);
+		btnStartHard.setContentAreaFilled(true);
+		btnStartHard.setBorderPainted(true);
+		btnStartHard.setBounds(460, 400, 80, 30);
+		btnStartHard.addActionListener(this);
 	}
 
 	protected void paintComponent(Graphics g) {
