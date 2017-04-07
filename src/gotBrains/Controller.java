@@ -33,13 +33,12 @@ public class Controller {
 		scrabbleWindow = new ScrabbleWindow(this);
 		simonSaysWindow = new SimonSaysWindow(this);
 		mathGameMenu = new MathGameMenu(this);
-		mathGameGame = new MathGameGame(this);
 		
 		panelContainer.add(menuWindow, "menuWindow");
 		panelContainer.add(scrabbleWindow, "scrabbleWindow");
 		panelContainer.add(simonSaysWindow, "simonSaysWindow");
 		panelContainer.add(mathGameMenu, "mathGameWindow");
-		panelContainer.add(mathGameGame, "mathGameGame");
+		
 		cl.show(panelContainer, "menuWindow");
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,21 +69,26 @@ public class Controller {
 	}
 	
 	public void startMathGame(String difficulty) {
+		mathGameGame = new MathGameGame(this);
+		panelContainer.add(mathGameGame, "mathGameGame");
+		
 		mathGameGame.setDifficulty(difficulty);
 		cl.show(panelContainer, "mathGameGame");
+		mathGameGame.textField.grabFocus();
 	}
 	
 	public void showMenu() {
 		cl.show(panelContainer, "menuWindow");
+		
+	}
+	
+	public JFrame getFrame() {
+		return frame;
 	}
 	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
-		Controller controller = new Controller(frame);
-		
-		
-		
+		Controller controller = new Controller(frame);	
 		
 	}
-
 }

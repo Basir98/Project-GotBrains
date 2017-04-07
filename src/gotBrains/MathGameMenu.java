@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -20,7 +19,7 @@ public class MathGameMenu extends JPanel implements ActionListener {
 	private JButton btnStartMedium = new JButton("Medium");
 	private JButton btnStartHard = new JButton("Hard");
 	private Controller controller;
-
+	
 	public MathGameMenu(Controller controller) {
 		this.controller = controller;
 		setLayout(null);
