@@ -31,6 +31,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 	private JLabel lblScore = new JLabel("Score: " + score, SwingConstants.LEFT);
 	private JLabel lblTimer = new JLabel("", SwingConstants.LEFT);
 
+	@SuppressWarnings("serial")
 	public MathGameGame(Controller controller) {
 		this.controller = controller;
 		setLayout(null);
