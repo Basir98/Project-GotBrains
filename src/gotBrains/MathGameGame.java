@@ -108,7 +108,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 		mge = new MathGameEasy();
 		mge.newTask();
 
-		CountDownTimer timer = new CountDownTimer(5, 0);
+		CountDownTimer timer = new CountDownTimer(0, 10);
 		timer.start();
 
 	}	
@@ -118,7 +118,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 	}
 	
 	public void gameOver() {
-		
+		controller.showMathGameWindow();
 	}
 
 	public void setDifficulty(String difficulty) {
