@@ -68,11 +68,12 @@ public class Controller {
 		
 	}
 	
-	public void startMathGame(String difficulty) {
+	public void startMathGame(int difficulty) {
 		mathGameGame = new MathGameGame(this);
 		panelContainer.add(mathGameGame, "mathGameGame");
 		
 		mathGameGame.setDifficulty(difficulty);
+		mathGameGame.startLevel();
 		cl.show(panelContainer, "mathGameGame");
 		mathGameGame.textField.grabFocus();
 	}

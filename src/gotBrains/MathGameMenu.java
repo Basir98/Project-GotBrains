@@ -81,11 +81,11 @@ public class MathGameMenu extends JPanel implements ActionListener {
 		} else if (e.getSource() == btnQuit) {
 			System.exit(0);
 		} else if(e.getSource() == btnStartEasy) {
-			controller.startMathGame("easy");
+			controller.startMathGame(1);
 		} else if(e.getSource() == btnStartMedium) {
-			controller.startMathGame("medium");
+			controller.startMathGame(5);
 		} else if(e.getSource() == btnStartHard) {
-			controller.startMathGame("hard");
+			controller.startMathGame(10);
 		}
 	}
 

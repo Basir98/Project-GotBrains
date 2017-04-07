@@ -4,25 +4,20 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-
 import javax.swing.*;
 
 public class MathGameGame extends JPanel implements ActionListener {
 	private Controller controller;
-	private MathGameEasy mge;
+	private MathGame mathGame;
 	private Font font = new Font("Calibri", Font.BOLD, 32);
 	private Color fontColor = new Color(80, 80, 80);
-	private String difficulty = "";
+	private int difficulty;
 	private int score = 0;
 	private Random random = new Random();
 	private Action action;
 
-	private ImageIcon iconQuit = new ImageIcon("images/quitButton.png");
-	private ImageIcon iconQuitHover = new ImageIcon("images/quitButtonHover.png");
-	private ImageIcon iconMenu = new ImageIcon("images/menuButton.png");
-	private ImageIcon iconMenuHover = new ImageIcon("images/menuButtonHover.png");
-	private JButton btnQuit = new JButton(iconQuit);
-	private JButton btnMenu = new JButton(iconMenu);
+	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
+	private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
 	JTextField textField = new JTextField();
 
 	private JLabel lblNbr1 = new JLabel("", SwingConstants.RIGHT);
@@ -43,7 +38,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 		btnQuit.setBorderPainted(false);
 		btnQuit.setBounds(758, 2, 40, 35);
 		btnQuit.addActionListener(this);
-		btnQuit.setRolloverIcon(iconQuitHover);
+		btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
 
 		add(btnMenu);
 		btnMenu.setOpaque(false);
@@ -51,7 +46,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 		btnMenu.setBorderPainted(false);
 		btnMenu.setBounds(-2, -2, 120, 30);
 		btnMenu.addActionListener(this);
-		btnMenu.setRolloverIcon(iconMenuHover);
+		btnMenu.setRolloverIcon(new ImageIcon("images/menuButtonHover.png"));
 
 		add(lblNbr1);
 		lblNbr1.setFont(font);
@@ -76,21 +71,42 @@ public class MathGameGame extends JPanel implements ActionListener {
 		textField.setBounds(265, 370, 250, 30);
 		textField.addActionListener(action = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				
-				int correctAnswer1 = Integer.parseInt(lblNbr1.getText()) + Integer.parseInt(lblNbr2.getText());
-				int correctAnswer2 = Integer.parseInt(lblNbr1.getText()) - Integer.parseInt(lblNbr2.getText());
-				System.out.println(correctAnswer1 + ", " + correctAnswer2);
-				System.out.println(textField.getText());
-				
+				int correctAnswerAdd = Integer.parseInt(lblNbr1.getText()) + Integer.parseInt(lblNbr2.getText());
+				int correctAnswerSub = Integer.parseInt(lblNbr1.getText()) - Integer.parseInt(lblNbr2.getText());
+				int correctAnswerMulti = Integer.parseInt(lblNbr1.getText()) * Integer.parseInt(lblNbr2.getText());
 				int userAnswer = Integer.parseInt(textField.getText());
 				
-				if(Integer.toString(userAnswer).equals((Integer.toString(correctAnswer1))) || Integer.toString(userAnswer).equals((Integer.toString(correctAnswer2)))) {
-					score++;
-					updateScore();
-					textField.setText("");
-					mge.newTask();
-				} else {
-					textField.setText("");
+				System.out.println("Your answer: " + textField.getText());
+
+				String operation = lblOperation.getText();
+				switch (operation) {
+				case "+":
+					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswerAdd)))) {
+						score++;
+						updateScore();
+						textField.setText("");
+						mathGame.newTask();
+					} else {
+						textField.setText("");
+					}
+				case "-":
+					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswerSub)))) {
+						score++;
+						updateScore();
+						textField.setText("");
+						mathGame.newTask();
+					} else {
+						textField.setText("");
+					}
+				case "*":
+					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswerMulti)))) {
+						score++;
+						updateScore();
+						textField.setText("");
+						mathGame.newTask();
+					} else {
+						textField.setText("");
+					}
 				}
 			}
 		});
@@ -99,30 +115,31 @@ public class MathGameGame extends JPanel implements ActionListener {
 		lblScore.setFont(new Font("Calibri", Font.PLAIN, 28));
 		lblScore.setForeground(fontColor);
 		lblScore.setBounds(340, 445, 200, 30);
-		
+
 		add(lblTimer);
 		lblTimer.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 18));
 		lblTimer.setForeground(new Color(180, 180, 180));
 		lblTimer.setBounds(330, 2, 160, 30);
 
-		mge = new MathGameEasy();
-		mge.newTask();
-
-		CountDownTimer timer = new CountDownTimer(0, 10);
+		CountDownTimer timer = new CountDownTimer(0, 30);
 		timer.start();
+	}
 
-	}	
-	
 	public void updateScore() {
 		lblScore.setText("Score: " + score);
 	}
-	
+
 	public void gameOver() {
 		controller.showMathGameWindow();
 	}
 
-	public void setDifficulty(String difficulty) {
+	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
+	}
+
+	public void startLevel() {
+		mathGame = new MathGame();
+		mathGame.newTask();
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -133,24 +150,60 @@ public class MathGameGame extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMenu) {
-
+//			avbryt aktuellt spel, nollställ timer, nollställ score.
 			controller.showMenu();
 		} else if (e.getSource() == btnQuit) {
 			System.exit(0);
 
 		}
 	}
-	
-	private class MathGameEasy {
-		public void newTask() {
-			lblNbr1.setText(Integer.toString(random.nextInt(9) + 1));
-			lblNbr2.setText(Integer.toString(random.nextInt(9) + 1));
-			int tempChar = random.nextInt(2) + 1;
 
-			if (tempChar == 1) {
-				lblOperation.setText("+");
-			} else if (tempChar == 2) {
-				lblOperation.setText("-");
+	private class MathGame {
+		public void newTask() {
+			int range;
+			switch (difficulty) {
+			case 1:
+				int tempChar1 = random.nextInt(2) + 1;
+				if (tempChar1 == 1) {
+					lblOperation.setText("+");
+					range = 9;
+				} else {
+					lblOperation.setText("-");
+					range = 9;
+				}
+				lblNbr1.setText(Integer.toString(random.nextInt(range) + 1));
+				lblNbr2.setText(Integer.toString(random.nextInt(range) + 1));
+				break;
+			case 5:
+				int tempChar5 = random.nextInt(3) + 1;
+				if (tempChar5 == 1) {
+					lblOperation.setText("+");
+					range = 99;
+				} else if (tempChar5 == 2) {
+					lblOperation.setText("-");
+					range = 99;
+				} else {
+					lblOperation.setText("*");
+					range = 9;
+				}
+				lblNbr1.setText(Integer.toString(random.nextInt(range) + 1));
+				lblNbr2.setText(Integer.toString(random.nextInt(range) + 1));
+				break;
+			case 10:
+				int tempChar10 = random.nextInt(3) + 1;
+				if (tempChar10 == 1) {
+					lblOperation.setText("+");
+					range = 999;
+				} else if (tempChar10 == 2) {
+					lblOperation.setText("-");
+					range = 999;
+				} else {
+					lblOperation.setText("*");
+					range = 99;
+				}
+				lblNbr1.setText(Integer.toString(random.nextInt(range) + 1));
+				lblNbr2.setText(Integer.toString(random.nextInt(range) + 1));
+				break;
 			}
 		}
 	}
@@ -166,7 +219,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 
 		public void run() {
 			do {
-//				System.out.println(toString());
+				// System.out.println(toString());
 				lblTimer.setText(toString());
 				try {
 					Thread.sleep(999);
