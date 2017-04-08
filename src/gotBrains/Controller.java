@@ -80,7 +80,7 @@ public class Controller {
 	
 	public void showMenu() {
 		cl.show(panelContainer, "menuWindow");
-		
+		menuWindow.fieldUsername.grabFocus();
 	}
 	
 	public JFrame getFrame() {

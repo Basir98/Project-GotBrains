@@ -65,7 +65,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 
 		add(textField);
 		textField.setOpaque(false);
-		textField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		textField.setBorder(BorderFactory.createEmptyBorder());
 		textField.setFont(new Font("Calibri", Font.PLAIN, 28));
 		textField.setForeground(fontColor);
 		textField.setBounds(265, 370, 250, 30);
@@ -130,6 +130,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 	}
 
 	public void gameOver() {
+		System.out.println("Your result: " + score + " points.");
 		controller.showMathGameWindow();
 	}
 
@@ -154,7 +155,6 @@ public class MathGameGame extends JPanel implements ActionListener {
 			controller.showMenu();
 		} else if (e.getSource() == btnQuit) {
 			System.exit(0);
-
 		}
 	}
 

@@ -10,12 +10,19 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 public class MenuWindow extends JPanel implements ActionListener {
 	private JButton btnQuit = new JButton("QUIT");
 	private JButton btnScrabble = new JButton("SCRABBLE");
 	private JButton btnSimonSays = new JButton("SIMON SAYS");
 	private JButton btnMathGame = new JButton("MATH GAME");
+	private JButton btnLeaderboard = new JButton("LEADERBOARD");
+	JTextField fieldUsername = new JTextField();
+	
+	private Font font = new Font("Calibri", Font.BOLD, 18);
 	private Controller controller;
 
 	public MenuWindow(Controller controller) {
@@ -38,21 +45,32 @@ public class MenuWindow extends JPanel implements ActionListener {
 		add(btnScrabble);
 		btnScrabble.setOpaque(false);
 		btnScrabble.setContentAreaFilled(false);
-		btnScrabble.setBounds(340, 300, 110, 30);
+		btnScrabble.setBounds(220, 360, 110, 30);
 		btnScrabble.addActionListener(this);
 
 		add(btnSimonSays);
 		btnSimonSays.setOpaque(false);
 		btnSimonSays.setContentAreaFilled(false);
-		btnSimonSays.setBounds(340, 340, 110, 30);
+		btnSimonSays.setBounds(340, 360, 110, 30);
 		btnSimonSays.addActionListener(this);
 
 		add(btnMathGame);
 		btnMathGame.setOpaque(false);
 		btnMathGame.setContentAreaFilled(false);
-		btnMathGame.setBounds(340, 380, 110, 30);
+		btnMathGame.setBounds(460, 360, 110, 30);
 		btnMathGame.addActionListener(this);
-
+		
+		add(fieldUsername);
+		fieldUsername.setOpaque(false);
+		fieldUsername.setHorizontalAlignment(JTextField.CENTER);
+		fieldUsername.setFont(font);
+		fieldUsername.setDocument(new LengthRestrictedDocument(12));
+		fieldUsername.setText("ANONYMOUS");
+		fieldUsername.setCaretPosition(fieldUsername.getText().length());
+		fieldUsername.setBorder(BorderFactory.createEmptyBorder());
+		fieldUsername.setForeground(new Color(80, 80, 80));
+		fieldUsername.setBounds(320, 320, 150, 30);
+		
 		add(btnQuit);
 		btnQuit.setOpaque(false);
 		btnQuit.setContentAreaFilled(false);
@@ -77,4 +95,24 @@ public class MenuWindow extends JPanel implements ActionListener {
 			controller.showMathGameWindow();
 		}
 	}
+	
+	public final class LengthRestrictedDocument extends PlainDocument {
+
+		  private final int limit;
+
+		  public LengthRestrictedDocument(int limit) {
+		    this.limit = limit;
+		  }
+
+		  @Override
+		  public void insertString(int offs, String str, AttributeSet a)
+		      throws BadLocationException {
+		    if (str == null)
+		      return;
+
+		    if ((getLength() + str.length()) <= limit) {
+		      super.insertString(offs, str, a);
+		    }
+		  }
+		}
 }
