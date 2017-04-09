@@ -20,6 +20,7 @@ public class Controller {
 	private SimonSaysWindow simonSaysWindow;
 	private MathGameMenu mathGameMenu;
 	private MathGameGame mathGameGame;
+	private Leaderboard leaderboardMathGame;
 	CardLayout cl = new CardLayout();
 	
 	public Controller(JFrame frame) {
@@ -76,6 +77,12 @@ public class Controller {
 		mathGameGame.startLevel();
 		cl.show(panelContainer, "mathGameGame");
 		mathGameGame.textField.grabFocus();
+	}
+	
+	public void showMathGameLeaderboard() {
+		leaderboardMathGame = new Leaderboard(this);
+		panelContainer.add(leaderboardMathGame, "leaderboardMathGame");
+		cl.show(panelContainer, "leaderboardMathGame");
 	}
 	
 	public void showMenu() {

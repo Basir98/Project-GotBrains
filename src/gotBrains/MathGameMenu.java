@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class MathGameMenu extends JPanel implements ActionListener {
 	private Controller controller;
@@ -21,6 +22,7 @@ public class MathGameMenu extends JPanel implements ActionListener {
 	private JButton btnStartEasy = new JButton(new ImageIcon("images/easyButton.png"));
 	private JButton btnStartMedium = new JButton(new ImageIcon("images/mediumButton.png"));
 	private JButton btnStartHard = new JButton(new ImageIcon("images/hardButton.png"));
+	private JButton btnLeaderboard = new JButton("LEADERBOARD");
 	
 	
 	public MathGameMenu(Controller controller) {
@@ -67,6 +69,15 @@ public class MathGameMenu extends JPanel implements ActionListener {
 		btnStartHard.setRolloverIcon(new ImageIcon("images/hardButtonHover.png"));
 		btnStartHard.setBounds(455, 295, 100, 30);
 		btnStartHard.addActionListener(this);
+		
+		add(btnLeaderboard);
+		btnLeaderboard.setOpaque(true);
+		btnLeaderboard.setContentAreaFilled(false);
+		btnLeaderboard.setBorderPainted(true);
+		
+		btnLeaderboard.setBounds(245, 330, 310, 30);
+		btnLeaderboard.addActionListener(this);
+		
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -86,6 +97,8 @@ public class MathGameMenu extends JPanel implements ActionListener {
 			controller.startMathGame(5);
 		} else if(e.getSource() == btnStartHard) {
 			controller.startMathGame(10);
+		} else if(e.getSource() == btnLeaderboard) {
+			controller.showMathGameLeaderboard();
 		}
 	}
 

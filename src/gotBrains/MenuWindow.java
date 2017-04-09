@@ -15,7 +15,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
 public class MenuWindow extends JPanel implements ActionListener {
-	private JButton btnQuit = new JButton("QUIT");
+	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
 	private JButton btnScrabble = new JButton("SCRABBLE");
 	private JButton btnSimonSays = new JButton("SIMON SAYS");
 	private JButton btnMathGame = new JButton("MATH GAME");
@@ -42,6 +42,14 @@ public class MenuWindow extends JPanel implements ActionListener {
 //			System.out.println(e);
 //		}
 
+		add(btnQuit);
+		btnQuit.setOpaque(false);
+		btnQuit.setContentAreaFilled(false);
+		btnQuit.setBorderPainted(false);
+		btnQuit.setBounds(758, 2, 40, 35);
+		btnQuit.addActionListener(this);
+		btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
+		
 		add(btnScrabble);
 		btnScrabble.setOpaque(false);
 		btnScrabble.setContentAreaFilled(false);
@@ -71,11 +79,6 @@ public class MenuWindow extends JPanel implements ActionListener {
 		fieldUsername.setForeground(new Color(80, 80, 80));
 		fieldUsername.setBounds(320, 320, 150, 30);
 		
-		add(btnQuit);
-		btnQuit.setOpaque(false);
-		btnQuit.setContentAreaFilled(false);
-		btnQuit.setBounds(360, 420, 70, 30);
-		btnQuit.addActionListener(this);
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -104,7 +107,6 @@ public class MenuWindow extends JPanel implements ActionListener {
 		    this.limit = limit;
 		  }
 
-		  @Override
 		  public void insertString(int offs, String str, AttributeSet a)
 		      throws BadLocationException {
 		    if (str == null)
