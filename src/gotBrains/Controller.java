@@ -29,7 +29,7 @@ public class Controller {
 		loadApp();
 	}
 	
-	public void loadApp() {
+	public void loadApp() {	
 		menuWindow = new MenuWindow(this);
 		scrabbleWindow = new ScrabbleWindow(this);
 		simonSaysWindow = new SimonSaysWindow(this);
@@ -40,8 +40,6 @@ public class Controller {
 		panelContainer.add(simonSaysWindow, "simonSaysWindow");
 		panelContainer.add(mathGameMenu, "mathGameWindow");
 		
-		cl.show(panelContainer, "menuWindow");
-		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panelContainer);
 		frame.setSize(800, 600);
@@ -51,6 +49,14 @@ public class Controller {
 		frame.pack();
 		frame.setVisible(true);
 		frame.setResizable(false);
+		
+		cl.show(panelContainer, "menuWindow");
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		menuWindow.fieldUsername.grabFocus();
 		
 	}
 	
