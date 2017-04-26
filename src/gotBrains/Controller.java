@@ -16,7 +16,8 @@ public class Controller {
 	private JFrame frame;
 	private JPanel panelContainer = new JPanel();
 	private MenuWindow menuWindow;
-	private ScrabbleWindow scrabbleWindow;
+	private ScrabbleMenu scrabbleMenu;
+	private ScrabbleWindow scrabbleGame;
 	private SimonSaysWindow simonSaysWindow;
 	private MathGameMenu mathGameMenu;
 	private MathGameGame mathGameGame;
@@ -31,12 +32,12 @@ public class Controller {
 	
 	public void loadApp() {	
 		menuWindow = new MenuWindow(this);
-		scrabbleWindow = new ScrabbleWindow(this);
+		scrabbleMenu = new ScrabbleMenu(this);
 		simonSaysWindow = new SimonSaysWindow(this);
 		mathGameMenu = new MathGameMenu(this);
 		
 		panelContainer.add(menuWindow, "menuWindow");
-		panelContainer.add(scrabbleWindow, "scrabbleWindow");
+		panelContainer.add(scrabbleMenu, "scrabbleWindow");
 		panelContainer.add(simonSaysWindow, "simonSaysWindow");
 		panelContainer.add(mathGameMenu, "mathGameWindow");
 		
@@ -74,7 +75,15 @@ public class Controller {
 		cl.show(panelContainer, "mathGameWindow");
 		
 	}
-	
+	public void startScrabbleWindow(int difficulty) {
+		scrabbleGame = new ScrabbleWindow(this);
+		panelContainer.add(scrabbleGame, "scrabbleGame");
+		
+		scrabbleGame.setDifficulty(difficulty);
+		scrabbleGame.startLevel();
+		cl.show(panelContainer, "scrabbleGame");
+		scrabbleGame.textField.grabFocus();
+	}
 	public void startMathGame(int difficulty) {
 		mathGameGame = new MathGameGame(this);
 		panelContainer.add(mathGameGame, "mathGameGame");
