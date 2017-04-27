@@ -51,7 +51,7 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 		add(lblText);
 		lblText.setFont(font);
 		lblText.setForeground(fontColor);
-		lblText.setBounds(320, 320, 60, 30);
+		lblText.setBounds(320, 320, 200, 200);
 
 		add(textField);
 		textField.setOpaque(false);
@@ -61,14 +61,14 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 		textField.setBounds(265, 370, 250, 30);
 		textField.addActionListener(action = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				String correctAnswer = ;
+				String correctAnswer = lblText.getText();
 				String userAnswer = textField.getText();
 				
 				System.out.println("Your answer: " + textField.getText());
 
-				String lblText = lblText.getText();
-				switch (lblText) {
-				case "Correct":
+				String lbltext = lblText.getText();
+				switch (lbltext) {
+				case " ":
 					if ((userAnswer).equals(correctAnswer)) {
 						score++;
 						updateScore();
@@ -130,47 +130,93 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 	}
 
 	private class ScrabbleGame {
-		public void Game() {
-			String[] wordsEasy = { "Baguette", "Fanta", "Samsung", "Lenovo", "Bond", "Väska", "Dricka","Kallt", "Varmt",};
-			String[] wordsMedium={ "Ljummet", "Centrerad", "Batteri", "Högtalare", "Kapsyl", "Tangentbord", "Muspekare", "Layout", "Flygplan" };
-			String[] wordsHard={ "Taklampa", "Aggressivitet", "Synonymer", "Överlappa", "Vattenpöl", "Multiplicitet", "Decryptering", "Inkorporation", "Arrangemang" };
-			Random rand = new Random();
-			int r = rand.nextInt(9);
-
-			// System.out.println(words[r].toLowerCase());
-
-			// Create a new char array with the size of the random word.
-			char[] chars = new char[wordsEasy[r].length()];
-
-			// Populate the char array.
-			for (int i = 0; i < wordsEasy[r].length(); i++) {
-				chars[i] = wordsEasy[r].toLowerCase().charAt(i);
-			}
-
-			for (int i = 0; i < chars.length; i++) {
-				int randomPosition = rand.nextInt(chars.length);
-				char temp = chars[i];
-				chars[i] = chars[randomPosition];
-				chars[randomPosition] = temp;
-			}
-		// Save the scrambled word in a new string.
-			String scrambledWord = new String(chars);
-
-			Scanner userAnswer = new Scanner(System.in);
-		}
-
 		public void newTask() {
+
 			switch (difficulty) {
 			case 1:
+				String[] wordsEasy = { "Baguette", "Fanta", "Samsung", "Lenovo", "Bond", "Väska", "Dricka","Kallt", "Varmt",};
+				Random rand = new Random();
+				int r = rand.nextInt(9);
 
-				break;
+				 System.out.println(wordsEasy[r].toLowerCase());
+
+				// Create a new char array with the size of the random word.
+				char[] chars = new char[wordsEasy[r].length()];
+
+				// Populate the char array.
+				for (int i = 0; i < wordsEasy[r].length(); i++) {
+					chars[i] = wordsEasy[r].toLowerCase().charAt(i);
+				}
+
+				for (int i = 0; i < chars.length; i++) {
+					int randomPosition = rand.nextInt(chars.length);
+					char temp = chars[i];
+					chars[i] = chars[randomPosition];
+					chars[randomPosition] = temp;
+				}
+			// Save the scrambled word in a new string.
+				String scrambledWord = new String(chars);
+
+				Scanner userAnswer = new Scanner(System.in);
+				return;
+				
 			case 5:
+				String[] wordsMedium={ "Ljummet", "Centrerad", "Batteri", "Högtalare", "Kapsyl", "Tangentbord", "Muspekare", "Layout", "Flygplan" };
+				Random rand1 = new Random();
+				int r1 = rand1.nextInt(9);
 
-				break;
+				System.out.println(wordsMedium[r1].toLowerCase());
+
+				// Create a new char array with the size of the random word.
+				char[] chars1 = new char[wordsMedium[r1].length()];
+
+				// Populate the char array.
+				for (int i = 0; i < wordsMedium[r1].length(); i++) {
+					chars1[i] = wordsMedium[r1].toLowerCase().charAt(i);
+				}
+
+				for (int i = 0; i < chars1.length; i++) {
+					int randomPosition = rand1.nextInt(chars1.length);
+					char temp = chars1[i];
+					chars1[i] = chars1[randomPosition];
+					chars1[randomPosition] = temp;
+				}
+			// Save the scrambled word in a new string.
+				String scrambledWord1 = new String(chars1);
+
+				Scanner userAnswer1 = new Scanner(System.in);
+				return;
 			case 10:
+				String[] wordsHard={ "Taklampa", "Aggressivitet", "Synonymer", "Överlappa", "Vattenpöl", "Multiplicitet", "Decryptering", "Inkorporation", "Arrangemang" };
+				Random rand2 = new Random();
+				int r2 = rand2.nextInt(9);
 
-				break;
+				 System.out.println(wordsHard[r2].toLowerCase());
+
+				// Create a new char array with the size of the random word.
+				char[] chars2 = new char[wordsHard[r2].length()];
+
+				// Populate the char array.
+				for (int i = 0; i < wordsHard[r2].length(); i++) {
+					chars2[i] = wordsHard[r2].toLowerCase().charAt(i);
+				}
+
+				for (int i = 0; i < chars2.length; i++) {
+					int randomPosition = rand2.nextInt(chars2.length);
+					char temp = chars2[i];
+					chars2[i] = chars2[randomPosition];
+					chars2[randomPosition] = temp;
+				}
+			// Save the scrambled word in a new string.
+				String scrambledWord2 = new String(chars2);
+
+				Scanner userAnswer2 = new Scanner(System.in);
+				
+				return;
+				
 			}
+			
+
 		}
 	}
 
