@@ -51,7 +51,7 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 		add(lblText);
 		lblText.setFont(font);
 		lblText.setForeground(fontColor);
-		lblText.setBounds(320, 320, 200, 200);
+		lblText.setBounds(300, 180, 200, 200);
 
 		add(textField);
 		textField.setOpaque(false);
@@ -158,7 +158,8 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 				String scrambledWord = new String(chars);
 
 				Scanner userAnswer = new Scanner(System.in);
-				return;
+				lblText.setText(scrambledWord);
+				break;
 				
 			case 5:
 				String[] wordsMedium={ "Ljummet", "Centrerad", "Batteri", "Högtalare", "Kapsyl", "Tangentbord", "Muspekare", "Layout", "Flygplan" };
@@ -185,7 +186,8 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 				String scrambledWord1 = new String(chars1);
 
 				Scanner userAnswer1 = new Scanner(System.in);
-				return;
+				lblText.setText(scrambledWord1);
+				break;
 			case 10:
 				String[] wordsHard={ "Taklampa", "Aggressivitet", "Synonymer", "Överlappa", "Vattenpöl", "Multiplicitet", "Decryptering", "Inkorporation", "Arrangemang" };
 				Random rand2 = new Random();
@@ -211,8 +213,8 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 				String scrambledWord2 = new String(chars2);
 
 				Scanner userAnswer2 = new Scanner(System.in);
-				
-				return;
+				lblText.setText(scrambledWord2);
+				break;
 				
 			}
 			
