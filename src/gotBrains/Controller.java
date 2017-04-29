@@ -22,6 +22,8 @@ public class Controller {
 	private MathGameMenu mathGameMenu;
 	private MathGameGame mathGameGame;
 	private Leaderboard leaderboardMathGame;
+	private String username;
+	
 	CardLayout cl = new CardLayout();
 	
 	public Controller(JFrame frame) {
@@ -103,6 +105,14 @@ public class Controller {
 	public void showMenu() {
 		cl.show(panelContainer, "menuWindow");
 		menuWindow.fieldUsername.grabFocus();
+	}
+	
+	public void setUsername() {
+		this.username = menuWindow.fieldUsername.getText();
+	}
+	
+	public String getUsername() {
+		return this.username;
 	}
 	
 	public JFrame getFrame() {
