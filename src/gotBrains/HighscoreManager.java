@@ -16,7 +16,7 @@ public class HighscoreManager {
 	}
 
 	public ArrayList<Player> getScores() {
-		// loadScoreFile();
+		loadScoreFile();
 		sort();
 		return players;
 	}
@@ -28,9 +28,9 @@ public class HighscoreManager {
 
 	// TODO Felmeddelande om username redan finns
 	public void addPlayer(String username) {
-		// loadScoreFile();
+		loadScoreFile();
 		players.add(new Player(username));
-		// updateScoreFile();
+		updateScoreFile();
 	}
 
 	public void addMathGameScore(String username, int score) {
@@ -78,32 +78,28 @@ public class HighscoreManager {
 			}
 		}
 	}
-	
+
 	public void updateScoreFile() {
-        try {
-            outputStream = new ObjectOutputStream(new FileOutputStream(HIGHSCORE_FILE));
-            outputStream.writeObject(players);
-        } catch (FileNotFoundException e) {
-            System.out.println("FNF Error: " + e.getMessage() + ", the program will try and make a new file.");
-        } catch (IOException e) {
-            System.out.println("IO Error: " + e.getMessage());
-        } finally {
-            try {
-                if (outputStream != null) {
-                    outputStream.flush();
-                    outputStream.close();
-                }
-            } catch (IOException e) {
-                System.out.println("IO Error: " + e.getMessage());
-            }
-        }
-}
+		try {
+			outputStream = new ObjectOutputStream(new FileOutputStream(HIGHSCORE_FILE));
+			outputStream.writeObject(players);
+		} catch (FileNotFoundException e) {
+			System.out.println("FNF Error: " + e.getMessage() + ", the program will try and make a new file.");
+		} catch (IOException e) {
+			System.out.println("IO Error: " + e.getMessage());
+		} finally {
+			try {
+				if (outputStream != null) {
+					outputStream.flush();
+					outputStream.close();
+				}
+			} catch (IOException e) {
+				System.out.println("IO Error: " + e.getMessage());
+			}
+		}
+	}
 
 }
-
-
-
-
 
 
 
