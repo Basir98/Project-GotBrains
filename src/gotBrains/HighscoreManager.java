@@ -5,9 +5,7 @@ import java.io.*;
 
 public class HighscoreManager {
 	private ArrayList<Player> players;
-
 	private static final String HIGHSCORE_FILE = "files/scores.dat";
-
 	ObjectOutputStream outputStream = null;
 	ObjectInputStream inputStream = null;
 
@@ -25,44 +23,63 @@ public class HighscoreManager {
 		HighscoreComparator comparator = new HighscoreComparator();
 		Collections.sort(players, comparator);
 	}
-
-	// TODO Felmeddelande om username redan finns
+	
 	public void addPlayer(String username) {
 		loadScoreFile();
-		players.add(new Player(username));
-		updateScoreFile();
+		if (!usernameTaken(players, username)) {
+			players.add(new Player(username));
+			updateScoreFile();
+		} else {
+			System.out.println("Username \"" + username + "\" already exists.");
+			System.out.println();
+		}
+	}
+
+	public boolean usernameTaken(ArrayList<Player> players, String username) {
+		for (Player object : players) {
+			if (object.getUsername().equals(username)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void addMathGameScore(String username, int score) {
+		loadScoreFile();
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).getUsername().equals(username)) {
 				players.get(i).setMathGameScore(score);
 			}
 		}
+		updateScoreFile();
 	}
 
 	public void addScrabbleScore(String username, int score) {
+		loadScoreFile();
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).getUsername().equals(username)) {
 				players.get(i).setScrabbleScore(score);
 			}
 		}
+		updateScoreFile();
 	}
 
 	public void addSimonSaysScore(String username, int score) {
+		loadScoreFile();
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).getUsername().equals(username)) {
 				players.get(i).setSimonSaysScore(score);
 			}
 		}
+		updateScoreFile();
 	}
-	
+
 	public void clearScores() {
 		loadScoreFile();
 		players.clear();
 		updateScoreFile();
 	}
-	
+
 	public void loadScoreFile() {
 		try {
 			inputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILE));
@@ -124,14 +141,5 @@ public class HighscoreManager {
 		}
 		return highscoreString;
 	}
-	
-	
-	
+
 }
-
-
-
-
-
-
-
