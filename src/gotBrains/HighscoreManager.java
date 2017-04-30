@@ -35,7 +35,7 @@ public class HighscoreManager {
 
 	public void addMathGameScore(String username, int score) {
 		for (int i = 0; i < players.size(); i++) {
-			if (players.get(i).getUsername() == username) {
+			if (players.get(i).getUsername().equals(username)) {
 				players.get(i).setMathGameScore(score);
 			}
 		}
@@ -43,7 +43,7 @@ public class HighscoreManager {
 
 	public void addScrabbleScore(String username, int score) {
 		for (int i = 0; i < players.size(); i++) {
-			if (players.get(i).getUsername() == username) {
+			if (players.get(i).getUsername().equals(username)) {
 				players.get(i).setScrabbleScore(score);
 			}
 		}
@@ -51,12 +51,18 @@ public class HighscoreManager {
 
 	public void addSimonSaysScore(String username, int score) {
 		for (int i = 0; i < players.size(); i++) {
-			if (players.get(i).getUsername() == username) {
+			if (players.get(i).getUsername().equals(username)) {
 				players.get(i).setSimonSaysScore(score);
 			}
 		}
 	}
-
+	
+	public void clearScores() {
+		loadScoreFile();
+		players.clear();
+		updateScoreFile();
+	}
+	
 	public void loadScoreFile() {
 		try {
 			inputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILE));
@@ -99,22 +105,29 @@ public class HighscoreManager {
 		}
 	}
 
+	public String getHighscoreString() {
+		String highscoreString = "";
+		int max = 10;
+
+		ArrayList<Player> players;
+		players = getScores();
+
+		int i = 0;
+		int x = players.size();
+		if (x > max) {
+			x = max;
+		}
+		while (i < x) {
+			highscoreString += (i + 1) + ".\t" + players.get(i).getUsername() + "\t\t" + players.get(i).getTotalScore()
+					+ "\n";
+			i++;
+		}
+		return highscoreString;
+	}
+	
+	
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

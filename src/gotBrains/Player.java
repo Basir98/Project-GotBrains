@@ -1,14 +1,13 @@
 package gotBrains;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
 	private String username;
-	private int scrabbleScore, mathGameScore, simonSaysScore;
+	private int scrabbleScore = 0, mathGameScore = 0, simonSaysScore = 0, totalScore = 0;
 
 	public Player(String username) {
 		this.username = username;
-		setScrabbleScore(0);
-		setMathGameScore(0);
-		setSimonSaysScore(0);
 	}
 
 	public void setSimonSaysScore(int score) {
@@ -29,6 +28,10 @@ public class Player {
 		}
 	}
 	
+	public void setTotalScore() {
+		totalScore = getMathGameScore() + getScrabbleScore() + getSimonSaysScore();
+	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -46,11 +49,12 @@ public class Player {
 	}
 	
 	public int getTotalScore() {
-		return mathGameScore + scrabbleScore + simonSaysScore;
+		setTotalScore();
+		return totalScore;
 	}
 	
 	public String toString() {
-		return "Result: \n\n" + "Username: " + username + "\nScrabble Score: " + scrabbleScore + "\nSimon Says score: " + simonSaysScore + "\nMath Game score: " + mathGameScore;
+		return "Result: \n\n" + "Username: " + username + "\nScrabble Score: " + scrabbleScore + "\nSimon Says score: " + simonSaysScore + "\nMath Game score: " + mathGameScore + "\nTotal score: " + getTotalScore();
 	}
 	
 //	public static void main(String[] args) {
