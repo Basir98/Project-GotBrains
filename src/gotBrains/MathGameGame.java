@@ -6,9 +6,15 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 import javax.swing.*;
 
+/**
+ * The panel-class that holds the actual gameUI and Game logic.
+ * @author Isak Hartman, Felix Jönsson
+ *
+ */
 public class MathGameGame extends JPanel implements ActionListener {
 	private Controller controller;
 	private MathGame mathGame;
+	private CountDownTimer timer = new CountDownTimer(0, 30);
 	private Font font = new Font("Calibri", Font.BOLD, 32);
 	private Color fontColor = new Color(80, 80, 80);
 	private int difficulty;
@@ -25,7 +31,11 @@ public class MathGameGame extends JPanel implements ActionListener {
 	private JLabel lblOperation = new JLabel("", SwingConstants.CENTER);
 	private JLabel lblScore = new JLabel("Score: " + score, SwingConstants.LEFT);
 	private JLabel lblTimer = new JLabel("", SwingConstants.LEFT);
-
+	
+	/**
+	 * 
+	 * @param Controller controller
+	 */
 	@SuppressWarnings("serial")
 	public MathGameGame(Controller controller) {
 		this.controller = controller;
@@ -71,9 +81,9 @@ public class MathGameGame extends JPanel implements ActionListener {
 		textField.setBounds(265, 370, 250, 30);
 		textField.addActionListener(action = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				int correctAnswerAdd = Integer.parseInt(lblNbr1.getText()) + Integer.parseInt(lblNbr2.getText());
-				int correctAnswerSub = Integer.parseInt(lblNbr1.getText()) - Integer.parseInt(lblNbr2.getText());
-				int correctAnswerMulti = Integer.parseInt(lblNbr1.getText()) * Integer.parseInt(lblNbr2.getText());
+				
+				
+				int correctAnswer;
 				int userAnswer = Integer.parseInt(textField.getText());
 				
 				System.out.println("Your answer: " + textField.getText());
@@ -81,7 +91,8 @@ public class MathGameGame extends JPanel implements ActionListener {
 				String operation = lblOperation.getText();
 				switch (operation) {
 				case "+":
-					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswerAdd)))) {
+					correctAnswer = Integer.parseInt(lblNbr1.getText()) + Integer.parseInt(lblNbr2.getText());
+					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
 						score++;
 						updateScore();
 						textField.setText("");
@@ -90,7 +101,8 @@ public class MathGameGame extends JPanel implements ActionListener {
 						textField.setText("");
 					}
 				case "-":
-					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswerSub)))) {
+					correctAnswer = Integer.parseInt(lblNbr1.getText()) - Integer.parseInt(lblNbr2.getText());
+					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
 						score++;
 						updateScore();
 						textField.setText("");
@@ -99,7 +111,8 @@ public class MathGameGame extends JPanel implements ActionListener {
 						textField.setText("");
 					}
 				case "*":
-					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswerMulti)))) {
+					correctAnswer = Integer.parseInt(lblNbr1.getText()) * Integer.parseInt(lblNbr2.getText());
+					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
 						score++;
 						updateScore();
 						textField.setText("");
@@ -121,26 +134,35 @@ public class MathGameGame extends JPanel implements ActionListener {
 		lblTimer.setForeground(new Color(180, 180, 180));
 		lblTimer.setBounds(330, 2, 160, 30);
 
-		CountDownTimer timer = new CountDownTimer(0, 30);
 		timer.start();
 	}
-
+	
 	public void updateScore() {
 		lblScore.setText("Score: " + score);
 	}
-
+	
 	public void gameOver() {
+		if(!timer.isInterrupted()) {
+			timer.interrupt();
+		}
+		textField.setEditable(false);
+		
 		System.out.println("Your result: " + score*difficulty + " points.");
 		controller.newMathGameScore(score*difficulty);
 	}
-
+	
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
 	}
 
 	public void startLevel() {
 		mathGame = new MathGame();
+		textField.setEditable(true);
 		mathGame.newTask();
+	}
+	
+	public void showResult(String result) {
+		
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -225,7 +247,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 				try {
 					Thread.sleep(999);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					System.out.println("Timer thread was interrupted!");
 				}
 				if (seconds == 0) {
 					minutes--;
