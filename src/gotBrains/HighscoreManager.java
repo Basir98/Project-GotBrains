@@ -23,7 +23,7 @@ public class HighscoreManager {
 		HighscoreComparator comparator = new HighscoreComparator();
 		Collections.sort(players, comparator);
 	}
-	
+
 	public void addPlayer(String username) {
 		loadScoreFile();
 		if (!usernameTaken(players, username)) {
@@ -135,17 +135,17 @@ public class HighscoreManager {
 			x = max;
 		}
 		while (i < x) {
-			highscoreString += (i + 1) + ".\t" + players.get(i).getUsername() + "\t\t" + players.get(i).getTotalScore()
-					+ "\n";
+			highscoreString += (i + 1) + ".  " + String.format("%-12s",players.get(i).getUsername()) + "\t" + String.format("%3d", players.get(i).getTotalScore())
+					+ "\t" + String.format("%3d", players.get(i).getMathGameScore()) + "\t" + String.format("%3d", players.get(i).getScrabbleScore()) + "\t"
+					+ String.format("%3d", players.get(i).getSimonSaysScore()) + "\n";
 			i++;
 		}
 		return highscoreString;
 	}
 
 	public class HighscoreComparator implements Comparator<Player> {
-		
-		public int compare(Player player1, Player player2) {
 
+		public int compare(Player player1, Player player2) {
 			int sc1 = player1.getTotalScore();
 			int sc2 = player2.getTotalScore();
 			if (sc1 > sc2) {
@@ -158,5 +158,5 @@ public class HighscoreManager {
 		}
 
 	}
-	
+
 }

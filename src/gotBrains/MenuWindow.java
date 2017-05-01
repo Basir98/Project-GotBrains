@@ -91,30 +91,17 @@ public class MenuWindow extends JPanel implements ActionListener {
 		if (e.getSource() == btnQuit) {
 			System.exit(0);
 		} else if (e.getSource() == btnScrabble) {
+			controller.addPlayer(fieldUsername.getText());
+			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showScrabbleWindow();
 		} else if (e.getSource() == btnSimonSays) {
+			controller.addPlayer(fieldUsername.getText());
+			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showSimonSaysWindow();
 		} else if (e.getSource() == btnMathGame) {
+			controller.addPlayer(fieldUsername.getText());
+			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showMathGameWindow();
 		}
 	}
-	
-	public final class LengthRestrictedDocument extends PlainDocument {
-
-		  private final int limit;
-
-		  public LengthRestrictedDocument(int limit) {
-		    this.limit = limit;
-		  }
-
-		  public void insertString(int offs, String str, AttributeSet a)
-		      throws BadLocationException {
-		    if (str == null)
-		      return;
-
-		    if ((getLength() + str.length()) <= limit) {
-		      super.insertString(offs, str, a);
-		    }
-		  }
-		}
 }

@@ -8,7 +8,7 @@ package gotBrains;
 public class HighscoreTest {
     public static void main(String[] args) {
         HighscoreManager hm = new HighscoreManager();
-        hm.clearScores();
+//        hm.clearScores();
         hm.addPlayer("Isak");
         hm.addPlayer("Felix");
         hm.addPlayer("Gulcin");

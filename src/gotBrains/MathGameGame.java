@@ -130,8 +130,8 @@ public class MathGameGame extends JPanel implements ActionListener {
 	}
 
 	public void gameOver() {
-		System.out.println("Your result: " + score + " points.");
-		controller.showMathGameWindow();
+		System.out.println("Your result: " + score*difficulty + " points.");
+		controller.newMathGameScore(score*difficulty);
 	}
 
 	public void setDifficulty(int difficulty) {
@@ -152,6 +152,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMenu) {
 //			avbryt aktuellt spel, nollställ timer, nollställ score.
+			gameOver();
 			controller.showMenu();
 		} else if (e.getSource() == btnQuit) {
 			System.exit(0);
