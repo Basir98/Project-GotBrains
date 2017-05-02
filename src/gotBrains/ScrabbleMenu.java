@@ -97,9 +97,7 @@ public class ScrabbleMenu extends JPanel implements ActionListener {
 			controller.startScrabbleWindow(5);
 		} else if(e.getSource() == btnStartHard) {
 			controller.startScrabbleWindow(10);
-		} else if(e.getSource() == btnLeaderboard) {
-			controller.showMathGameLeaderboard();
-		}
+		} 
 	}
 
 }

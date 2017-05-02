@@ -48,9 +48,9 @@ public class HighscoreTest {
         hm.addScrabbleScore("Isak", 24);
         hm.addSimonSaysScore("Isak", 16);
         
-        hm.addMathGameScore("Unknown", 1);
-        hm.addScrabbleScore("Unknown", 1);
-        hm.addSimonSaysScore("Unknown", 1);
+//        hm.addMathGameScore("Unknown", 1);
+//        hm.addScrabbleScore("Unknown", 1);
+//        hm.addSimonSaysScore("Unknown", 1);
         
         hm.updateScoreFile();
         hm.loadScoreFile();

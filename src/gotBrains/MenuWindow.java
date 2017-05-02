@@ -53,7 +53,7 @@ public class MenuWindow extends JPanel implements ActionListener {
 		add(btnScrabble);
 		btnScrabble.setOpaque(false);
 		btnScrabble.setContentAreaFilled(false);
-		btnScrabble.setBounds(220, 360, 110, 30);
+		btnScrabble.setBounds(230, 360, 110, 30);
 		btnScrabble.addActionListener(this);
 
 		add(btnSimonSays);
@@ -65,8 +65,14 @@ public class MenuWindow extends JPanel implements ActionListener {
 		add(btnMathGame);
 		btnMathGame.setOpaque(false);
 		btnMathGame.setContentAreaFilled(false);
-		btnMathGame.setBounds(460, 360, 110, 30);
+		btnMathGame.setBounds(450, 360, 110, 30);
 		btnMathGame.addActionListener(this);
+		
+		add(btnLeaderboard);
+		btnLeaderboard.setOpaque(false);
+		btnLeaderboard.setContentAreaFilled(false);
+		btnLeaderboard.setBounds(230, 390, 330, 30);
+		btnLeaderboard.addActionListener(this);
 		
 		add(fieldUsername);
 		fieldUsername.setOpaque(false);
@@ -75,6 +81,7 @@ public class MenuWindow extends JPanel implements ActionListener {
 		fieldUsername.setDocument(new LengthRestrictedDocument(12));
 		fieldUsername.setText("ANONYMOUS");
 		fieldUsername.setCaretPosition(fieldUsername.getText().length());
+		fieldUsername.setSelectionColor(Color.white);
 		fieldUsername.setBorder(BorderFactory.createEmptyBorder());
 		fieldUsername.setForeground(new Color(80, 80, 80));
 		fieldUsername.setBounds(320, 320, 150, 30);
@@ -90,18 +97,24 @@ public class MenuWindow extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnQuit) {
 			System.exit(0);
+			
 		} else if (e.getSource() == btnScrabble) {
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showScrabbleWindow();
+			
 		} else if (e.getSource() == btnSimonSays) {
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showSimonSaysWindow();
+			
 		} else if (e.getSource() == btnMathGame) {
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showMathGameWindow();
+			
+		} else if (e.getSource() == btnLeaderboard) {
+			controller.showLeaderboard();
 		}
 	}
 }

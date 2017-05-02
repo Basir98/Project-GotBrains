@@ -70,14 +70,6 @@ public class MathGameMenu extends JPanel implements ActionListener {
 		btnStartHard.setBounds(455, 295, 100, 30);
 		btnStartHard.addActionListener(this);
 		
-		add(btnLeaderboard);
-		btnLeaderboard.setOpaque(true);
-		btnLeaderboard.setContentAreaFilled(false);
-		btnLeaderboard.setBorderPainted(true);
-		
-		btnLeaderboard.setBounds(245, 330, 310, 30);
-		btnLeaderboard.addActionListener(this);
-		
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -97,8 +89,6 @@ public class MathGameMenu extends JPanel implements ActionListener {
 			controller.startMathGame(5);
 		} else if(e.getSource() == btnStartHard) {
 			controller.startMathGame(10);
-		} else if(e.getSource() == btnLeaderboard) {
-			controller.showMathGameLeaderboard();
 		}
 	}
 

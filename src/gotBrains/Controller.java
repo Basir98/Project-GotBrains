@@ -23,7 +23,7 @@ public class Controller {
 	private SimonSaysWindow simonSaysWindow;
 	private MathGameMenu mathGameMenu;
 	private MathGameGame mathGameGame;
-	private Leaderboard leaderboardMathGame;
+	private Leaderboard leaderboardWindow;
 	private String currentUsername;
 
 	private HighscoreManager hm = new HighscoreManager();
@@ -46,7 +46,8 @@ public class Controller {
 		panelContainer.add(scrabbleMenu, "scrabbleWindow");
 		panelContainer.add(simonSaysWindow, "simonSaysWindow");
 		panelContainer.add(mathGameMenu, "mathGameWindow");
-
+		
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panelContainer);
 		frame.setSize(800, 600);
@@ -69,17 +70,14 @@ public class Controller {
 
 	public void showScrabbleWindow() {
 		cl.show(panelContainer, "scrabbleWindow");
-
 	}
 
 	public void showSimonSaysWindow() {
 		cl.show(panelContainer, "simonSaysWindow");
-
 	}
 
 	public void showMathGameWindow() {
 		cl.show(panelContainer, "mathGameWindow");
-
 	}
 
 	public void startScrabbleWindow(int difficulty) {
@@ -102,33 +100,38 @@ public class Controller {
 		mathGameGame.textField.grabFocus();
 	}
 
-	public void showMathGameLeaderboard() {
-		leaderboardMathGame = new Leaderboard(this);
-		panelContainer.add(leaderboardMathGame, "leaderboardMathGame");
-		cl.show(panelContainer, "leaderboardMathGame");
+	public void showLeaderboard() {
+		leaderboardWindow = new Leaderboard(this);
+		panelContainer.add(leaderboardWindow, "leaderboardWindow");
+		cl.show(panelContainer, "leaderboardWindow");
 	}
 
 	public void showMenu() {
 		cl.show(panelContainer, "menuWindow");
 		menuWindow.fieldUsername.grabFocus();
 	}
+
+	public void setCurrentUsername(String username) {
+		this.currentUsername = username;
+	}
 	
 	public void addPlayer(String username) {
 		hm.addPlayer(username);
 	}
 	
-	public void setCurrentUsername(String username) {
-		this.currentUsername = username;
-	}
 	
+	public String getHighscore() {
+		return hm.getHighscoreString();
+	}
+
 	public void newMathGameScore(int score) {
 		hm.addMathGameScore(this.currentUsername, score);
 	}
-	
+
 	public void newScrabbleScore(int score) {
 		hm.addScrabbleScore(this.currentUsername, score);
 	}
-	
+
 	public void newSimonSaysScore(int score) {
 		hm.addSimonSaysScore(this.currentUsername, score);
 	}
@@ -136,6 +139,6 @@ public class Controller {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		Controller controller = new Controller(frame);
-
 	}
+
 }

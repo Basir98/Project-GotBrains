@@ -1,21 +1,24 @@
 package gotBrains;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class Leaderboard extends JPanel implements ActionListener {
-	HashMap<String, Integer> leaderboard = new HashMap<String, Integer>();
 	
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
 	private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
-
+	private JTextArea highscoreList = new JTextArea();
+	
+	private Font font = new Font("Calibri", Font.BOLD, 18);
+	private Color fontColor = new Color(80, 80, 80);
+	
 	private Controller controller;
 	
 	public Leaderboard(Controller controller) {
@@ -38,21 +41,22 @@ public class Leaderboard extends JPanel implements ActionListener {
 		btnMenu.setBounds(-2, -2, 120, 30);
 		btnMenu.addActionListener(this);
 		btnMenu.setRolloverIcon(new ImageIcon("images/menuButtonHover.png"));
+		
+		add(highscoreList);
+		highscoreList.setOpaque(false);
+		highscoreList.setBounds(125, 180, 550, 350);
+		highscoreList.setForeground(fontColor);
+		highscoreList.setFont(font);
+		highscoreList.setEditable(false);
+		highscoreList.setText(controller.getHighscore());
+		highscoreList.setSelectionColor(new Color(0, 0, 0, 0));
+		
 	}
 	
 	protected void paintComponent(Graphics g) {
-		ImageIcon background = new ImageIcon("images/leaderboardMathGame.png");
+		ImageIcon background = new ImageIcon("images/leaderboardBackground.png");
 		super.paintComponent(g);
 		g.drawImage(background.getImage(), 0, 0, null);
-	}
-	
-	public void put(String username, int score) {
-		leaderboard.put(username, score);
-	}
-	
-	public String get(String key) {
-		return key + "-" + leaderboard.get(key);
-		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -61,18 +65,5 @@ public class Leaderboard extends JPanel implements ActionListener {
 		} else if(e.getSource() == btnMenu) {
 			controller.showMenu();
 		}
-		
 	}
-	
-//	public static void main(String[] args) {
-//		Leaderboard leaderboard = new Leaderboard();
-//		leaderboard.put("Felix", 500);
-//		leaderboard.put("Isak", 501);
-//		leaderboard.put("Alfons", 200);
-//		leaderboard.put("Fredrik", 2);
-//		System.out.println(leaderboard.get("Felix"));
-//		System.out.println(leaderboard.get("Isak"));
-//		System.out.println(leaderboard.get("Fredrik"));
-//		
-//	}
 }
