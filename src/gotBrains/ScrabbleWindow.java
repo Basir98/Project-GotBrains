@@ -52,36 +52,36 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 		add(lblText);
 		lblText.setFont(new Font("Rockwell", Font.BOLD, 36));
 		lblText.setForeground(fontColor);
-		lblText.setBounds(200, 180, 400, 300);
+		lblText.setBounds(190, 180, 400, 300);
 
 		add(textField);
 		textField.setOpaque(false);
 		textField.setBorder(BorderFactory.createEmptyBorder());
 		textField.setFont(new Font("Calibri", Font.PLAIN, 28));
 		textField.setForeground(fontColor);
-		textField.setBounds(265, 370, 250, 30);
+		textField.setBounds(290, 370, 250, 30);
 		textField.addActionListener(action = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				String correctAnswer = rightAnswer;
 				String userAnswer = textField.getText();
-				
+
 				System.out.println("Your answer: " + textField.getText());
 
-			//	String right = rightAnswer;
-			//	switch (right) {
-			//	case "":
-					if ((userAnswer).equals(correctAnswer)) {
-						score++;
-						updateScore();
-						textField.setText("");
-						scrabbleGame.newTask();
-					} else {
-						textField.setText("");
-					}
-			
+				// String right = rightAnswer;
+				// switch (right) {
+				// case "":
+				if ((userAnswer).equals(correctAnswer)) {
+					score++;
+					updateScore();
+					textField.setText("");
+					scrabbleGame.newTask();
+				} else {
+					textField.setText("");
 				}
-			});
-		//});
+
+			}
+		});
+		// });
 
 		add(lblScore);
 		lblScore.setFont(new Font("Calibri", Font.PLAIN, 28));
@@ -93,7 +93,7 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 		lblTimer.setForeground(new Color(180, 180, 180));
 		lblTimer.setBounds(330, 2, 160, 30);
 
-		CountDownTimer timer = new CountDownTimer(0, 30);
+		CountDownTimer timer = new CountDownTimer(1, 0);
 		timer.start();
 	}
 
@@ -103,8 +103,8 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 
 	public void gameOver() {
 		textField.setEditable(false);
-		System.out.println("Your result: " + score*difficulty + " points.");
-		controller.newScrabbleScore(score*difficulty);
+		System.out.println("Your result: " + score * difficulty + " points.");
+		controller.newScrabbleScore(score * difficulty);
 	}
 
 	public void setDifficulty(int difficulty) {
@@ -136,13 +136,14 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 
 			switch (difficulty) {
 			case 1:
-				String[] wordsEasy = { "Sun", "Son", "Life", "Love", "Bond", "Ring", "Bag", "Cold", "Fish",
-						"Hell", "Five", "Wolf", "Star", "King", "Time", "Tree", "City", "Sing", "Lion", "Foot"};
+				String[] wordsEasy = { "Sun", "Son", "Life", "Love", "Fond", "Ring", "Bag", "Cold", "Fish", "Hell",
+						"Five", "Wolf", "Star", "King", "Time", "Tree", "City", "Sing", "Lion", "Foot", "Cool", "Body",
+						"Golf", "Moon", "Work", "Lady", "Cake", "Blue", "High", "Rock" };
 				Random rand = new Random();
-				int r = rand.nextInt(20);
+				int r = rand.nextInt(30);
 				rightAnswer = wordsEasy[r].toLowerCase();
 
-				 System.out.println(wordsEasy[r].toLowerCase());
+				System.out.println(wordsEasy[r].toLowerCase());
 
 				// Create a new char array with the size of the random word.
 				char[] chars = new char[wordsEasy[r].length()];
@@ -158,18 +159,20 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 					chars[i] = chars[randomPosition];
 					chars[randomPosition] = temp;
 				}
-			// Save the scrambled word in a new string.
+				// Save the scrambled word in a new string.
 				String scrambledWord = new String(chars);
 
 				Scanner userAnswer = new Scanner(System.in);
-				lblText.setText(scrambledWord.toUpperCase());	
+				lblText.setText(scrambledWord.toUpperCase());
 				break;
-				
+
 			case 5:
-				String[] wordsMedium={ "Hello", "Purple", "Twelve", "Samsung", "Heaven", "Banana", "Africa", "Office", "Snitch", "Pumpkin",
-						"Perfect", "Freedom", "Nothing", "History", "Amazing", "Welcome", "Jupiter", "Dolphin", "Justice", "Ascend"};
+				String[] wordsMedium = { "Hello", "Purple", "Twelve", "Samsung", "Heaven", "Banana", "Africa", "Office",
+						"Snitch", "Pumpkin", "Perfect", "Freedom", "Nothing", "History", "Amazing", "Welcome", "Secret",
+						"Dolphin", "Justice", "Animal", "Mother", "Father", "Pirate", "Winter", "Summer", "Friend",
+						"Memory", "Bottle", "Couple", "Simple" };
 				Random rand1 = new Random();
-				int r1 = rand1.nextInt(20);
+				int r1 = rand1.nextInt(30);
 				rightAnswer = wordsMedium[r1].toLowerCase();
 				System.out.println(wordsMedium[r1].toLowerCase());
 
@@ -187,21 +190,23 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 					chars1[i] = chars1[randomPosition];
 					chars1[randomPosition] = temp;
 				}
-			// Save the scrambled word in a new string.
+				// Save the scrambled word in a new string.
 				String scrambledWord1 = new String(chars1);
 
 				Scanner userAnswer1 = new Scanner(System.in);
 				lblText.setText(scrambledWord1.toUpperCase());
 				break;
 			case 10:
-				String[] wordsHard={ "Valkyire", "Heartbeat", "Ascending", "Independence", "Intelligence", "Relationship", "Intimidating", "Bodybuilding",
-						"Everything", "Basketball", "Technology", "Watermelon", "Washington", "Government", "Television", "Friendship", "Punishment",
-						"University", "Blackboard", "Confidence"};
+				String[] wordsHard = { "Valkyire", "Football", "Strength", "February", "Building", "Relationship",
+						"Calendar", "November", "Everything", "Basketball", "Technology", "Watermelon", "Champion",
+						"Hospital", "Television", "Friendship", "Medicine", "University", "Blackboard", "Whiteboard",
+						"Jupiter", "Mountain", "Umbrella", "Computer", "Electric", "Doughnut", "Paradise", "Keyboard",
+						"Dinosaur", "Aquarium" };
 				Random rand2 = new Random();
-				int r2 = rand2.nextInt(20);
+				int r2 = rand2.nextInt(30);
 				rightAnswer = wordsHard[r2].toLowerCase();
 
-				 System.out.println(wordsHard[r2].toLowerCase());
+				System.out.println(wordsHard[r2].toLowerCase());
 
 				// Create a new char array with the size of the random word.
 				char[] chars2 = new char[wordsHard[r2].length()];
@@ -217,15 +222,14 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 					chars2[i] = chars2[randomPosition];
 					chars2[randomPosition] = temp;
 				}
-			// Save the scrambled word in a new string.
+				// Save the scrambled word in a new string.
 				String scrambledWord2 = new String(chars2);
 
 				Scanner userAnswer2 = new Scanner(System.in);
 				lblText.setText(scrambledWord2.toUpperCase());
 				break;
-				
+
 			}
-			
 
 		}
 	}
