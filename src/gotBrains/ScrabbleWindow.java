@@ -138,9 +138,11 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 			case 1:
 				String[] wordsEasy = { "Sun", "Son", "Life", "Love", "Fond", "Ring", "Bag", "Cold", "Fish", "Hell",
 						"Five", "Wolf", "Star", "King", "Time", "Tree", "City", "Sing", "Lion", "Foot", "Cool", "Body",
-						"Golf", "Moon", "Work", "Lady", "Cake", "Blue", "High", "Rock" };
+						"Golf", "Moon", "Work", "Lady", "Cake", "Blue", "High", "Rock", "Face", "Good", "Hate", "Pink",
+						"Oven", "Bear", "Snow", "Taco", "Zero", "Town", "Book", "Card", "Bomb", "Game", "Year", "Worm",
+						"Rage", "Quit", "Ugly", "Rice" };
 				Random rand = new Random();
-				int r = rand.nextInt(30);
+				int r = rand.nextInt(50);
 				rightAnswer = wordsEasy[r].toLowerCase();
 
 				System.out.println(wordsEasy[r].toLowerCase());
@@ -170,9 +172,11 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 				String[] wordsMedium = { "Hello", "Purple", "Twelve", "Samsung", "Heaven", "Banana", "Africa", "Office",
 						"Snitch", "Pumpkin", "Perfect", "Freedom", "Nothing", "History", "Amazing", "Welcome", "Secret",
 						"Dolphin", "Justice", "Animal", "Mother", "Father", "Pirate", "Winter", "Summer", "Friend",
-						"Memory", "Bottle", "Couple", "Simple" };
+						"Memory", "Bottle", "Couple", "Simple", "Guitar", "Police", "Bullet", "Soccer", "Hungry",
+						"Murder", "Travel", "Killer", "Finger", "Second", "First", "Shadow", "Peanut", "Zombie",
+						"Puzzle", "Vision", "Target", "Option", "Cheese", "Rocket" };
 				Random rand1 = new Random();
-				int r1 = rand1.nextInt(30);
+				int r1 = rand1.nextInt(50);
 				rightAnswer = wordsMedium[r1].toLowerCase();
 				System.out.println(wordsMedium[r1].toLowerCase());
 
@@ -201,9 +205,11 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 						"Calendar", "November", "Everything", "Basketball", "Technology", "Watermelon", "Champion",
 						"Hospital", "Television", "Friendship", "Medicine", "University", "Blackboard", "Whiteboard",
 						"Jupiter", "Mountain", "Umbrella", "Computer", "Electric", "Doughnut", "Paradise", "Keyboard",
-						"Dinosaur", "Aquarium" };
+						"Dinosaur", "Aquarium", "Aardvark", "Predator", "Smoothie", "Military", "Festival", "Campfire",
+						"Training", "Lemonade", "Popsicle", "Broccoli", "Fraction", "Addition", "", "Blackout",
+						"Audience", "Creative", "Division", "Goldfish", "Colorful", "Geometry" };
 				Random rand2 = new Random();
-				int r2 = rand2.nextInt(30);
+				int r2 = rand2.nextInt(50);
 				rightAnswer = wordsHard[r2].toLowerCase();
 
 				System.out.println(wordsHard[r2].toLowerCase());
