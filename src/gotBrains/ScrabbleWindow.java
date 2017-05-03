@@ -206,7 +206,7 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 						"Hospital", "Television", "Friendship", "Medicine", "University", "Blackboard", "Whiteboard",
 						"Jupiter", "Mountain", "Umbrella", "Computer", "Electric", "Doughnut", "Paradise", "Keyboard",
 						"Dinosaur", "Aquarium", "Aardvark", "Predator", "Smoothie", "Military", "Festival", "Campfire",
-						"Training", "Lemonade", "Popsicle", "Broccoli", "Fraction", "Addition", "", "Blackout",
+						"Training", "Lemonade", "Popsicle", "Broccoli", "Fraction", "Addition", "Anaconda", "Blackout",
 						"Audience", "Creative", "Division", "Goldfish", "Colorful", "Geometry" };
 				Random rand2 = new Random();
 				int r2 = rand2.nextInt(50);
