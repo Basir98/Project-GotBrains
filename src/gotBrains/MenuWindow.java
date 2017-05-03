@@ -22,7 +22,7 @@ public class MenuWindow extends JPanel implements ActionListener {
 	private JButton btnLeaderboard = new JButton("LEADERBOARD");
 	JTextField fieldUsername = new JTextField();
 	
-	private Font font = new Font("Calibri", Font.BOLD, 18);
+	private Font font = new Font("Monospaced", Font.BOLD, 18);
 	private Controller controller;
 
 	public MenuWindow(Controller controller) {

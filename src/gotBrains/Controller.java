@@ -120,10 +120,18 @@ public class Controller {
 	}
 	
 	
-	public String getHighscore() {
-		return hm.getHighscoreString();
+	public String getLeaderboardPlacement() {
+		return hm.getLeaderboardPlacement();
+	}
+	
+	public String getLeaderboardScore() {
+		return hm.getLeaderboardScore();
 	}
 
+	public void clearLeaderboard() {
+		hm.clearScores();
+	}
+	
 	public void newMathGameScore(int score) {
 		hm.addMathGameScore(this.currentUsername, score);
 	}

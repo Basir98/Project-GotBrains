@@ -40,7 +40,7 @@ public class HighscoreTest {
         
         hm.updateScoreFile();
         hm.loadScoreFile();
-        System.out.print(hm.getHighscoreString());
+        System.out.print(hm.getLeaderboardPlacement());
         System.out.println();
         
         hm.addPlayer("Isak");
@@ -51,10 +51,10 @@ public class HighscoreTest {
 //        hm.addMathGameScore("Unknown", 1);
 //        hm.addScrabbleScore("Unknown", 1);
 //        hm.addSimonSaysScore("Unknown", 1);
-        
+//        hm.clearScores();
         hm.updateScoreFile();
         hm.loadScoreFile();
-        System.out.print(hm.getHighscoreString());
+        System.out.print(hm.getLeaderboardPlacement());
         System.out.println();
     }
 }

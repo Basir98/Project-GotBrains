@@ -73,7 +73,7 @@ public class HighscoreManager {
 		}
 		updateScoreFile();
 	}
-	
+
 	public void clearScores() {
 		loadScoreFile();
 		players.clear();
@@ -121,20 +121,20 @@ public class HighscoreManager {
 			}
 		}
 	}
-	
+
 	public ArrayList getHighscoreList(int elements) {
 		ArrayList<Player> topPlayers = new ArrayList(elements);
-		if(players.size() < elements) {
+		if (players.size() < elements) {
 			elements = players.size();
 		}
-		for(int i = 0; i<elements; i++) {
+		for (int i = 0; i < elements; i++) {
 			topPlayers.add(players.get(i));
 		}
 		return topPlayers;
 	}
-	
-	public String getHighscoreString() {
-		String highscoreString = "";
+
+	public String getLeaderboardPlacement() {
+		String leaderboardPlacement = "";
 		int max = 10;
 
 		ArrayList<Player> players;
@@ -146,12 +146,38 @@ public class HighscoreManager {
 			x = max;
 		}
 		while (i < x) {
-			highscoreString += (i + 1) + ".    " + String.format("%-13s",players.get(i).getUsername()) + "\t\t" + String.format("%3d", players.get(i).getTotalScore())
-					+ "   " + String.format("%3d", players.get(i).getMathGameScore()) + "   " + String.format("%3d", players.get(i).getScrabbleScore()) + "   "
-					+ String.format("%3d", players.get(i).getSimonSaysScore()) + "\n";
+			leaderboardPlacement += String.format("%4d.      %-14s\n", (i + 1), players.get(i).getUsername());
+
+			// highscoreString += String.format("%3s",(i + 1) + ".") +
+			// String.format("%-25s","\t" + players.get(i).getUsername()) + "\t"
+			// + String.format("%-4d", players.get(i).getTotalScore()) + "\n";
+
+			// + "" + String.format("%4d", players.get(i).getMathGameScore()) +
+			// "" + String.format("%4d", players.get(i).getScrabbleScore()) + ""
+			// + String.format("%4d", players.get(i).getSimonSaysScore()) +
+			// "\n";
 			i++;
 		}
-		return highscoreString;
+		return leaderboardPlacement;
+	}
+
+	public String getLeaderboardScore() {
+		String leaderboardScore = "";
+		int max = 10;
+
+		ArrayList<Player> players;
+		players = getScores();
+
+		int i = 0;
+		int x = players.size();
+		if (x > max) {
+			x = max;
+		}
+		while (i < x) {
+			leaderboardScore += String.format("%-4d \n", players.get(i).getTotalScore());
+			i++;
+		}
+		return leaderboardScore;
 	}
 
 	public class HighscoreComparator implements Comparator<Player> {
