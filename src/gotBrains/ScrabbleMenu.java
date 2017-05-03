@@ -22,7 +22,7 @@ public class ScrabbleMenu extends JPanel implements ActionListener {
 	private JButton btnStartEasy = new JButton(new ImageIcon("images/easyButton.png"));
 	private JButton btnStartMedium = new JButton(new ImageIcon("images/mediumButton.png"));
 	private JButton btnStartHard = new JButton(new ImageIcon("images/hardButton.png"));
-	private JButton btnLeaderboard = new JButton("LEADERBOARD");
+//	private JButton btnLeaderboard = new JButton("LEADERBOARD");
 	
 	
 	public ScrabbleMenu(Controller controller) {
@@ -70,13 +70,13 @@ public class ScrabbleMenu extends JPanel implements ActionListener {
 		btnStartHard.setBounds(455, 295, 100, 30);
 		btnStartHard.addActionListener(this);
 		
-		add(btnLeaderboard);
-		btnLeaderboard.setOpaque(true);
-		btnLeaderboard.setContentAreaFilled(false);
-		btnLeaderboard.setBorderPainted(true);
+	//	add(btnLeaderboard);
+	//	btnLeaderboard.setOpaque(true);
+	//	btnLeaderboard.setContentAreaFilled(false);
+	//	btnLeaderboard.setBorderPainted(true);
 		
-		btnLeaderboard.setBounds(245, 330, 310, 30);
-		btnLeaderboard.addActionListener(this);
+	//	btnLeaderboard.setBounds(245, 330, 310, 30);
+	//	btnLeaderboard.addActionListener(this);
 		
 	}
 

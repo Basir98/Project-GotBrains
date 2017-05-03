@@ -93,7 +93,7 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 		lblTimer.setForeground(new Color(180, 180, 180));
 		lblTimer.setBounds(330, 2, 160, 30);
 
-		CountDownTimer timer = new CountDownTimer(1, 0);
+		CountDownTimer timer = new CountDownTimer(0, 30);
 		timer.start();
 	}
 
@@ -102,8 +102,9 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 	}
 
 	public void gameOver() {
-		System.out.println("Your result: " + score + " points.");
-		controller.showScrabbleWindow();
+		textField.setEditable(false);
+		System.out.println("Your result: " + score*difficulty + " points.");
+		controller.newScrabbleScore(score*difficulty);
 	}
 
 	public void setDifficulty(int difficulty) {
