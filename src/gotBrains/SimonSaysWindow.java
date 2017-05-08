@@ -1,13 +1,16 @@
 package gotBrains;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class SimonSaysWindow extends JPanel implements ActionListener {
 	private ImageIcon iconQuit = new ImageIcon("images/quitButton.png");
@@ -17,9 +20,13 @@ public class SimonSaysWindow extends JPanel implements ActionListener {
 	private JButton btnQuit = new JButton(iconQuit);
 	private JButton btnMenu = new JButton(iconMenu);
 	private Controller controller;
-
-	public SimonSaysWindow(Controller controller) {
-		this.controller = controller;
+        private int score = 0;
+	private JLabel lblText = new JLabel("", SwingConstants.CENTER);
+	
+	private JLabel lblTimer = new JLabel("", SwingConstants.LEFT);
+        public SimonSaysWindow(Controller controller) {
+	
+            this.controller = controller;
 		setLayout(null);
 		setPreferredSize(new Dimension(800, 600));
 
@@ -27,7 +34,7 @@ public class SimonSaysWindow extends JPanel implements ActionListener {
 		btnQuit.setOpaque(false);
 		btnQuit.setContentAreaFilled(false);
 		btnQuit.setBorderPainted(false);
-		btnQuit.setBounds(762, -2, 40, 35);
+		btnQuit.setBounds(758, 2, 40, 35);
 		btnQuit.addActionListener(this);
 		btnQuit.setRolloverIcon(iconQuitHover);
 
@@ -38,9 +45,9 @@ public class SimonSaysWindow extends JPanel implements ActionListener {
 		btnMenu.setBounds(-2, -2, 120, 30);
 		btnMenu.addActionListener(this);
 		btnMenu.setRolloverIcon(iconMenuHover);
-	}
-
-	protected void paintComponent(Graphics g) {
+	        
+        }
+              protected void paintComponent(Graphics g) {
 		ImageIcon background = new ImageIcon("images/simonSaysBackground.png");
 		super.paintComponent(g);
 		g.drawImage(background.getImage(), 0, 0, null);
@@ -53,4 +60,8 @@ public class SimonSaysWindow extends JPanel implements ActionListener {
 			System.exit(0);
 		}
 	}
+
+
+
+
 }
