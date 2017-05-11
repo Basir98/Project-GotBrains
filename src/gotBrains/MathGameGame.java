@@ -166,9 +166,14 @@ public class MathGameGame extends JPanel implements ActionListener {
 	}
 
 	protected void paintComponent(Graphics g) {
+		int xPoints[] = {280, 330, 470, 520};
+	    int yPoints[] = {0, 30, 30, 0};
+	    int nPoints = 4;
 		ImageIcon background = new ImageIcon("images/mathGameGameBackground.png");
 		super.paintComponent(g);
 		g.drawImage(background.getImage(), 0, 0, null);
+		g.setColor(new Color(80, 80, 80));
+		g.fillPolygon(xPoints, yPoints, nPoints);
 	}
 
 	public void actionPerformed(ActionEvent e) {

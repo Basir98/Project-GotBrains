@@ -73,9 +73,10 @@ public class MathGameMenu extends JPanel implements ActionListener {
 	}
 
 	protected void paintComponent(Graphics g) {
-		ImageIcon background = new ImageIcon("images/mathGameBackground.png");
+		ImageIcon background = new ImageIcon("images/calculateThisBackground.png");
 		super.paintComponent(g);
 		g.drawImage(background.getImage(), 0, 0, null);
+		
 	}
 
 	public void actionPerformed(ActionEvent e) {
