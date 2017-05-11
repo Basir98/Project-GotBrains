@@ -8,6 +8,7 @@ import javax.swing.*;
 
 /**
  * The panel-class that holds the actual gameUI and Game logic.
+ * 
  * @author Isak Hartman, Felix Jönsson
  *
  */
@@ -31,10 +32,11 @@ public class MathGameGame extends JPanel implements ActionListener {
 	private JLabel lblOperation = new JLabel("", SwingConstants.CENTER);
 	private JLabel lblScore = new JLabel("Score: " + score, SwingConstants.LEFT);
 	private JLabel lblTimer = new JLabel("", SwingConstants.LEFT);
-	
+
 	/**
 	 * 
-	 * @param Controller controller
+	 * @param Controller
+	 *            controller
 	 */
 	@SuppressWarnings("serial")
 	public MathGameGame(Controller controller) {
@@ -81,11 +83,10 @@ public class MathGameGame extends JPanel implements ActionListener {
 		textField.setBounds(265, 370, 250, 30);
 		textField.addActionListener(action = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
+
 				int correctAnswer;
 				int userAnswer = Integer.parseInt(textField.getText());
-				
+
 				System.out.println("Your answer: " + textField.getText());
 
 				String operation = lblOperation.getText();
@@ -94,33 +95,29 @@ public class MathGameGame extends JPanel implements ActionListener {
 					correctAnswer = Integer.parseInt(lblNbr1.getText()) + Integer.parseInt(lblNbr2.getText());
 					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
 						score++;
-						updateScore();
-						textField.setText("");
 						mathGame.newTask();
-					} else {
-						textField.setText("");
-					}
+						controller.correctSound(true);
+					} else controller.correctSound(false);
+					break;
 				case "-":
 					correctAnswer = Integer.parseInt(lblNbr1.getText()) - Integer.parseInt(lblNbr2.getText());
 					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
 						score++;
-						updateScore();
-						textField.setText("");
 						mathGame.newTask();
-					} else {
-						textField.setText("");
-					}
+						controller.correctSound(true);
+					} else controller.correctSound(false);
+					break;
 				case "*":
 					correctAnswer = Integer.parseInt(lblNbr1.getText()) * Integer.parseInt(lblNbr2.getText());
 					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
-						score++;
-						updateScore();
-						textField.setText("");
+						score++;	
 						mathGame.newTask();
-					} else {
-						textField.setText("");
-					}
+						controller.correctSound(true);
+					} else controller.correctSound(false);
+					break;
 				}
+				updateScore();
+				textField.setText("");
 			}
 		});
 
@@ -136,21 +133,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 
 		timer.start();
 	}
-	
-	public void updateScore() {
-		lblScore.setText("Score: " + score);
-	}
-	
-	public void gameOver() {
-		if(!timer.isInterrupted()) {
-			timer.interrupt();
-		}
-		textField.setEditable(false);
-		
-		System.out.println("Your result: " + score*difficulty + " points.");
-		controller.newMathGameScore(score*difficulty);
-	}
-	
+
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
 	}
@@ -160,16 +143,36 @@ public class MathGameGame extends JPanel implements ActionListener {
 		textField.setEditable(true);
 		mathGame.newTask();
 	}
+
+	public void updateScore() {
+		lblScore.setText("Score: " + score);
+	}
 	
+	public void playSound(boolean correct) {
+		if(correct) {
+			
+		}
+	}
+
+	public void gameOver() {
+		if (!timer.isInterrupted()) {
+			timer.interrupt();
+		}
+		textField.setEditable(false);
+
+		System.out.println("Your result: " + score * difficulty + " points.");
+		controller.newMathGameScore(score * difficulty);
+	}
+
 	public void showResult(String result) {
-		
+
 	}
 
 	protected void paintComponent(Graphics g) {
-		int xPoints[] = {280, 330, 470, 520};
-	    int yPoints[] = {0, 30, 30, 0};
-	    int nPoints = 4;
-		ImageIcon background = new ImageIcon("images/mathGameGameBackground.png");
+		int xPoints[] = { 280, 330, 470, 520 };
+		int yPoints[] = { 0, 30, 30, 0 };
+		int nPoints = 4;
+		ImageIcon background = new ImageIcon("images/calculateThisBackground.png");
 		super.paintComponent(g);
 		g.drawImage(background.getImage(), 0, 0, null);
 		g.setColor(new Color(80, 80, 80));
@@ -178,7 +181,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMenu) {
-//			avbryt aktuellt spel, nollställ timer, nollställ score.
+			// avbryt aktuellt spel, nollställ timer, nollställ score.
 			gameOver();
 			controller.showMenu();
 		} else if (e.getSource() == btnQuit) {
@@ -247,7 +250,6 @@ public class MathGameGame extends JPanel implements ActionListener {
 
 		public void run() {
 			do {
-				// System.out.println(toString());
 				lblTimer.setText(toString());
 				try {
 					Thread.sleep(999);

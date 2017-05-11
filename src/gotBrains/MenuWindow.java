@@ -16,12 +16,17 @@ import javax.swing.text.PlainDocument;
 
 public class MenuWindow extends JPanel implements ActionListener {
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
-	private JButton btnScrabble = new JButton("SCRABBLE");
-	private JButton btnSimonSays = new JButton("SIMON SAYS");
-	private JButton btnMathGame = new JButton("MATH GAME");
+	private JButton btnScrabble = new JButton("SPELL THIS!");
+	private JButton btnSimonSays = new JButton("MEMORIZE THIS!");
+	private JButton btnMathGame = new JButton("CALCULATE THIS!");
 	private JButton btnLeaderboard = new JButton("LEADERBOARD");
 	JTextField fieldUsername = new JTextField();
-	
+	private JButton btnToggleMusic = new JButton(new ImageIcon("images/musicIcon.png"));
+	private JButton btnToggleSound = new JButton(new ImageIcon("images/soundIcon.png"));
+
+	private boolean mutedMusic = false;
+	private boolean mutedSound = false;
+
 	private Font font = new Font("Monospaced", Font.BOLD, 18);
 	private Controller controller;
 
@@ -29,18 +34,6 @@ public class MenuWindow extends JPanel implements ActionListener {
 		this.controller = controller;
 		setLayout(null);
 		setPreferredSize(new Dimension(800, 600));
-//		try {
-//			File backgroundMusic = new File("sounds/backgroundMusic.wav");
-//			AudioInputStream ais = AudioSystem.getAudioInputStream(backgroundMusic);
-//			Clip clip = AudioSystem.getClip();
-//			clip.open(ais);
-//			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-//			gainControl.setValue(-20.0f);
-//			clip.start();
-//			clip.loop(10);
-//		} catch (Exception e) {
-//			System.out.println(e);
-//		}
 
 		add(btnQuit);
 		btnQuit.setOpaque(false);
@@ -49,7 +42,7 @@ public class MenuWindow extends JPanel implements ActionListener {
 		btnQuit.setBounds(758, 2, 40, 35);
 		btnQuit.addActionListener(this);
 		btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
-		
+
 		add(btnScrabble);
 		btnScrabble.setOpaque(false);
 		btnScrabble.setContentAreaFilled(false);
@@ -67,13 +60,13 @@ public class MenuWindow extends JPanel implements ActionListener {
 		btnMathGame.setContentAreaFilled(false);
 		btnMathGame.setBounds(450, 360, 110, 30);
 		btnMathGame.addActionListener(this);
-		
+
 		add(btnLeaderboard);
 		btnLeaderboard.setOpaque(false);
 		btnLeaderboard.setContentAreaFilled(false);
 		btnLeaderboard.setBounds(230, 390, 330, 30);
 		btnLeaderboard.addActionListener(this);
-		
+
 		add(fieldUsername);
 		fieldUsername.setOpaque(false);
 		fieldUsername.setHorizontalAlignment(JTextField.CENTER);
@@ -85,7 +78,19 @@ public class MenuWindow extends JPanel implements ActionListener {
 		fieldUsername.setBorder(BorderFactory.createEmptyBorder());
 		fieldUsername.setForeground(new Color(80, 80, 80));
 		fieldUsername.setBounds(320, 320, 150, 30);
-		
+
+		add(btnToggleMusic);
+		btnToggleMusic.setContentAreaFilled(false);
+		btnToggleMusic.setBorderPainted(false);
+		btnToggleMusic.setBounds(5, 560, 32, 32);
+		btnToggleMusic.addActionListener(this);
+
+		add(btnToggleSound);
+		btnToggleSound.setContentAreaFilled(false);
+		btnToggleSound.setBorderPainted(false);
+		btnToggleSound.setBounds(40, 560, 32, 32);
+		btnToggleSound.addActionListener(this);
+
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -97,24 +102,43 @@ public class MenuWindow extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnQuit) {
 			System.exit(0);
-			
+
 		} else if (e.getSource() == btnScrabble) {
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showScrabbleWindow();
-			
+
 		} else if (e.getSource() == btnSimonSays) {
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showSimonSaysWindow();
-			
+
 		} else if (e.getSource() == btnMathGame) {
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showMathGameWindow();
-			
+
 		} else if (e.getSource() == btnLeaderboard) {
 			controller.showLeaderboard();
+
+		} else if (e.getSource() == btnToggleMusic) {
+			controller.toggleMusic();
+			if (!mutedMusic) {
+				btnToggleMusic.setIcon(new ImageIcon("images/musicIconMuted.png"));
+				mutedMusic = true;
+			} else if (mutedMusic) {
+				btnToggleMusic.setIcon(new ImageIcon("images/musicIcon.png"));
+				mutedMusic = false;
+			}
+		} else if (e.getSource() == btnToggleSound) {
+			controller.toggleSound();
+			if(!mutedSound) {
+				btnToggleSound.setIcon(new ImageIcon("images/soundIconMuted.png"));
+				mutedSound = true;
+			} else if(mutedSound) {
+				btnToggleSound.setIcon(new ImageIcon("images/soundIcon.png"));
+				mutedSound = false;
+			}
 		}
 	}
 }

@@ -3,7 +3,9 @@ package gotBrains;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
 
+import javax.sound.sampled.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -25,6 +27,12 @@ public class Controller {
 	private MathGameGame mathGameGame;
 	private Leaderboard leaderboardWindow;
 	private String currentUsername;
+	private File backgroundMusic = new File("sounds/backgroundMusic.wav");
+	private File correctSound = new File("sounds/correctSound.wav");
+	private File incorrectSound = new File("sounds/incorrectSound.wav");
+	private Clip music;
+	private boolean mutedMusic = false;
+	private boolean mutedSound = false;
 
 	private HighscoreManager hm = new HighscoreManager();
 	private CardLayout cl = new CardLayout();
@@ -33,6 +41,7 @@ public class Controller {
 		this.frame = frame;
 		panelContainer.setLayout(cl);
 		loadApp();
+		startMusic();
 	}
 
 	public void loadApp() {
@@ -46,8 +55,7 @@ public class Controller {
 		panelContainer.add(scrabbleMenu, "scrabbleWindow");
 		panelContainer.add(simonSaysWindow, "simonSaysWindow");
 		panelContainer.add(mathGameMenu, "mathGameWindow");
-		
-		
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panelContainer);
 		frame.setSize(800, 600);
@@ -65,7 +73,57 @@ public class Controller {
 			e.printStackTrace();
 		}
 		menuWindow.fieldUsername.grabFocus();
+	}
 
+	public void startMusic() {
+		try {
+			AudioInputStream ais = AudioSystem.getAudioInputStream(backgroundMusic);
+			music = AudioSystem.getClip();
+			music.open(ais);
+			FloatControl gainControl = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
+			gainControl.setValue(-20.0f);
+			music.start();
+			music.loop(100);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	public void toggleMusic() {
+		if (!mutedMusic) {
+			music.stop();
+			mutedMusic = true;
+		}
+		else if (mutedMusic) {
+			startMusic();
+			mutedMusic = false;
+		}
+	}
+
+	public void toggleSound() {
+		if (mutedSound) {
+			mutedSound = false;
+		} else mutedSound = true;
+	}
+
+	public void correctSound(boolean correct) {
+		if (!mutedSound) {
+			try {
+				if (correct) {
+					AudioInputStream ais = AudioSystem.getAudioInputStream(correctSound);
+					Clip sound = AudioSystem.getClip();
+					sound.open(ais);
+					sound.start();
+				} else if (!correct) {
+					AudioInputStream ais = AudioSystem.getAudioInputStream(incorrectSound);
+					Clip sound = AudioSystem.getClip();
+					sound.open(ais);
+					sound.start();
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
 	}
 
 	public void showScrabbleWindow() {
@@ -114,16 +172,15 @@ public class Controller {
 	public void setCurrentUsername(String username) {
 		this.currentUsername = username;
 	}
-	
+
 	public void addPlayer(String username) {
 		hm.addPlayer(username);
 	}
-	
-	
+
 	public String getLeaderboardPlacement() {
 		return hm.getLeaderboardPlacement();
 	}
-	
+
 	public String getLeaderboardScore() {
 		return hm.getLeaderboardScore();
 	}
@@ -131,7 +188,7 @@ public class Controller {
 	public void clearLeaderboard() {
 		hm.clearScores();
 	}
-	
+
 	public void newMathGameScore(int score) {
 		hm.addMathGameScore(this.currentUsername, score);
 	}
