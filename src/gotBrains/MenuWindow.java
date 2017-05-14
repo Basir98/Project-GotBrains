@@ -16,13 +16,15 @@ import javax.swing.text.PlainDocument;
 
 public class MenuWindow extends JPanel implements ActionListener {
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
+	private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
 	private JButton btnScrabble = new JButton("SPELL THIS!");
 	private JButton btnSimonSays = new JButton("MEMORIZE THIS!");
 	private JButton btnMathGame = new JButton("CALCULATE THIS!");
 	private JButton btnLeaderboard = new JButton("LEADERBOARD");
-	JTextField fieldUsername = new JTextField();
+
 	private JButton btnToggleMusic = new JButton(new ImageIcon("images/musicIcon.png"));
 	private JButton btnToggleSound = new JButton(new ImageIcon("images/soundIcon.png"));
+	JTextField fieldUsername = new JTextField();
 
 	private boolean mutedMusic = false;
 	private boolean mutedSound = false;
@@ -39,9 +41,19 @@ public class MenuWindow extends JPanel implements ActionListener {
 		btnQuit.setOpaque(false);
 		btnQuit.setContentAreaFilled(false);
 		btnQuit.setBorderPainted(false);
-		btnQuit.setBounds(758, 2, 40, 35);
+		btnQuit.setFocusPainted(false);
+		btnQuit.setBounds(756, 2, 40, 35);
 		btnQuit.addActionListener(this);
 		btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
+
+		add(btnMinimize);
+		btnMinimize.setOpaque(false);
+		btnMinimize.setContentAreaFilled(false);
+		btnMinimize.setBorderPainted(false);
+		btnMinimize.setFocusPainted(false);
+		btnMinimize.setBounds(716, 2, 40, 35);
+		btnMinimize.addActionListener(this);
+		btnMinimize.setRolloverIcon(new ImageIcon("images/minimizeButtonHover.png"));
 
 		add(btnScrabble);
 		btnScrabble.setOpaque(false);
@@ -103,6 +115,9 @@ public class MenuWindow extends JPanel implements ActionListener {
 		if (e.getSource() == btnQuit) {
 			System.exit(0);
 
+		} else if (e.getSource() == btnMinimize) {
+			controller.minimizeApp();
+			
 		} else if (e.getSource() == btnScrabble) {
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
@@ -132,10 +147,10 @@ public class MenuWindow extends JPanel implements ActionListener {
 			}
 		} else if (e.getSource() == btnToggleSound) {
 			controller.toggleSound();
-			if(!mutedSound) {
+			if (!mutedSound) {
 				btnToggleSound.setIcon(new ImageIcon("images/soundIconMuted.png"));
 				mutedSound = true;
-			} else if(mutedSound) {
+			} else if (mutedSound) {
 				btnToggleSound.setIcon(new ImageIcon("images/soundIcon.png"));
 				mutedSound = false;
 			}

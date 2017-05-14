@@ -2,8 +2,13 @@ package gotBrains;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.sound.sampled.*;
 import javax.swing.JFrame;
@@ -17,6 +22,7 @@ import javax.swing.JPanel;
  *
  */
 public class Controller {
+	
 	private JFrame frame;
 	private JPanel panelContainer = new JPanel();
 	private MenuWindow menuWindow;
@@ -36,6 +42,7 @@ public class Controller {
 
 	private HighscoreManager hm = new HighscoreManager();
 	private CardLayout cl = new CardLayout();
+	private Font customFont;
 
 	public Controller(JFrame frame) {
 		this.frame = frame;
@@ -45,7 +52,6 @@ public class Controller {
 	}
 
 	public void loadApp() {
-
 		menuWindow = new MenuWindow(this);
 		scrabbleMenu = new ScrabbleMenu(this);
 		simonSaysWindow = new SimonSaysWindow(this);
@@ -74,7 +80,22 @@ public class Controller {
 		}
 		menuWindow.fieldUsername.grabFocus();
 	}
-
+	
+	public Font getCustomFont(String filepath, int style, int size) {
+		try {
+			customFont = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File(filepath))).deriveFont(style, size);
+		} catch (FileNotFoundException e) {
+			System.out.println("ERROR: " + e);
+		} catch (FontFormatException e) {
+			System.out.println("ERROR: " + e);
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("ERROR: " + e);
+			e.printStackTrace();
+		}
+		return customFont;
+	}
+	
 	public void startMusic() {
 		try {
 			AudioInputStream ais = AudioSystem.getAudioInputStream(backgroundMusic);
@@ -167,6 +188,10 @@ public class Controller {
 	public void showMenu() {
 		cl.show(panelContainer, "menuWindow");
 		menuWindow.fieldUsername.grabFocus();
+	}
+	
+	public void minimizeApp() {
+		frame.setState(JFrame.ICONIFIED);
 	}
 
 	public void setCurrentUsername(String username) {

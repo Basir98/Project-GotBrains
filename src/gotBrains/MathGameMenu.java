@@ -13,18 +13,18 @@ import javax.swing.SwingConstants;
 
 public class MathGameMenu extends JPanel implements ActionListener {
 	private Controller controller;
-	
-	private Font font = new Font("Courier New", Font.BOLD, 14);
-	private Color fontColor = new Color(180, 180, 180);
-	
+
+	private Font font = new Font("Georgia", Font.BOLD, 20);
+	private Color fontColor = new Color(100, 100, 100);
+
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
+	private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
 	private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
 	private JButton btnStartEasy = new JButton(new ImageIcon("images/easyButton.png"));
 	private JButton btnStartMedium = new JButton(new ImageIcon("images/mediumButton.png"));
 	private JButton btnStartHard = new JButton(new ImageIcon("images/hardButton.png"));
 	private JButton btnLeaderboard = new JButton("LEADERBOARD");
-	
-	
+
 	public MathGameMenu(Controller controller) {
 		this.controller = controller;
 		setLayout(null);
@@ -34,9 +34,19 @@ public class MathGameMenu extends JPanel implements ActionListener {
 		btnQuit.setOpaque(false);
 		btnQuit.setContentAreaFilled(false);
 		btnQuit.setBorderPainted(false);
-		btnQuit.setBounds(758, 2, 40, 35);
+		btnQuit.setFocusPainted(false);
+		btnQuit.setBounds(756, 2, 40, 35);
 		btnQuit.addActionListener(this);
 		btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
+		
+		add(btnMinimize);
+		btnMinimize.setOpaque(false);
+		btnMinimize.setContentAreaFilled(false);
+		btnMinimize.setBorderPainted(false);
+		btnMinimize.setFocusPainted(false);
+		btnMinimize.setBounds(716, 2, 40, 35);
+		btnMinimize.addActionListener(this);
+		btnMinimize.setRolloverIcon(new ImageIcon("images/minimizeButtonHover.png"));
 		
 		add(btnMenu);
 		btnMenu.setOpaque(false);
@@ -44,8 +54,8 @@ public class MathGameMenu extends JPanel implements ActionListener {
 		btnMenu.setBorderPainted(false);
 		btnMenu.setBounds(-2, -2, 120, 30);
 		btnMenu.addActionListener(this);
-		btnMenu.setRolloverIcon( new ImageIcon("images/menuButtonHover.png"));
-		
+		btnMenu.setRolloverIcon(new ImageIcon("images/menuButtonHover.png"));
+
 		add(btnStartEasy);
 		btnStartEasy.setOpaque(true);
 		btnStartEasy.setContentAreaFilled(false);
@@ -53,7 +63,7 @@ public class MathGameMenu extends JPanel implements ActionListener {
 		btnStartEasy.setRolloverIcon(new ImageIcon("images/easyButtonHover.png"));
 		btnStartEasy.setBounds(245, 295, 100, 30);
 		btnStartEasy.addActionListener(this);
-		
+
 		add(btnStartMedium);
 		btnStartMedium.setOpaque(true);
 		btnStartMedium.setContentAreaFilled(false);
@@ -61,7 +71,7 @@ public class MathGameMenu extends JPanel implements ActionListener {
 		btnStartMedium.setRolloverIcon(new ImageIcon("images/mediumButtonHover.png"));
 		btnStartMedium.setBounds(350, 295, 100, 30);
 		btnStartMedium.addActionListener(this);
-		
+
 		add(btnStartHard);
 		btnStartHard.setOpaque(true);
 		btnStartHard.setContentAreaFilled(false);
@@ -69,14 +79,17 @@ public class MathGameMenu extends JPanel implements ActionListener {
 		btnStartHard.setRolloverIcon(new ImageIcon("images/hardButtonHover.png"));
 		btnStartHard.setBounds(455, 295, 100, 30);
 		btnStartHard.addActionListener(this);
-		
+
 	}
 
 	protected void paintComponent(Graphics g) {
 		ImageIcon background = new ImageIcon("images/calculateThisBackground.png");
 		super.paintComponent(g);
 		g.drawImage(background.getImage(), 0, 0, null);
-		
+		g.setColor(fontColor);
+		g.setFont(font);
+		g.drawString("Choose difficulty", 310, 280);
+
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -84,12 +97,14 @@ public class MathGameMenu extends JPanel implements ActionListener {
 			controller.showMenu();
 		} else if (e.getSource() == btnQuit) {
 			System.exit(0);
-		} else if(e.getSource() == btnStartEasy) {
+		} else if (e.getSource() == btnStartEasy) {
 			controller.startMathGame(1);
-		} else if(e.getSource() == btnStartMedium) {
+		} else if (e.getSource() == btnStartMedium) {
 			controller.startMathGame(5);
-		} else if(e.getSource() == btnStartHard) {
+		} else if (e.getSource() == btnStartHard) {
 			controller.startMathGame(10);
+		} else if (e.getSource() == btnMinimize) {
+			controller.minimizeApp();
 		}
 	}
 

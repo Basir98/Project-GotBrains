@@ -4,7 +4,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
+
+import javax.print.attribute.AttributeSet;
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 /**
  * The panel-class that holds the actual gameUI and Game logic.
@@ -17,16 +21,20 @@ public class MathGameGame extends JPanel implements ActionListener {
 	private MathGame mathGame;
 	private CountDownTimer timer = new CountDownTimer(0, 30);
 	private Font font = new Font("Calibri", Font.BOLD, 32);
-	private Color fontColor = new Color(80, 80, 80);
+	private Color darkGrey = new Color(80, 80, 80);
+	private Color lightGrey = new Color(180, 180, 180);
 	private int difficulty;
 	private int score = 0;
 	private Random random = new Random();
 	private Action action;
 
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
+	private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
 	private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
 	JTextField textField = new JTextField();
-
+	private JTextArea gameLog = new JTextArea();
+	private JScrollPane logScroll;
+	
 	private JLabel lblNbr1 = new JLabel("", SwingConstants.RIGHT);
 	private JLabel lblNbr2 = new JLabel("", SwingConstants.LEFT);
 	private JLabel lblOperation = new JLabel("", SwingConstants.CENTER);
@@ -35,10 +43,8 @@ public class MathGameGame extends JPanel implements ActionListener {
 
 	/**
 	 * 
-	 * @param Controller
-	 *            controller
+	 * @param controller
 	 */
-	@SuppressWarnings("serial")
 	public MathGameGame(Controller controller) {
 		this.controller = controller;
 		setLayout(null);
@@ -48,9 +54,19 @@ public class MathGameGame extends JPanel implements ActionListener {
 		btnQuit.setOpaque(false);
 		btnQuit.setContentAreaFilled(false);
 		btnQuit.setBorderPainted(false);
-		btnQuit.setBounds(758, 2, 40, 35);
+		btnQuit.setFocusPainted(false);
+		btnQuit.setBounds(756, 2, 40, 35);
 		btnQuit.addActionListener(this);
 		btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
+
+		add(btnMinimize);
+		btnMinimize.setOpaque(false);
+		btnMinimize.setContentAreaFilled(false);
+		btnMinimize.setBorderPainted(false);
+		btnMinimize.setFocusPainted(false);
+		btnMinimize.setBounds(716, 2, 40, 35);
+		btnMinimize.addActionListener(this);
+		btnMinimize.setRolloverIcon(new ImageIcon("images/minimizeButtonHover.png"));
 
 		add(btnMenu);
 		btnMenu.setOpaque(false);
@@ -62,75 +78,50 @@ public class MathGameGame extends JPanel implements ActionListener {
 
 		add(lblNbr1);
 		lblNbr1.setFont(font);
-		lblNbr1.setForeground(fontColor);
+		lblNbr1.setForeground(darkGrey);
 		lblNbr1.setBounds(320, 320, 60, 30);
 
 		add(lblOperation);
 		lblOperation.setFont(font);
-		lblOperation.setForeground(fontColor);
+		lblOperation.setForeground(darkGrey);
 		lblOperation.setBounds(380, 320, 30, 30);
 
 		add(lblNbr2);
 		lblNbr2.setFont(font);
-		lblNbr2.setForeground(fontColor);
+		lblNbr2.setForeground(darkGrey);
 		lblNbr2.setBounds(410, 320, 60, 30);
 
 		add(textField);
 		textField.setOpaque(false);
 		textField.setBorder(BorderFactory.createEmptyBorder());
+		textField.setDocument(new LengthRestrictedDocument(9));
+		textField.setHorizontalAlignment(JTextField.CENTER);
 		textField.setFont(new Font("Calibri", Font.PLAIN, 28));
-		textField.setForeground(fontColor);
-		textField.setBounds(265, 370, 250, 30);
-		textField.addActionListener(action = new AbstractAction() {
-			public void actionPerformed(ActionEvent e) {
-
-				int correctAnswer;
-				int userAnswer = Integer.parseInt(textField.getText());
-
-				System.out.println("Your answer: " + textField.getText());
-
-				String operation = lblOperation.getText();
-				switch (operation) {
-				case "+":
-					correctAnswer = Integer.parseInt(lblNbr1.getText()) + Integer.parseInt(lblNbr2.getText());
-					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
-						score++;
-						mathGame.newTask();
-						controller.correctSound(true);
-					} else controller.correctSound(false);
-					break;
-				case "-":
-					correctAnswer = Integer.parseInt(lblNbr1.getText()) - Integer.parseInt(lblNbr2.getText());
-					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
-						score++;
-						mathGame.newTask();
-						controller.correctSound(true);
-					} else controller.correctSound(false);
-					break;
-				case "*":
-					correctAnswer = Integer.parseInt(lblNbr1.getText()) * Integer.parseInt(lblNbr2.getText());
-					if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
-						score++;	
-						mathGame.newTask();
-						controller.correctSound(true);
-					} else controller.correctSound(false);
-					break;
-				}
-				updateScore();
-				textField.setText("");
-			}
-		});
+		textField.setForeground(darkGrey);
+		textField.setBounds(270, 370, 250, 30);
+		textField.addActionListener(action());
 
 		add(lblScore);
-		lblScore.setFont(new Font("Calibri", Font.PLAIN, 28));
-		lblScore.setForeground(fontColor);
-		lblScore.setBounds(340, 445, 200, 30);
+		lblScore.setFont(new Font("Calibri", Font.PLAIN, 24));
+		lblScore.setForeground(lightGrey);
+		lblScore.setBounds(355, 405, 200, 30);
 
 		add(lblTimer);
 		lblTimer.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 18));
-		lblTimer.setForeground(new Color(180, 180, 180));
+		lblTimer.setForeground(lightGrey);
 		lblTimer.setBounds(330, 2, 160, 30);
-
+		
+		add(gameLog);
+		gameLog.setFont(new Font("Monospaced", Font.PLAIN, 12));
+		gameLog.setForeground(new Color(140, 0, 0));
+		gameLog.setOpaque(true);
+		gameLog.setBorder(BorderFactory.createEmptyBorder());
+		gameLog.setDocument(new LimitedRowLengthDocument(gameLog, 27));
+		gameLog.setBounds(590, 370, 195, 215);
+		
+		logScroll = new JScrollPane(gameLog);
+	    add(logScroll);
+		
 		timer.start();
 	}
 
@@ -144,14 +135,60 @@ public class MathGameGame extends JPanel implements ActionListener {
 		mathGame.newTask();
 	}
 
+	public Action action() {
+		action = new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				if (!textField.getText().equals("")) {
+					try {
+						int userAnswer = Integer.parseInt(textField.getText());
+						int correctAnswer;
+						System.out.println("Your answer: " + textField.getText());
+
+						String operation = lblOperation.getText();
+						switch (operation) {
+						case "+":
+							correctAnswer = Integer.parseInt(lblNbr1.getText()) + Integer.parseInt(lblNbr2.getText());
+							if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
+								score++;
+								mathGame.newTask();
+								controller.correctSound(true);
+							} else
+								controller.correctSound(false);
+							break;
+						case "-":
+							correctAnswer = Integer.parseInt(lblNbr1.getText()) - Integer.parseInt(lblNbr2.getText());
+							if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
+								score++;
+								mathGame.newTask();
+								controller.correctSound(true);
+							} else
+								controller.correctSound(false);
+							break;
+						case "*":
+							correctAnswer = Integer.parseInt(lblNbr1.getText()) * Integer.parseInt(lblNbr2.getText());
+							if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
+								score++;
+								mathGame.newTask();
+								controller.correctSound(true);
+							} else
+								controller.correctSound(false);
+							break;
+						}
+						updateScore();
+						textField.setText("");
+					} catch (NumberFormatException nfE) {
+						System.out.println("ERROR: Input is not a number.");
+						controller.correctSound(false);
+						textField.setText("");
+					}
+				}
+			}
+		};
+		return action;
+	}
+
 	public void updateScore() {
 		lblScore.setText("Score: " + score);
-	}
-	
-	public void playSound(boolean correct) {
-		if(correct) {
-			
-		}
 	}
 
 	public void gameOver() {
@@ -169,23 +206,35 @@ public class MathGameGame extends JPanel implements ActionListener {
 	}
 
 	protected void paintComponent(Graphics g) {
-		int xPoints[] = { 280, 330, 470, 520 };
-		int yPoints[] = { 0, 30, 30, 0 };
-		int nPoints = 4;
 		ImageIcon background = new ImageIcon("images/calculateThisBackground.png");
 		super.paintComponent(g);
+		// Coordinates that are used in painting custom Polygons
+		int x1Points[] = { 280, 330, 470, 520 };
+		int y1Points[] = { 0, 30, 30, 0 };
+		int y2Points[] = { 400, 435, 435, 400 };
+		int nPoints = 4;
 		g.drawImage(background.getImage(), 0, 0, null);
-		g.setColor(new Color(80, 80, 80));
-		g.fillPolygon(xPoints, yPoints, nPoints);
+		g.setColor(darkGrey);
+		g.fillPolygon(x1Points, y1Points, nPoints);
+		g.fillPolygon(x1Points, y2Points, nPoints);
+
+		// Sets the thickness of the stroke to 2 pixels.
+		Graphics2D g2 = (Graphics2D) g.create();
+		g2.setStroke(new BasicStroke(3));
+		g2.setColor(darkGrey);
+		g2.drawRect(270, 366, 250, 35);
+		g2.drawRect(580, 365, 300, 300);
+
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMenu) {
-			// avbryt aktuellt spel, nollställ timer, nollställ score.
 			gameOver();
 			controller.showMenu();
 		} else if (e.getSource() == btnQuit) {
 			System.exit(0);
+		} else if (e.getSource() == btnMinimize) {
+			controller.minimizeApp();
 		}
 	}
 
