@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.print.attribute.AttributeSet;
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
@@ -34,12 +35,13 @@ public class MathGameGame extends JPanel implements ActionListener {
 	JTextField textField = new JTextField();
 	private JTextArea gameLog = new JTextArea();
 	private JScrollPane logScroll;
-	
+
 	private JLabel lblNbr1 = new JLabel("", SwingConstants.RIGHT);
 	private JLabel lblNbr2 = new JLabel("", SwingConstants.LEFT);
 	private JLabel lblOperation = new JLabel("", SwingConstants.CENTER);
 	private JLabel lblScore = new JLabel("Score: " + score, SwingConstants.LEFT);
 	private JLabel lblTimer = new JLabel("", SwingConstants.LEFT);
+	private JLabel lblEnterIcon = new JLabel(new ImageIcon("images/enterIcon.png"));
 
 	/**
 	 * 
@@ -94,12 +96,15 @@ public class MathGameGame extends JPanel implements ActionListener {
 		add(textField);
 		textField.setOpaque(false);
 		textField.setBorder(BorderFactory.createEmptyBorder());
-		textField.setDocument(new LengthRestrictedDocument(9));
+		textField.setDocument(new LengthRestrictedDocument(6));
 		textField.setHorizontalAlignment(JTextField.CENTER);
 		textField.setFont(new Font("Calibri", Font.PLAIN, 28));
 		textField.setForeground(darkGrey);
-		textField.setBounds(270, 370, 250, 30);
+		textField.setBounds(300, 370, 190, 30);
 		textField.addActionListener(action());
+
+		add(lblEnterIcon);
+		lblEnterIcon.setBounds(490, 372, 24, 24);
 
 		add(lblScore);
 		lblScore.setFont(new Font("Calibri", Font.PLAIN, 24));
@@ -109,19 +114,28 @@ public class MathGameGame extends JPanel implements ActionListener {
 		add(lblTimer);
 		lblTimer.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 18));
 		lblTimer.setForeground(lightGrey);
-		lblTimer.setBounds(330, 2, 160, 30);
-		
+		lblTimer.setBounds(325, 2, 160, 30);
+
 		add(gameLog);
-		gameLog.setFont(new Font("Monospaced", Font.PLAIN, 12));
-		gameLog.setForeground(new Color(140, 0, 0));
-		gameLog.setOpaque(true);
+		gameLog.setFont(new Font("Monospaced", Font.BOLD, 12));
+		// gameLog.setDocument(new LimitedRowLengthDocument(gameLog, 27));
+		gameLog.setForeground(new Color(80, 80, 80));
+		gameLog.setOpaque(false);
 		gameLog.setBorder(BorderFactory.createEmptyBorder());
-		gameLog.setDocument(new LimitedRowLengthDocument(gameLog, 27));
-		gameLog.setBounds(590, 370, 195, 215);
-		
+		gameLog.setEditable(false);
+
+		gameLog.setBounds(0, 0, 190, 210);
+
 		logScroll = new JScrollPane(gameLog);
-	    add(logScroll);
-		
+		add(logScroll);
+		logScroll.setOpaque(false);
+		logScroll.getViewport().setOpaque(false);
+		logScroll.setBorder(BorderFactory.createEmptyBorder());
+		logScroll.setHorizontalScrollBar(null);
+		logScroll.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+		logScroll.getVerticalScrollBar().setOpaque(false);
+		logScroll.setBounds(590, 367, 206, 229);
+
 		timer.start();
 	}
 
@@ -130,6 +144,15 @@ public class MathGameGame extends JPanel implements ActionListener {
 	}
 
 	public void startLevel() {
+		String difficultyStr = "No";
+		if (this.difficulty == 1)
+			difficultyStr = "Easy";
+		if (this.difficulty == 5)
+			difficultyStr = "Medium";
+		if (this.difficulty == 10)
+			difficultyStr = "Hard";
+		gameLog.append(difficultyStr + " difficulty chosen.\n");
+		gameLog.append("Every correct answer is " + "\nworth " + difficulty + " point(s).\n");
 		mathGame = new MathGame();
 		textField.setEditable(true);
 		mathGame.newTask();
@@ -142,42 +165,51 @@ public class MathGameGame extends JPanel implements ActionListener {
 					try {
 						int userAnswer = Integer.parseInt(textField.getText());
 						int correctAnswer;
-						System.out.println("Your answer: " + textField.getText());
+						gameLog.append("Your answer: " + textField.getText() + "\n");
 
 						String operation = lblOperation.getText();
 						switch (operation) {
 						case "+":
 							correctAnswer = Integer.parseInt(lblNbr1.getText()) + Integer.parseInt(lblNbr2.getText());
 							if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
-								score++;
+								score += difficulty;
 								mathGame.newTask();
 								controller.correctSound(true);
-							} else
+								gameLog.append("Correct!\n");
+							} else {
 								controller.correctSound(false);
+								gameLog.append("Incorrect, try again!\n");
+							}
 							break;
 						case "-":
 							correctAnswer = Integer.parseInt(lblNbr1.getText()) - Integer.parseInt(lblNbr2.getText());
 							if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
-								score++;
+								score += difficulty;
 								mathGame.newTask();
 								controller.correctSound(true);
-							} else
+								gameLog.append("Correct!\n");
+							} else {
 								controller.correctSound(false);
+								gameLog.append("Incorrect, try again!\n");
+							}
 							break;
 						case "*":
 							correctAnswer = Integer.parseInt(lblNbr1.getText()) * Integer.parseInt(lblNbr2.getText());
 							if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
-								score++;
+								score += difficulty;
 								mathGame.newTask();
 								controller.correctSound(true);
-							} else
+								gameLog.append("Correct!\n");
+							} else {
 								controller.correctSound(false);
+								gameLog.append("Incorrect, try again!\n");
+							}
 							break;
 						}
 						updateScore();
 						textField.setText("");
 					} catch (NumberFormatException nfE) {
-						System.out.println("ERROR: Input is not a number.");
+						gameLog.append("ERROR: Input is not a number.\n");
 						controller.correctSound(false);
 						textField.setText("");
 					}
@@ -192,24 +224,19 @@ public class MathGameGame extends JPanel implements ActionListener {
 	}
 
 	public void gameOver() {
-		if (!timer.isInterrupted()) {
-			timer.interrupt();
-		}
+		timer.interrupt();
+
 		textField.setEditable(false);
 
-		System.out.println("Your result: " + score * difficulty + " points.");
+		gameLog.append("Your result: " + score * difficulty + " point(s).\n");
 		controller.newMathGameScore(score * difficulty);
-	}
-
-	public void showResult(String result) {
-
 	}
 
 	protected void paintComponent(Graphics g) {
 		ImageIcon background = new ImageIcon("images/calculateThisBackground.png");
 		super.paintComponent(g);
 		// Coordinates that are used in painting custom Polygons
-		int x1Points[] = { 280, 330, 470, 520 };
+		int x1Points[] = { 275, 325, 465, 515 };
 		int y1Points[] = { 0, 30, 30, 0 };
 		int y2Points[] = { 400, 435, 435, 400 };
 		int nPoints = 4;
@@ -221,7 +248,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 		// Sets the thickness of the stroke to 2 pixels.
 		Graphics2D g2 = (Graphics2D) g.create();
 		g2.setStroke(new BasicStroke(3));
-		g2.setColor(darkGrey);
+		g2.setPaint(darkGrey);
 		g2.drawRect(270, 366, 250, 35);
 		g2.drawRect(580, 365, 300, 300);
 
@@ -288,6 +315,12 @@ public class MathGameGame extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * A Timer class that handles the GUI game timer.
+	 * 
+	 * @author Isak Hartman, Felix Jönsson
+	 *
+	 */
 	private class CountDownTimer extends Thread {
 		private int minutes;
 		private int seconds;
@@ -298,21 +331,23 @@ public class MathGameGame extends JPanel implements ActionListener {
 		}
 
 		public void run() {
-			do {
-				lblTimer.setText(toString());
-				try {
+			try {
+				do {
+					lblTimer.setText(toString());
 					Thread.sleep(999);
-				} catch (InterruptedException e) {
-					System.out.println("Timer thread was interrupted!");
-				}
-				if (seconds == 0) {
-					minutes--;
-					seconds = 59;
-				} else if (seconds != 0) {
-					seconds--;
-				}
-			} while (minutes >= 0 && seconds >= 0);
-			gameOver();
+
+					if (seconds == 0) {
+						minutes--;
+						seconds = 59;
+					} else if (seconds != 0) {
+						seconds--;
+					}
+				} while (minutes >= 0 && seconds >= 0);
+				// Ev. lägga till ljud när tiden tar slut??
+				gameOver();
+			} catch (InterruptedException e) {
+				gameLog.append("Game over, time's up!\n");
+			}
 		}
 
 		public String toString() {
