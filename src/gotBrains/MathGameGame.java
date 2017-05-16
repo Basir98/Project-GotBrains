@@ -114,7 +114,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 		add(lblTimer);
 		lblTimer.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 18));
 		lblTimer.setForeground(lightGrey);
-		lblTimer.setBounds(325, 2, 160, 30);
+		lblTimer.setBounds(345, 2, 160, 30);
 
 		add(gameLog);
 		gameLog.setFont(new Font("Monospaced", Font.BOLD, 12));
@@ -123,7 +123,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 		gameLog.setOpaque(false);
 		gameLog.setBorder(BorderFactory.createEmptyBorder());
 		gameLog.setEditable(false);
-
+		gameLog.setSelectionColor(new Color(0, 0, 0, 0));
 		gameLog.setBounds(0, 0, 190, 210);
 
 		logScroll = new JScrollPane(gameLog);
@@ -173,9 +173,9 @@ public class MathGameGame extends JPanel implements ActionListener {
 							correctAnswer = Integer.parseInt(lblNbr1.getText()) + Integer.parseInt(lblNbr2.getText());
 							if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
 								score += difficulty;
-								mathGame.newTask();
 								controller.correctSound(true);
 								gameLog.append("Correct!\n");
+								mathGame.newTask();
 							} else {
 								controller.correctSound(false);
 								gameLog.append("Incorrect, try again!\n");
@@ -185,9 +185,9 @@ public class MathGameGame extends JPanel implements ActionListener {
 							correctAnswer = Integer.parseInt(lblNbr1.getText()) - Integer.parseInt(lblNbr2.getText());
 							if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
 								score += difficulty;
-								mathGame.newTask();
 								controller.correctSound(true);
 								gameLog.append("Correct!\n");
+								mathGame.newTask();
 							} else {
 								controller.correctSound(false);
 								gameLog.append("Incorrect, try again!\n");
@@ -197,9 +197,9 @@ public class MathGameGame extends JPanel implements ActionListener {
 							correctAnswer = Integer.parseInt(lblNbr1.getText()) * Integer.parseInt(lblNbr2.getText());
 							if (Integer.toString(userAnswer).equals((Integer.toString(correctAnswer)))) {
 								score += difficulty;
-								mathGame.newTask();
 								controller.correctSound(true);
 								gameLog.append("Correct!\n");
+								mathGame.newTask();
 							} else {
 								controller.correctSound(false);
 								gameLog.append("Incorrect, try again!\n");
@@ -209,7 +209,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 						updateScore();
 						textField.setText("");
 					} catch (NumberFormatException nfE) {
-						gameLog.append("ERROR: Input is not a number.\n");
+						gameLog.append("Please enter a number.\n");
 						controller.correctSound(false);
 						textField.setText("");
 					}
@@ -224,12 +224,12 @@ public class MathGameGame extends JPanel implements ActionListener {
 	}
 
 	public void gameOver() {
+		textField.setEditable(false);
+		gameLog.append(
+				"Game over, time's up!\n" + "Your result: " + score + " point(s).\n____________________________\n");
+		controller.newMathGameScore(score);
 		timer.interrupt();
 
-		textField.setEditable(false);
-
-		gameLog.append("Your result: " + score * difficulty + " point(s).\n");
-		controller.newMathGameScore(score * difficulty);
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -266,6 +266,8 @@ public class MathGameGame extends JPanel implements ActionListener {
 	}
 
 	private class MathGame {
+		int questionNbr = 1;
+
 		public void newTask() {
 			int range;
 			switch (difficulty) {
@@ -311,7 +313,10 @@ public class MathGameGame extends JPanel implements ActionListener {
 				lblNbr1.setText(Integer.toString(random.nextInt(range) + 1));
 				lblNbr2.setText(Integer.toString(random.nextInt(range) + 1));
 				break;
+
 			}
+			gameLog.append("Question " + questionNbr + ":\n");
+			questionNbr++;
 		}
 	}
 
@@ -333,6 +338,12 @@ public class MathGameGame extends JPanel implements ActionListener {
 		public void run() {
 			try {
 				do {
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							lblTimer.setText(timer.toString());
+						}
+					});
 					lblTimer.setText(toString());
 					Thread.sleep(999);
 
@@ -344,9 +355,14 @@ public class MathGameGame extends JPanel implements ActionListener {
 					}
 				} while (minutes >= 0 && seconds >= 0);
 				// Ev. lägga till ljud när tiden tar slut??
-				gameOver();
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						gameOver();
+					}
+				});
 			} catch (InterruptedException e) {
-				gameLog.append("Game over, time's up!\n");
+				System.out.println("Timer was interrupted.");
 			}
 		}
 

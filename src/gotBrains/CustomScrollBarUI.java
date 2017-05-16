@@ -40,7 +40,7 @@ public class CustomScrollBarUI extends BasicScrollBarUI {
 		g.fillRect(trackBounds.x, trackBounds.y, trackBounds.width - 5, trackBounds.height - 5);
 
 	}
-
+	
 	@Override
 	protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
 		if (thumbBounds.isEmpty() || !scrollbar.isEnabled()) {

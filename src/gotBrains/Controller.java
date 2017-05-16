@@ -102,7 +102,7 @@ public class Controller {
 			music = AudioSystem.getClip();
 			music.open(ais);
 			FloatControl gainControl = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(-20.0f);
+			gainControl.setValue(-10.0f);
 			music.start();
 			music.loop(100);
 		} catch (Exception e) {
@@ -126,7 +126,7 @@ public class Controller {
 			mutedSound = false;
 		} else mutedSound = true;
 	}
-
+	
 	public void correctSound(boolean correct) {
 		if (!mutedSound) {
 			try {
