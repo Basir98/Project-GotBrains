@@ -51,7 +51,7 @@ public class Leaderboard extends JPanel implements ActionListener {
 		btnMenu.setOpaque(false);
 		btnMenu.setContentAreaFilled(false);
 		btnMenu.setBorderPainted(false);
-		btnMenu.setBounds(-2, -2, 120, 30);
+		btnMenu.setBounds(4, 4, 120, 30);
 		btnMenu.addActionListener(this);
 		btnMenu.setRolloverIcon(new ImageIcon("images/menuButtonHover.png"));
 		

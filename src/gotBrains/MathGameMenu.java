@@ -38,7 +38,7 @@ public class MathGameMenu extends JPanel implements ActionListener {
 		btnQuit.setBounds(756, 2, 40, 35);
 		btnQuit.addActionListener(this);
 		btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
-		
+
 		add(btnMinimize);
 		btnMinimize.setOpaque(false);
 		btnMinimize.setContentAreaFilled(false);
@@ -47,12 +47,12 @@ public class MathGameMenu extends JPanel implements ActionListener {
 		btnMinimize.setBounds(716, 2, 40, 35);
 		btnMinimize.addActionListener(this);
 		btnMinimize.setRolloverIcon(new ImageIcon("images/minimizeButtonHover.png"));
-		
+
 		add(btnMenu);
 		btnMenu.setOpaque(false);
 		btnMenu.setContentAreaFilled(false);
 		btnMenu.setBorderPainted(false);
-		btnMenu.setBounds(-2, -2, 120, 30);
+		btnMenu.setBounds(4, 4, 120, 30);
 		btnMenu.addActionListener(this);
 		btnMenu.setRolloverIcon(new ImageIcon("images/menuButtonHover.png"));
 

@@ -3,6 +3,8 @@ package gotBrains;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Random;
 
 import javax.print.attribute.AttributeSet;
@@ -20,7 +22,7 @@ import javax.swing.text.PlainDocument;
 public class MathGameGame extends JPanel implements ActionListener {
 	private Controller controller;
 	private MathGame mathGame;
-	private CountDownTimer timer = new CountDownTimer(0, 30);
+	private CountDownTimer timer;
 	private Font font = new Font("Calibri", Font.BOLD, 32);
 	private Color darkGrey = new Color(80, 80, 80);
 	private Color lightGrey = new Color(180, 180, 180);
@@ -32,6 +34,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
 	private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
 	private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
+	private JButton btnRestart = new JButton(new ImageIcon("images/restartButton.png"));
 	JTextField textField = new JTextField();
 	private JTextArea gameLog = new JTextArea();
 	private JScrollPane logScroll;
@@ -74,10 +77,19 @@ public class MathGameGame extends JPanel implements ActionListener {
 		btnMenu.setOpaque(false);
 		btnMenu.setContentAreaFilled(false);
 		btnMenu.setBorderPainted(false);
-		btnMenu.setBounds(-2, -2, 120, 30);
+		btnMenu.setBounds(4, 4, 120, 30);
 		btnMenu.addActionListener(this);
 		btnMenu.setRolloverIcon(new ImageIcon("images/menuButtonHover.png"));
-
+		
+		add(btnRestart);
+		btnRestart.setOpaque(false);
+		btnRestart.setContentAreaFilled(false);
+		btnRestart.setBorderPainted(false);
+		btnRestart.setFocusPainted(false);
+		btnRestart.setBounds(576, 325, 220, 40);
+		btnRestart.addActionListener(this);
+		btnRestart.setRolloverIcon(new ImageIcon("images/restartButtonHover.png"));
+		
 		add(lblNbr1);
 		lblNbr1.setFont(font);
 		lblNbr1.setForeground(darkGrey);
@@ -137,6 +149,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 		logScroll.getVerticalScrollBar().setOpaque(false);
 		logScroll.setBounds(590, 367, 206, 229);
 
+		timer = new CountDownTimer(0, 10);
 		timer.start();
 	}
 
@@ -166,7 +179,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 					try {
 						int userAnswer = Integer.parseInt(textField.getText());
 						int correctAnswer;
-						gameLog.append("Your answer: " + textField.getText() + "\n");
+//						gameLog.append("Your answer: " + textField.getText() + "\n");
 
 						String operation = lblOperation.getText();
 						switch (operation) {
@@ -226,11 +239,26 @@ public class MathGameGame extends JPanel implements ActionListener {
 
 	public void gameOver() {
 		textField.setEditable(false);
+		textField.setText("");
 		gameLog.append(
-				"Game over, time's up!\n" + "Your result: " + score + " point(s).\n____________________________\n");
+				"\nGame over, time's up!\n" + "Your result: " + score + " point(s).\n");
 		controller.newMathGameScore(score);
 		timer.interrupt();
 
+	}
+
+	public void restart() {
+		textField.setText("");
+		timer.interrupt();
+		this.score = 0;
+		updateScore();
+		gameLog.append("\n____________________________\n\nRound restarted. \n\n");
+		timer = new CountDownTimer(0, 10);
+		timer.start();
+		mathGame = new MathGame();
+		textField.setEditable(true);
+		mathGame.newTask();
+		textField.grabFocus();
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -251,7 +279,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 		g2.setStroke(new BasicStroke(3));
 		g2.setPaint(darkGrey);
 		g2.drawRect(270, 366, 250, 35);
-		g2.drawRect(580, 365, 300, 300);
+		g2.drawRect(577, 365, 300, 300);
 
 	}
 
@@ -259,15 +287,19 @@ public class MathGameGame extends JPanel implements ActionListener {
 		if (e.getSource() == btnMenu) {
 			gameOver();
 			controller.showMenu();
-			
+
 		} else if (e.getSource() == btnQuit) {
 			System.exit(0);
-			
+
 		} else if (e.getSource() == btnMinimize) {
 			controller.minimizeApp();
+			
+		} else if( e.getSource() == btnRestart) {
+			restart();
+			
 		}
 	}
-
+	
 	private class MathGame {
 		int questionNbr = 1;
 
