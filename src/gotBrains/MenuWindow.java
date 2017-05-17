@@ -17,10 +17,10 @@ import javax.swing.text.PlainDocument;
 public class MenuWindow extends JPanel implements ActionListener {
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
 	private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
-	private JButton btnScrabble = new JButton("SPELL THIS!");
-	private JButton btnSimonSays = new JButton("MEMORIZE THIS!");
-	private JButton btnMathGame = new JButton("CALCULATE THIS!");
-	private JButton btnLeaderboard = new JButton("LEADERBOARD");
+	private JButton btnSpellThis = new JButton(new ImageIcon("images/spellThisButton.png"));
+	private JButton btnMemorizeThis = new JButton(new ImageIcon("images/memorizeThisButton.png"));
+	private JButton btnCalculateThis = new JButton(new ImageIcon("images/calculateThisButton.png"));
+	private JButton btnLeaderboard = new JButton(new ImageIcon("images/leaderboardButton.png"));
 
 	private JButton btnToggleMusic = new JButton(new ImageIcon("images/musicIcon.png"));
 	private JButton btnToggleSound = new JButton(new ImageIcon("images/soundIcon.png"));
@@ -54,31 +54,7 @@ public class MenuWindow extends JPanel implements ActionListener {
 		btnMinimize.setBounds(716, 2, 40, 35);
 		btnMinimize.addActionListener(this);
 		btnMinimize.setRolloverIcon(new ImageIcon("images/minimizeButtonHover.png"));
-
-		add(btnScrabble);
-		btnScrabble.setOpaque(false);
-		btnScrabble.setContentAreaFilled(false);
-		btnScrabble.setBounds(230, 360, 110, 30);
-		btnScrabble.addActionListener(this);
-
-		add(btnSimonSays);
-		btnSimonSays.setOpaque(false);
-		btnSimonSays.setContentAreaFilled(false);
-		btnSimonSays.setBounds(340, 360, 110, 30);
-		btnSimonSays.addActionListener(this);
-
-		add(btnMathGame);
-		btnMathGame.setOpaque(false);
-		btnMathGame.setContentAreaFilled(false);
-		btnMathGame.setBounds(450, 360, 110, 30);
-		btnMathGame.addActionListener(this);
-
-		add(btnLeaderboard);
-		btnLeaderboard.setOpaque(false);
-		btnLeaderboard.setContentAreaFilled(false);
-		btnLeaderboard.setBounds(230, 390, 330, 30);
-		btnLeaderboard.addActionListener(this);
-
+		
 		add(fieldUsername);
 		fieldUsername.setOpaque(false);
 		fieldUsername.setHorizontalAlignment(JTextField.CENTER);
@@ -89,7 +65,39 @@ public class MenuWindow extends JPanel implements ActionListener {
 		fieldUsername.setSelectionColor(Color.white);
 		fieldUsername.setBorder(BorderFactory.createEmptyBorder());
 		fieldUsername.setForeground(new Color(80, 80, 80));
-		fieldUsername.setBounds(320, 320, 150, 30);
+		fieldUsername.setBounds(325, 260, 150, 30);
+		
+		add(btnCalculateThis);
+		btnCalculateThis.setOpaque(false);
+		btnCalculateThis.setContentAreaFilled(false);
+		btnCalculateThis.setBorderPainted(false);
+		btnCalculateThis.setBounds(275, 300, 250, 50);
+		btnCalculateThis.addActionListener(this);
+		btnCalculateThis.setRolloverIcon(new ImageIcon("images/calculateThisButtonHover.png"));
+		
+		add(btnMemorizeThis);
+		btnMemorizeThis.setOpaque(false);
+		btnMemorizeThis.setContentAreaFilled(false);
+		btnMemorizeThis.setBorderPainted(false);
+		btnMemorizeThis.setBounds(275, 360, 250, 50);
+		btnMemorizeThis.addActionListener(this);
+		btnMemorizeThis.setRolloverIcon(new ImageIcon("images/memorizeThisButtonHover.png"));
+		
+		add(btnSpellThis);
+		btnSpellThis.setOpaque(false);
+		btnSpellThis.setContentAreaFilled(false);
+		btnSpellThis.setBorderPainted(false);
+		btnSpellThis.setBounds(275, 420, 250, 50);
+		btnSpellThis.addActionListener(this);
+		btnSpellThis.setRolloverIcon(new ImageIcon("images/spellThisButtonHover.png"));
+
+		add(btnLeaderboard);
+		btnLeaderboard.setOpaque(false);
+		btnLeaderboard.setContentAreaFilled(false);
+		btnLeaderboard.setBorderPainted(false);
+		btnLeaderboard.setBounds(275, 480, 250, 50);
+		btnLeaderboard.addActionListener(this);
+		btnLeaderboard.setRolloverIcon(new ImageIcon("images/leaderboardButtonHover.png"));
 
 		add(btnToggleMusic);
 		btnToggleMusic.setContentAreaFilled(false);
@@ -118,17 +126,17 @@ public class MenuWindow extends JPanel implements ActionListener {
 		} else if (e.getSource() == btnMinimize) {
 			controller.minimizeApp();
 			
-		} else if (e.getSource() == btnScrabble) {
+		} else if (e.getSource() == btnSpellThis) {
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showScrabbleWindow();
 
-		} else if (e.getSource() == btnSimonSays) {
+		} else if (e.getSource() == btnMemorizeThis) {
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showSimonSaysWindow();
 
-		} else if (e.getSource() == btnMathGame) {
+		} else if (e.getSource() == btnCalculateThis) {
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showMathGameWindow();

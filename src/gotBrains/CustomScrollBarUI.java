@@ -40,7 +40,7 @@ public class CustomScrollBarUI extends BasicScrollBarUI {
 		g.fillRect(trackBounds.x, trackBounds.y, trackBounds.width - 5, trackBounds.height - 5);
 
 	}
-	
+
 	@Override
 	protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
 		if (thumbBounds.isEmpty() || !scrollbar.isEnabled()) {
@@ -57,10 +57,10 @@ public class CustomScrollBarUI extends BasicScrollBarUI {
 		Graphics2D g2 = (Graphics2D) g;
 		Paint gp = null;
 		if (this.scrollbar.getOrientation() == JScrollBar.VERTICAL) {
-			gp = new Color(80,80,80, 200);
+			gp = new Color(80, 80, 80, 200);
 		}
 		if (this.scrollbar.getOrientation() == JScrollBar.HORIZONTAL) {
-			gp = new Color(80,80,80, 200);
+			gp = new Color(80, 80, 80, 200);
 		}
 		g2.setPaint(gp);
 		g2.fillRoundRect(9, 0, tw - 10, th - 1, 5, 5);

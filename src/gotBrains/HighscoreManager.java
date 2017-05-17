@@ -29,9 +29,6 @@ public class HighscoreManager {
 		if (!usernameTaken(players, username)) {
 			players.add(new Player(username));
 			updateScoreFile();
-		} else {
-			System.out.println("Username \"" + username + "\" already exists.");
-			System.out.println();
 		}
 	}
 

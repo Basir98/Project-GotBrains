@@ -13,6 +13,7 @@ import javax.swing.*;
 public class Leaderboard extends JPanel implements ActionListener {
 	
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
+	private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
 	private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
 	private JButton btnClearLeaderboard = new JButton("CLEAR LEADERBOARD");
 	private JTextArea leaderboardPlacement = new JTextArea();
@@ -32,9 +33,19 @@ public class Leaderboard extends JPanel implements ActionListener {
 		btnQuit.setOpaque(false);
 		btnQuit.setContentAreaFilled(false);
 		btnQuit.setBorderPainted(false);
-		btnQuit.setBounds(758, 2, 40, 35);
+		btnQuit.setFocusPainted(false);
+		btnQuit.setBounds(756, 2, 40, 35);
 		btnQuit.addActionListener(this);
 		btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
+
+		add(btnMinimize);
+		btnMinimize.setOpaque(false);
+		btnMinimize.setContentAreaFilled(false);
+		btnMinimize.setBorderPainted(false);
+		btnMinimize.setFocusPainted(false);
+		btnMinimize.setBounds(716, 2, 40, 35);
+		btnMinimize.addActionListener(this);
+		btnMinimize.setRolloverIcon(new ImageIcon("images/minimizeButtonHover.png"));
 
 		add(btnMenu);
 		btnMenu.setOpaque(false);
@@ -86,6 +97,9 @@ public class Leaderboard extends JPanel implements ActionListener {
 			controller.clearLeaderboard();
 			leaderboardPlacement.setText(controller.getLeaderboardPlacement());
 			leaderboardScore.setText(controller.getLeaderboardScore());
+			
+		} else if (e.getSource() == btnMinimize) {
+			controller.minimizeApp();
 		}
 	}
 }

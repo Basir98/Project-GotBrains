@@ -114,7 +114,8 @@ public class MathGameGame extends JPanel implements ActionListener {
 		add(lblTimer);
 		lblTimer.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 18));
 		lblTimer.setForeground(lightGrey);
-		lblTimer.setBounds(345, 2, 160, 30);
+		lblTimer.setHorizontalAlignment(JLabel.CENTER);
+		lblTimer.setBounds(315, 2, 160, 30);
 
 		add(gameLog);
 		gameLog.setFont(new Font("Monospaced", Font.BOLD, 12));
@@ -258,8 +259,10 @@ public class MathGameGame extends JPanel implements ActionListener {
 		if (e.getSource() == btnMenu) {
 			gameOver();
 			controller.showMenu();
+			
 		} else if (e.getSource() == btnQuit) {
 			System.exit(0);
+			
 		} else if (e.getSource() == btnMinimize) {
 			controller.minimizeApp();
 		}

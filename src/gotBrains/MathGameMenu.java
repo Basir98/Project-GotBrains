@@ -14,7 +14,7 @@ import javax.swing.SwingConstants;
 public class MathGameMenu extends JPanel implements ActionListener {
 	private Controller controller;
 
-	private Font font = new Font("Georgia", Font.BOLD, 20);
+	private Font font = new Font("Monospaced", Font.BOLD, 24);
 	private Color fontColor = new Color(100, 100, 100);
 
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
@@ -61,7 +61,7 @@ public class MathGameMenu extends JPanel implements ActionListener {
 		btnStartEasy.setContentAreaFilled(false);
 		btnStartEasy.setBorderPainted(false);
 		btnStartEasy.setRolloverIcon(new ImageIcon("images/easyButtonHover.png"));
-		btnStartEasy.setBounds(245, 295, 100, 30);
+		btnStartEasy.setBounds(175, 300, 150, 40);
 		btnStartEasy.addActionListener(this);
 
 		add(btnStartMedium);
@@ -69,7 +69,7 @@ public class MathGameMenu extends JPanel implements ActionListener {
 		btnStartMedium.setContentAreaFilled(false);
 		btnStartMedium.setBorderPainted(false);
 		btnStartMedium.setRolloverIcon(new ImageIcon("images/mediumButtonHover.png"));
-		btnStartMedium.setBounds(350, 295, 100, 30);
+		btnStartMedium.setBounds(325, 300, 150, 40);
 		btnStartMedium.addActionListener(this);
 
 		add(btnStartHard);
@@ -77,7 +77,7 @@ public class MathGameMenu extends JPanel implements ActionListener {
 		btnStartHard.setContentAreaFilled(false);
 		btnStartHard.setBorderPainted(false);
 		btnStartHard.setRolloverIcon(new ImageIcon("images/hardButtonHover.png"));
-		btnStartHard.setBounds(455, 295, 100, 30);
+		btnStartHard.setBounds(475, 300, 150, 40);
 		btnStartHard.addActionListener(this);
 
 	}
@@ -88,7 +88,7 @@ public class MathGameMenu extends JPanel implements ActionListener {
 		g.drawImage(background.getImage(), 0, 0, null);
 		g.setColor(fontColor);
 		g.setFont(font);
-		g.drawString("Choose difficulty", 310, 280);
+		g.drawString("Choose difficulty", 280, 280);
 
 	}
 
