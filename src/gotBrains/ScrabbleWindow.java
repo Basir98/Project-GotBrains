@@ -14,18 +14,22 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 	private ScrabbleGame scrabbleGame;
 	private Font font = new Font("Calibri", Font.BOLD, 32);
 	private Color fontColor = new Color(80, 80, 80);
+	private Color darkGrey = new Color(80, 80, 80);
+	private Color lightGrey = new Color(180, 180, 180);
 	private int difficulty;
 	private int score = 0;
 	private Random random = new Random();
 	private Action action;
 
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
+	private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
 	private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
 	JTextField textField = new JTextField();
 
 	private JLabel lblText = new JLabel("", SwingConstants.CENTER);
 	private JLabel lblScore = new JLabel("Score: " + score, SwingConstants.LEFT);
 	private JLabel lblTimer = new JLabel("", SwingConstants.LEFT);
+	private JLabel lblEnterIcon = new JLabel(new ImageIcon("images/enterIcon.png"));
 
 	@SuppressWarnings("serial")
 	public ScrabbleWindow(Controller controller) {
@@ -37,9 +41,19 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 		btnQuit.setOpaque(false);
 		btnQuit.setContentAreaFilled(false);
 		btnQuit.setBorderPainted(false);
-		btnQuit.setBounds(758, 2, 40, 35);
+		btnQuit.setFocusPainted(false);
+		btnQuit.setBounds(756, 2, 40, 35);
 		btnQuit.addActionListener(this);
 		btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
+		
+		add(btnMinimize);
+		btnMinimize.setOpaque(false);
+		btnMinimize.setContentAreaFilled(false);
+		btnMinimize.setBorderPainted(false);
+		btnMinimize.setFocusPainted(false);
+		btnMinimize.setBounds(716, 2, 40, 35);
+		btnMinimize.addActionListener(this);
+		btnMinimize.setRolloverIcon(new ImageIcon("images/minimizeButtonHover.png"));
 
 		add(btnMenu);
 		btnMenu.setOpaque(false);
@@ -53,6 +67,20 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 		lblText.setFont(new Font("Rockwell", Font.BOLD, 36));
 		lblText.setForeground(fontColor);
 		lblText.setBounds(190, 180, 400, 300);
+		
+		add(lblEnterIcon);
+		lblEnterIcon.setBounds(490, 372, 24, 24);
+
+		add(lblScore);
+		lblScore.setFont(new Font("Calibri", Font.PLAIN, 24));
+		lblScore.setForeground(lightGrey);
+		lblScore.setBounds(355, 405, 200, 30);
+
+		add(lblTimer);
+		lblTimer.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 18));
+		lblTimer.setForeground(lightGrey);
+		lblTimer.setHorizontalAlignment(JLabel.CENTER);
+		lblTimer.setBounds(315, 2, 160, 30);
 
 		add(textField);
 		textField.setOpaque(false);
@@ -84,9 +112,9 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 		// });
 
 		add(lblScore);
-		lblScore.setFont(new Font("Calibri", Font.PLAIN, 28));
-		lblScore.setForeground(fontColor);
-		lblScore.setBounds(340, 445, 200, 30);
+		lblScore.setFont(new Font("Calibri", Font.PLAIN, 24));
+		lblScore.setForeground(lightGrey);
+		lblScore.setBounds(355, 405, 200, 30);
 
 		add(lblTimer);
 		lblTimer.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 18));
@@ -98,7 +126,7 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 	}
 
 	public void updateScore() {
-		lblScore.setText("Score: " + score);
+		lblScore.setText("Score: " + score*difficulty);
 	}
 
 	public void gameOver() {
@@ -117,10 +145,27 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 	}
 
 	protected void paintComponent(Graphics g) {
-		ImageIcon background = new ImageIcon("images/scrabbleGameBackground.png");
+		ImageIcon background = new ImageIcon("images/spellThisBackground.png");
 		super.paintComponent(g);
 		g.drawImage(background.getImage(), 0, 0, null);
-	}
+		// Coordinates that are used in painting custom Polygons
+				int x1Points[] = { 275, 325, 465, 515 };
+				int y1Points[] = { 0, 30, 30, 0 };
+				int y2Points[] = { 400, 435, 435, 400 };
+				int nPoints = 4;
+				g.drawImage(background.getImage(), 0, 0, null);
+				g.setColor(darkGrey);
+				g.fillPolygon(x1Points, y1Points, nPoints);
+				g.fillPolygon(x1Points, y2Points, nPoints);
+
+				// Sets the thickness of the stroke to 2 pixels.
+				Graphics2D g2 = (Graphics2D) g.create();
+				g2.setStroke(new BasicStroke(3));
+				g2.setPaint(darkGrey);
+				g2.drawRect(270, 366, 250, 35);
+				g2.drawRect(580, 365, 300, 300);
+
+			}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMenu) {
@@ -128,6 +173,9 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 			controller.showMenu();
 		} else if (e.getSource() == btnQuit) {
 			System.exit(0);
+		}
+		else if (e.getSource() == btnMinimize) {
+			controller.minimizeApp();
 		}
 	}
 
