@@ -14,7 +14,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
-public class MenuWindow extends JPanel implements ActionListener {
+public class MainMenu extends JPanel implements ActionListener {
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
 	private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
 	private JButton btnSpellThis = new JButton(new ImageIcon("images/spellThisButton.png"));
@@ -32,7 +32,7 @@ public class MenuWindow extends JPanel implements ActionListener {
 	private Font font = new Font("Monospaced", Font.BOLD, 18);
 	private Controller controller;
 
-	public MenuWindow(Controller controller) {
+	public MainMenu(Controller controller) {
 		this.controller = controller;
 		setLayout(null);
 		setPreferredSize(new Dimension(800, 600));
@@ -129,17 +129,17 @@ public class MenuWindow extends JPanel implements ActionListener {
 		} else if (e.getSource() == btnSpellThis) {
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
-			controller.showScrabbleWindow();
+			controller.showSpellThisMenu();
 
 		} else if (e.getSource() == btnMemorizeThis) {
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
-			controller.showSimonSaysWindow();
+			controller.showMemorizeThisWindow();
 
 		} else if (e.getSource() == btnCalculateThis) {
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
-			controller.showMathGameWindow();
+			controller.showCalculateThisMenu();
 
 		} else if (e.getSource() == btnLeaderboard) {
 			controller.showLeaderboard();

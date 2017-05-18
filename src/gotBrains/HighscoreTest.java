@@ -15,26 +15,26 @@ public class HighscoreTest {
         hm.addPlayer("Farid");
         hm.addPlayer("Alper");
         
-        hm.addMathGameScore("Isak", 10);
-        hm.addScrabbleScore("Isak", 12);
-        hm.addSimonSaysScore("Isak", 8);
+        hm.addCalculateThisScore("Isak", 10);
+        hm.addSpellThisScore("Isak", 12);
+        hm.addMemorizeThisScore("Isak", 8);
         
-        hm.addMathGameScore("Felix", 14);
-        hm.addScrabbleScore("Felix", 4);
-        hm.addSimonSaysScore("Felix", 6);
+        hm.addCalculateThisScore("Felix", 14);
+        hm.addSpellThisScore("Felix", 4);
+        hm.addMemorizeThisScore("Felix", 6);
         
-        hm.addMathGameScore("Gulcin", 10);
-        hm.addScrabbleScore("Gulcin", 5);
-        hm.addSimonSaysScore("Gulcin", 5);
+        hm.addCalculateThisScore("Gulcin", 10);
+        hm.addSpellThisScore("Gulcin", 5);
+        hm.addMemorizeThisScore("Gulcin", 5);
         
-        hm.addMathGameScore("Alper", 2);
-        hm.addScrabbleScore("Alper", 5);
-        hm.addSimonSaysScore("Alper", 10);
+        hm.addCalculateThisScore("Alper", 2);
+        hm.addSpellThisScore("Alper", 5);
+        hm.addMemorizeThisScore("Alper", 10);
         
         
-        hm.addMathGameScore("Unknown", 1);
-        hm.addScrabbleScore("Unknown", 1);
-        hm.addSimonSaysScore("Unknown", 1);
+        hm.addCalculateThisScore("Unknown", 1);
+        hm.addSpellThisScore("Unknown", 1);
+        hm.addMemorizeThisScore("Unknown", 1);
         
         hm.addPlayer("Unknown");
         
@@ -44,9 +44,9 @@ public class HighscoreTest {
         System.out.println();
         
         hm.addPlayer("Isak");
-        hm.addMathGameScore("Isak", 20);
-        hm.addScrabbleScore("Isak", 24);
-        hm.addSimonSaysScore("Isak", 16);
+        hm.addCalculateThisScore("Isak", 20);
+        hm.addSpellThisScore("Isak", 24);
+        hm.addMemorizeThisScore("Isak", 16);
         
 //        hm.addMathGameScore("Unknown", 1);
 //        hm.addScrabbleScore("Unknown", 1);

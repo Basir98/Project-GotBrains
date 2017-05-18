@@ -19,9 +19,9 @@ import javax.swing.text.PlainDocument;
  * @author Isak Hartman, Felix Jönsson
  *
  */
-public class MathGameGame extends JPanel implements ActionListener {
+public class CalculateThisGame extends JPanel implements ActionListener {
 	private Controller controller;
-	private MathGame mathGame;
+	private CalculateThis calculateThis;
 	private CountDownTimer timer;
 	private Font font = new Font("Calibri", Font.BOLD, 32);
 	private Color darkGrey = new Color(80, 80, 80);
@@ -43,14 +43,14 @@ public class MathGameGame extends JPanel implements ActionListener {
 	private JLabel lblNbr2 = new JLabel("", SwingConstants.LEFT);
 	private JLabel lblOperation = new JLabel("", SwingConstants.CENTER);
 	private JLabel lblScore = new JLabel("Score: " + score, SwingConstants.LEFT);
-	private JLabel lblTimer = new JLabel("", SwingConstants.LEFT);
+	private JLabel lblTimer = new JLabel("", SwingConstants.CENTER);
 	private JLabel lblEnterIcon = new JLabel(new ImageIcon("images/enterIcon.png"));
 
 	/**
 	 * 
 	 * @param controller
 	 */
-	public MathGameGame(Controller controller) {
+	public CalculateThisGame(Controller controller) {
 		this.controller = controller;
 		setLayout(null);
 		setPreferredSize(new Dimension(800, 600));
@@ -80,7 +80,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 		btnMenu.setBounds(4, 4, 120, 30);
 		btnMenu.addActionListener(this);
 		btnMenu.setRolloverIcon(new ImageIcon("images/menuButtonHover.png"));
-		
+
 		add(btnRestart);
 		btnRestart.setOpaque(false);
 		btnRestart.setContentAreaFilled(false);
@@ -89,7 +89,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 		btnRestart.setBounds(576, 325, 220, 40);
 		btnRestart.addActionListener(this);
 		btnRestart.setRolloverIcon(new ImageIcon("images/restartButtonHover.png"));
-		
+
 		add(lblNbr1);
 		lblNbr1.setFont(font);
 		lblNbr1.setForeground(darkGrey);
@@ -126,12 +126,10 @@ public class MathGameGame extends JPanel implements ActionListener {
 		add(lblTimer);
 		lblTimer.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 18));
 		lblTimer.setForeground(lightGrey);
-		lblTimer.setHorizontalAlignment(JLabel.CENTER);
 		lblTimer.setBounds(315, 2, 160, 30);
 
 		add(gameLog);
 		gameLog.setFont(new Font("Monospaced", Font.BOLD, 12));
-		// gameLog.setDocument(new LimitedRowLengthDocument(gameLog, 27));
 		gameLog.setForeground(new Color(80, 80, 80));
 		gameLog.setOpaque(false);
 		gameLog.setBorder(BorderFactory.createEmptyBorder());
@@ -167,9 +165,9 @@ public class MathGameGame extends JPanel implements ActionListener {
 			difficultyStr = "Hard";
 		gameLog.append(difficultyStr + " difficulty chosen.\n");
 		gameLog.append("Every correct answer is " + "\nworth " + difficulty + " point(s).\n");
-		mathGame = new MathGame();
+		calculateThis = new CalculateThis();
 		textField.setEditable(true);
-		mathGame.newTask();
+		calculateThis.newTask();
 	}
 
 	public Action action() {
@@ -179,7 +177,6 @@ public class MathGameGame extends JPanel implements ActionListener {
 					try {
 						int userAnswer = Integer.parseInt(textField.getText());
 						int correctAnswer;
-//						gameLog.append("Your answer: " + textField.getText() + "\n");
 
 						String operation = lblOperation.getText();
 						switch (operation) {
@@ -189,7 +186,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 								score += difficulty;
 								controller.correctSound(true);
 								gameLog.append("Correct!\n");
-								mathGame.newTask();
+								calculateThis.newTask();
 							} else {
 								controller.correctSound(false);
 								gameLog.append("Incorrect, try again!\n");
@@ -201,7 +198,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 								score += difficulty;
 								controller.correctSound(true);
 								gameLog.append("Correct!\n");
-								mathGame.newTask();
+								calculateThis.newTask();
 							} else {
 								controller.correctSound(false);
 								gameLog.append("Incorrect, try again!\n");
@@ -213,7 +210,7 @@ public class MathGameGame extends JPanel implements ActionListener {
 								score += difficulty;
 								controller.correctSound(true);
 								gameLog.append("Correct!\n");
-								mathGame.newTask();
+								calculateThis.newTask();
 							} else {
 								controller.correctSound(false);
 								gameLog.append("Incorrect, try again!\n");
@@ -240,11 +237,9 @@ public class MathGameGame extends JPanel implements ActionListener {
 	public void gameOver() {
 		textField.setEditable(false);
 		textField.setText("");
-		gameLog.append(
-				"\nGame over, time's up!\n" + "Your result: " + score + " point(s).\n");
-		controller.newMathGameScore(score);
+		gameLog.append("\nGame over, time's up!\n" + "Your result: " + score + " point(s).\n\n");
+		controller.newCalculateThisScore(score);
 		timer.interrupt();
-
 	}
 
 	public void restart() {
@@ -255,21 +250,21 @@ public class MathGameGame extends JPanel implements ActionListener {
 		gameLog.append("\n____________________________\n\nRound restarted. \n\n");
 		timer = new CountDownTimer(0, 10);
 		timer.start();
-		mathGame = new MathGame();
+		calculateThis = new CalculateThis();
 		textField.setEditable(true);
-		mathGame.newTask();
+		calculateThis.newTask();
 		textField.grabFocus();
 	}
 
 	protected void paintComponent(Graphics g) {
 		ImageIcon background = new ImageIcon("images/calculateThisBackground.png");
 		super.paintComponent(g);
+		g.drawImage(background.getImage(), 0, 0, null);
 		// Coordinates that are used in painting custom Polygons
 		int x1Points[] = { 275, 325, 465, 515 };
 		int y1Points[] = { 0, 30, 30, 0 };
 		int y2Points[] = { 400, 435, 435, 400 };
 		int nPoints = 4;
-		g.drawImage(background.getImage(), 0, 0, null);
 		g.setColor(darkGrey);
 		g.fillPolygon(x1Points, y1Points, nPoints);
 		g.fillPolygon(x1Points, y2Points, nPoints);
@@ -286,21 +281,21 @@ public class MathGameGame extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMenu) {
 			gameOver();
-			controller.showMenu();
+			controller.showMainMenu();
 
 		} else if (e.getSource() == btnQuit) {
 			System.exit(0);
 
 		} else if (e.getSource() == btnMinimize) {
 			controller.minimizeApp();
-			
-		} else if( e.getSource() == btnRestart) {
+
+		} else if (e.getSource() == btnRestart) {
 			restart();
-			
+
 		}
 	}
-	
-	private class MathGame {
+
+	private class CalculateThis {
 		int questionNbr = 1;
 
 		public void newTask() {

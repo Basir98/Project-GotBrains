@@ -14,7 +14,7 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
-import gotBrains.SimonSaysWindow;
+import gotBrains.MemorizeThisWindow;
 public class Simon implements ActionListener, MouseListener
 {
 

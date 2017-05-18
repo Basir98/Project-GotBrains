@@ -41,7 +41,7 @@ public class HighscoreManager {
 		return false;
 	}
 
-	public void addMathGameScore(String username, int score) {
+	public void addCalculateThisScore(String username, int score) {
 		loadScoreFile();
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).getUsername().equals(username)) {
@@ -51,7 +51,7 @@ public class HighscoreManager {
 		updateScoreFile();
 	}
 
-	public void addScrabbleScore(String username, int score) {
+	public void addSpellThisScore(String username, int score) {
 		loadScoreFile();
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).getUsername().equals(username)) {
@@ -61,7 +61,7 @@ public class HighscoreManager {
 		updateScoreFile();
 	}
 
-	public void addSimonSaysScore(String username, int score) {
+	public void addMemorizeThisScore(String username, int score) {
 		loadScoreFile();
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).getUsername().equals(username)) {

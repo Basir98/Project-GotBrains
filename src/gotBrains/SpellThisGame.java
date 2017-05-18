@@ -8,10 +8,11 @@ import java.util.Scanner;
 
 import javax.swing.*;
 
-public class ScrabbleWindow extends JPanel implements ActionListener {
+public class SpellThisGame extends JPanel implements ActionListener {
 	private String rightAnswer;
 	private Controller controller;
-	private ScrabbleGame scrabbleGame;
+	CountDownTimer timer;
+	private SpellThis spellThis;
 	private Font font = new Font("Calibri", Font.BOLD, 32);
 	private Color fontColor = new Color(80, 80, 80);
 	private Color darkGrey = new Color(80, 80, 80);
@@ -24,15 +25,18 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
 	private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
 	private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
+	private JButton btnRestart = new JButton(new ImageIcon("images/restartButton.png"));
 	JTextField textField = new JTextField();
+	private JTextArea gameLog = new JTextArea();
+	private JScrollPane logScroll;
 
 	private JLabel lblText = new JLabel("", SwingConstants.CENTER);
 	private JLabel lblScore = new JLabel("Score: " + score, SwingConstants.LEFT);
-	private JLabel lblTimer = new JLabel("", SwingConstants.LEFT);
+	private JLabel lblTimer = new JLabel("", SwingConstants.CENTER);
 	private JLabel lblEnterIcon = new JLabel(new ImageIcon("images/enterIcon.png"));
 
 	@SuppressWarnings("serial")
-	public ScrabbleWindow(Controller controller) {
+	public SpellThisGame(Controller controller) {
 		this.controller = controller;
 		setLayout(null);
 		setPreferredSize(new Dimension(800, 600));
@@ -45,7 +49,7 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 		btnQuit.setBounds(756, 2, 40, 35);
 		btnQuit.addActionListener(this);
 		btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
-		
+
 		add(btnMinimize);
 		btnMinimize.setOpaque(false);
 		btnMinimize.setContentAreaFilled(false);
@@ -59,15 +63,24 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 		btnMenu.setOpaque(false);
 		btnMenu.setContentAreaFilled(false);
 		btnMenu.setBorderPainted(false);
-		btnMenu.setBounds(-2, -2, 120, 30);
+		btnMenu.setBounds(4, 4, 120, 30);
 		btnMenu.addActionListener(this);
 		btnMenu.setRolloverIcon(new ImageIcon("images/menuButtonHover.png"));
+
+		add(btnRestart);
+		btnRestart.setOpaque(false);
+		btnRestart.setContentAreaFilled(false);
+		btnRestart.setBorderPainted(false);
+		btnRestart.setFocusPainted(false);
+		btnRestart.setBounds(576, 325, 220, 40);
+		btnRestart.addActionListener(this);
+		btnRestart.setRolloverIcon(new ImageIcon("images/restartButtonHover.png"));
 
 		add(lblText);
 		lblText.setFont(new Font("Rockwell", Font.BOLD, 36));
 		lblText.setForeground(fontColor);
 		lblText.setBounds(190, 180, 400, 300);
-		
+
 		add(lblEnterIcon);
 		lblEnterIcon.setBounds(490, 372, 24, 24);
 
@@ -79,60 +92,95 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 		add(lblTimer);
 		lblTimer.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 18));
 		lblTimer.setForeground(lightGrey);
-		lblTimer.setHorizontalAlignment(JLabel.CENTER);
 		lblTimer.setBounds(315, 2, 160, 30);
 
 		add(textField);
 		textField.setOpaque(false);
 		textField.setBorder(BorderFactory.createEmptyBorder());
+		textField.setDocument(new LengthRestrictedDocument(15));
+		textField.setHorizontalAlignment(JTextField.CENTER);
 		textField.setFont(new Font("Calibri", Font.PLAIN, 28));
 		textField.setForeground(fontColor);
-		textField.setBounds(290, 370, 250, 30);
-		textField.addActionListener(action = new AbstractAction() {
-			public void actionPerformed(ActionEvent e) {
-				String correctAnswer = rightAnswer;
-				String userAnswer = textField.getText();
+		textField.setBounds(300, 370, 190, 30);
+		textField.addActionListener(action());
 
-				System.out.println("Your answer: " + textField.getText());
+		add(gameLog);
+		gameLog.setFont(new Font("Monospaced", Font.BOLD, 12));
+		gameLog.setForeground(new Color(80, 80, 80));
+		gameLog.setOpaque(false);
+		gameLog.setBorder(BorderFactory.createEmptyBorder());
+		gameLog.setEditable(false);
+		gameLog.setSelectionColor(new Color(0, 0, 0, 0));
+		gameLog.setBounds(0, 0, 190, 210);
 
-				// String right = rightAnswer;
-				// switch (right) {
-				// case "":
-				if ((userAnswer).equals(correctAnswer)) {
-					score++;
-					updateScore();
-					textField.setText("");
-					scrabbleGame.newTask();
-				} else {
-					textField.setText("");
-				}
+		logScroll = new JScrollPane(gameLog);
+		add(logScroll);
+		logScroll.setOpaque(false);
+		logScroll.getViewport().setOpaque(false);
+		logScroll.setBorder(BorderFactory.createEmptyBorder());
+		logScroll.setHorizontalScrollBar(null);
+		logScroll.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+		logScroll.getVerticalScrollBar().setOpaque(false);
+		logScroll.setBounds(590, 367, 206, 229);
 
-			}
-		});
-		// });
-
-		add(lblScore);
-		lblScore.setFont(new Font("Calibri", Font.PLAIN, 24));
-		lblScore.setForeground(lightGrey);
-		lblScore.setBounds(355, 405, 200, 30);
-
-		add(lblTimer);
-		lblTimer.setFont(new Font("DejaVu Sans Mono", Font.PLAIN, 18));
-		lblTimer.setForeground(new Color(180, 180, 180));
-		lblTimer.setBounds(330, 2, 160, 30);
-
-		CountDownTimer timer = new CountDownTimer(1, 0);
+		timer = new CountDownTimer(0, 10);
 		timer.start();
 	}
 
+	public Action action() {
+		action = new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				if (!textField.getText().equals("")) {
+					String correctAnswer = rightAnswer;
+					String userAnswer = textField.getText();
+
+					System.out.println("Your answer: " + textField.getText());
+
+					// String right = rightAnswer;
+					// switch (right) {
+					// case "":
+					if ((userAnswer).equals(correctAnswer)) {
+						score += difficulty;
+						controller.correctSound(true);
+						gameLog.append("Correct!\n");
+						spellThis.newTask();
+					} else {
+						controller.correctSound(false);
+						gameLog.append("Incorrect, try again!\n");
+					}
+					updateScore();
+					textField.setText("");
+
+				}
+			}
+		};
+		return action;
+	}
+
 	public void updateScore() {
-		lblScore.setText("Score: " + score*difficulty);
+		lblScore.setText("Score: " + score);
 	}
 
 	public void gameOver() {
 		textField.setEditable(false);
-		System.out.println("Your result: " + score * difficulty + " points.");
-		controller.newScrabbleScore(score * difficulty);
+		textField.setText("");
+		gameLog.append("\nGame over, time's up!\n" + "Your result: " + score + " point(s).\n");
+		controller.newSpellThisScore(score * difficulty);
+		timer.interrupt();
+	}
+
+	public void restart() {
+		textField.setText("");
+		timer.interrupt();
+		this.score = 0;
+		updateScore();
+		gameLog.append("\n____________________________\n\nRound restarted. \n\n");
+		timer = new CountDownTimer(0, 10);
+		timer.start();
+		spellThis = new SpellThis();
+		textField.setEditable(true);
+		spellThis.newTask();
+		textField.grabFocus();
 	}
 
 	public void setDifficulty(int difficulty) {
@@ -140,8 +188,18 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 	}
 
 	public void startLevel() {
-		scrabbleGame = new ScrabbleGame();
-		scrabbleGame.newTask();
+		String difficultyStr = "No";
+		if (this.difficulty == 1)
+			difficultyStr = "Easy";
+		if (this.difficulty == 5)
+			difficultyStr = "Medium";
+		if (this.difficulty == 10)
+			difficultyStr = "Hard";
+		gameLog.append(difficultyStr + " difficulty chosen.\n");
+		gameLog.append("Every correct answer is " + "\nworth " + difficulty + " point(s).\n\n");
+		spellThis = new SpellThis();
+		textField.setEditable(true);
+		spellThis.newTask();
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -149,37 +207,38 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 		super.paintComponent(g);
 		g.drawImage(background.getImage(), 0, 0, null);
 		// Coordinates that are used in painting custom Polygons
-				int x1Points[] = { 275, 325, 465, 515 };
-				int y1Points[] = { 0, 30, 30, 0 };
-				int y2Points[] = { 400, 435, 435, 400 };
-				int nPoints = 4;
-				g.drawImage(background.getImage(), 0, 0, null);
-				g.setColor(darkGrey);
-				g.fillPolygon(x1Points, y1Points, nPoints);
-				g.fillPolygon(x1Points, y2Points, nPoints);
+		int x1Points[] = { 275, 325, 465, 515 };
+		int y1Points[] = { 0, 30, 30, 0 };
+		int y2Points[] = { 400, 435, 435, 400 };
+		int nPoints = 4;
+		g.setColor(darkGrey);
+		g.fillPolygon(x1Points, y1Points, nPoints);
+		g.fillPolygon(x1Points, y2Points, nPoints);
 
-				// Sets the thickness of the stroke to 2 pixels.
-				Graphics2D g2 = (Graphics2D) g.create();
-				g2.setStroke(new BasicStroke(3));
-				g2.setPaint(darkGrey);
-				g2.drawRect(270, 366, 250, 35);
-				g2.drawRect(580, 365, 300, 300);
+		// Sets the thickness of the stroke to 2 pixels.
+		Graphics2D g2 = (Graphics2D) g.create();
+		g2.setStroke(new BasicStroke(3));
+		g2.setPaint(darkGrey);
+		g2.drawRect(270, 366, 250, 35);
+		g2.drawRect(577, 365, 300, 300);
 
-			}
+	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMenu) {
-			// avbryt aktuellt spel, nollställ timer, nollställ score.
-			controller.showMenu();
+			controller.showMainMenu();
 		} else if (e.getSource() == btnQuit) {
 			System.exit(0);
-		}
-		else if (e.getSource() == btnMinimize) {
+		} else if (e.getSource() == btnMinimize) {
 			controller.minimizeApp();
+		} else if (e.getSource() == btnRestart) {
+			restart();
 		}
 	}
 
-	private class ScrabbleGame {
+	private class SpellThis {
+		int questionNbr = 1;
+
 		public void newTask() {
 
 			switch (difficulty) {
@@ -284,6 +343,8 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 				break;
 
 			}
+			gameLog.append("Question " + questionNbr + ":\n");
+			questionNbr++;
 
 		}
 	}
@@ -298,22 +359,34 @@ public class ScrabbleWindow extends JPanel implements ActionListener {
 		}
 
 		public void run() {
-			do {
-				// System.out.println(toString());
-				lblTimer.setText(toString());
-				try {
+			try {
+				do {
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							lblTimer.setText(timer.toString());
+						}
+					});
+					lblTimer.setText(toString());
 					Thread.sleep(999);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				if (seconds == 0) {
-					minutes--;
-					seconds = 59;
-				} else if (seconds != 0) {
-					seconds--;
-				}
-			} while (minutes >= 0 && seconds >= 0);
-			gameOver();
+
+					if (seconds == 0) {
+						minutes--;
+						seconds = 59;
+					} else if (seconds != 0) {
+						seconds--;
+					}
+				} while (minutes >= 0 && seconds >= 0);
+				// Ev. lägga till ljud när tiden tar slut??
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						gameOver();
+					}
+				});
+			} catch (InterruptedException e) {
+				System.out.println("Timer was interrupted.");
+			}
 		}
 
 		public String toString() {

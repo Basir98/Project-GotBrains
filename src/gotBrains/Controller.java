@@ -25,13 +25,13 @@ public class Controller {
 	
 	private JFrame frame;
 	private JPanel panelContainer = new JPanel();
-	private MenuWindow menuWindow;
-	private ScrabbleMenu scrabbleMenu;
-	private ScrabbleWindow scrabbleGame;
-	private SimonSaysWindow simonSaysWindow;
-	private MathGameMenu mathGameMenu;
-	private MathGameGame mathGameGame;
-	private Leaderboard leaderboardWindow;
+	private MainMenu mainMenu;
+	private SpellThisMenu spellThisMenu;
+	private SpellThisGame spellThisGame;
+	private MemorizeThisWindow memorizeThisWindow;
+	private CalculateThisMenu calculateThisMenu;
+	private CalculateThisGame calculateThisGame;
+	private Leaderboard leaderboard;
 	private String currentUsername;
 	private File backgroundMusic = new File("sounds/backgroundMusic.wav");
 	private File correctSound = new File("sounds/correctSound.wav");
@@ -52,15 +52,15 @@ public class Controller {
 	}
 
 	public void loadApp() {
-		menuWindow = new MenuWindow(this);
-		scrabbleMenu = new ScrabbleMenu(this);
-		simonSaysWindow = new SimonSaysWindow(this);
-		mathGameMenu = new MathGameMenu(this);
+		mainMenu = new MainMenu(this);
+		spellThisMenu = new SpellThisMenu(this);
+		memorizeThisWindow = new MemorizeThisWindow(this);
+		calculateThisMenu = new CalculateThisMenu(this);
 
-		panelContainer.add(menuWindow, "menuWindow");
-		panelContainer.add(scrabbleMenu, "scrabbleWindow");
-		panelContainer.add(simonSaysWindow, "simonSaysWindow");
-		panelContainer.add(mathGameMenu, "mathGameWindow");
+		panelContainer.add(mainMenu, "mainMenu");
+		panelContainer.add(spellThisMenu, "spellThisMenu");
+		panelContainer.add(memorizeThisWindow, "memorizeThisWindow");
+		panelContainer.add(calculateThisMenu, "calculateThisMenu");
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panelContainer);
@@ -72,13 +72,13 @@ public class Controller {
 		frame.setVisible(true);
 		frame.setResizable(false);
 
-		cl.show(panelContainer, "menuWindow");
+		cl.show(panelContainer, "mainMenu");
 		try {
 			Thread.sleep(200);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		menuWindow.fieldUsername.grabFocus();
+		mainMenu.fieldUsername.grabFocus();
 	}
 	
 	public Font getCustomFont(String filepath, int style, int size) {
@@ -147,47 +147,47 @@ public class Controller {
 		}
 	}
 
-	public void showScrabbleWindow() {
-		cl.show(panelContainer, "scrabbleWindow");
+	public void showSpellThisMenu() {
+		cl.show(panelContainer, "spellThisMenu");
 	}
 
-	public void showSimonSaysWindow() {
-		cl.show(panelContainer, "simonSaysWindow");
+	public void showMemorizeThisWindow() {
+		cl.show(panelContainer, "memorizeThisWindow");
 	}
 
-	public void showMathGameWindow() {
-		cl.show(panelContainer, "mathGameWindow");
+	public void showCalculateThisMenu() {
+		cl.show(panelContainer, "calculateThisMenu");
 	}
 
-	public void startScrabbleWindow(int difficulty) {
-		scrabbleGame = new ScrabbleWindow(this);
-		panelContainer.add(scrabbleGame, "scrabbleGame");
+	public void startSpellThisGame(int difficulty) {
+		spellThisGame = new SpellThisGame(this);
+		panelContainer.add(spellThisGame, "spellThisGame");
 
-		scrabbleGame.setDifficulty(difficulty);
-		scrabbleGame.startLevel();
-		cl.show(panelContainer, "scrabbleGame");
-		scrabbleGame.textField.grabFocus();
+		spellThisGame.setDifficulty(difficulty);
+		spellThisGame.startLevel();
+		cl.show(panelContainer, "spellThisGame");
+		spellThisGame.textField.grabFocus();
 	}
 
-	public void startMathGame(int difficulty) {
-		mathGameGame = new MathGameGame(this);
-		panelContainer.add(mathGameGame, "mathGameGame");
+	public void startCalculateThisGame(int difficulty) {
+		calculateThisGame = new CalculateThisGame(this);
+		panelContainer.add(calculateThisGame, "calculateThisGame");
 
-		mathGameGame.setDifficulty(difficulty);
-		mathGameGame.startLevel();
-		cl.show(panelContainer, "mathGameGame");
-		mathGameGame.textField.grabFocus();
+		calculateThisGame.setDifficulty(difficulty);
+		calculateThisGame.startLevel();
+		cl.show(panelContainer, "calculateThisGame");
+		calculateThisGame.textField.grabFocus();
 	}
 
 	public void showLeaderboard() {
-		leaderboardWindow = new Leaderboard(this);
-		panelContainer.add(leaderboardWindow, "leaderboardWindow");
-		cl.show(panelContainer, "leaderboardWindow");
+		leaderboard = new Leaderboard(this);
+		panelContainer.add(leaderboard, "leaderboard");
+		cl.show(panelContainer, "leaderboard");
 	}
 
-	public void showMenu() {
-		cl.show(panelContainer, "menuWindow");
-		menuWindow.fieldUsername.grabFocus();
+	public void showMainMenu() {
+		cl.show(panelContainer, "mainMenu");
+		mainMenu.fieldUsername.grabFocus();
 	}
 	
 	public void minimizeApp() {
@@ -214,16 +214,16 @@ public class Controller {
 		hm.clearScores();
 	}
 
-	public void newMathGameScore(int score) {
-		hm.addMathGameScore(this.currentUsername, score);
+	public void newCalculateThisScore(int score) {
+		hm.addCalculateThisScore(this.currentUsername, score);
 	}
 
-	public void newScrabbleScore(int score) {
-		hm.addScrabbleScore(this.currentUsername, score);
+	public void newSpellThisScore(int score) {
+		hm.addSpellThisScore(this.currentUsername, score);
 	}
 
-	public void newSimonSaysScore(int score) {
-		hm.addSimonSaysScore(this.currentUsername, score);
+	public void newMemorizeThisScore(int score) {
+		hm.addMemorizeThisScore(this.currentUsername, score);
 	}
 
 	public static void main(String[] args) {

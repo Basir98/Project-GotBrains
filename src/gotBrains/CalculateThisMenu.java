@@ -11,22 +11,21 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class ScrabbleMenu extends JPanel implements ActionListener {
+public class CalculateThisMenu extends JPanel implements ActionListener {
 	private Controller controller;
-	
+
 	private Font font = new Font("Monospaced", Font.BOLD, 24);
 	private Color fontColor = new Color(100, 100, 100);
-	
+
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
-	private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
 	private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
+	private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
 	private JButton btnStartEasy = new JButton(new ImageIcon("images/easyButton.png"));
 	private JButton btnStartMedium = new JButton(new ImageIcon("images/mediumButton.png"));
 	private JButton btnStartHard = new JButton(new ImageIcon("images/hardButton.png"));
-//	private JButton btnLeaderboard = new JButton("LEADERBOARD");
-	
-	
-	public ScrabbleMenu(Controller controller) {
+	private JButton btnLeaderboard = new JButton("LEADERBOARD");
+
+	public CalculateThisMenu(Controller controller) {
 		this.controller = controller;
 		setLayout(null);
 		setPreferredSize(new Dimension(800, 600));
@@ -39,15 +38,7 @@ public class ScrabbleMenu extends JPanel implements ActionListener {
 		btnQuit.setBounds(756, 2, 40, 35);
 		btnQuit.addActionListener(this);
 		btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
-		
-		add(btnMenu);
-		btnMenu.setOpaque(false);
-		btnMenu.setContentAreaFilled(false);
-		btnMenu.setBorderPainted(false);
-		btnMenu.setBounds(-2, -2, 120, 30);
-		btnMenu.addActionListener(this);
-		btnMenu.setRolloverIcon( new ImageIcon("images/menuButtonHover.png"));
-		
+
 		add(btnMinimize);
 		btnMinimize.setOpaque(false);
 		btnMinimize.setContentAreaFilled(false);
@@ -56,7 +47,15 @@ public class ScrabbleMenu extends JPanel implements ActionListener {
 		btnMinimize.setBounds(716, 2, 40, 35);
 		btnMinimize.addActionListener(this);
 		btnMinimize.setRolloverIcon(new ImageIcon("images/minimizeButtonHover.png"));
-		
+
+		add(btnMenu);
+		btnMenu.setOpaque(false);
+		btnMenu.setContentAreaFilled(false);
+		btnMenu.setBorderPainted(false);
+		btnMenu.setBounds(4, 4, 120, 30);
+		btnMenu.addActionListener(this);
+		btnMenu.setRolloverIcon(new ImageIcon("images/menuButtonHover.png"));
+
 		add(btnStartEasy);
 		btnStartEasy.setOpaque(true);
 		btnStartEasy.setContentAreaFilled(false);
@@ -81,39 +80,30 @@ public class ScrabbleMenu extends JPanel implements ActionListener {
 		btnStartHard.setBounds(475, 300, 150, 40);
 		btnStartHard.addActionListener(this);
 
-		
-	//	add(btnLeaderboard);
-	//	btnLeaderboard.setOpaque(true);
-	//	btnLeaderboard.setContentAreaFilled(false);
-	//	btnLeaderboard.setBorderPainted(true);
-		
-	//	btnLeaderboard.setBounds(245, 330, 310, 30);
-	//	btnLeaderboard.addActionListener(this);
-		
 	}
 
 	protected void paintComponent(Graphics g) {
-		ImageIcon background = new ImageIcon("images/spellThisBackground.png");
+		ImageIcon background = new ImageIcon("images/calculateThisBackground.png");
 		super.paintComponent(g);
 		g.drawImage(background.getImage(), 0, 0, null);
 		g.setColor(fontColor);
 		g.setFont(font);
 		g.drawString("Choose difficulty", 280, 280);
+
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMenu) {
-			controller.showMenu();
+			controller.showMainMenu();
 		} else if (e.getSource() == btnQuit) {
 			System.exit(0);
-		} else if(e.getSource() == btnStartEasy) {
-			controller.startScrabbleWindow(1);
-		} else if(e.getSource() == btnStartMedium) {
-			controller.startScrabbleWindow(5);
-		} else if(e.getSource() == btnStartHard) {
-			controller.startScrabbleWindow(10);
-		} 
-		else if (e.getSource() == btnMinimize) {
+		} else if (e.getSource() == btnStartEasy) {
+			controller.startCalculateThisGame(1);
+		} else if (e.getSource() == btnStartMedium) {
+			controller.startCalculateThisGame(5);
+		} else if (e.getSource() == btnStartHard) {
+			controller.startCalculateThisGame(10);
+		} else if (e.getSource() == btnMinimize) {
 			controller.minimizeApp();
 		}
 	}

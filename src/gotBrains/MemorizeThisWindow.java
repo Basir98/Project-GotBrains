@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class SimonSaysWindow extends JPanel implements ActionListener {
+public class MemorizeThisWindow extends JPanel implements ActionListener {
 	private ImageIcon iconQuit = new ImageIcon("images/quitButton.png");
 	private ImageIcon iconQuitHover = new ImageIcon("images/quitButtonHover.png");
 	private ImageIcon iconMenu = new ImageIcon("images/menuButton.png");
@@ -24,7 +24,7 @@ public class SimonSaysWindow extends JPanel implements ActionListener {
 	private JLabel lblText = new JLabel("", SwingConstants.CENTER);
 	
 	private JLabel lblTimer = new JLabel("", SwingConstants.LEFT);
-        public SimonSaysWindow(Controller controller) {
+        public MemorizeThisWindow(Controller controller) {
 	
             this.controller = controller;
 		setLayout(null);
@@ -55,7 +55,7 @@ public class SimonSaysWindow extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMenu) {
-			controller.showMenu();
+			controller.showMainMenu();
 		} else if (e.getSource() == btnQuit) {
 			System.exit(0);
 		}

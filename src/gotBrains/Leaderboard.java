@@ -91,7 +91,7 @@ public class Leaderboard extends JPanel implements ActionListener {
 			System.exit(0);
 			
 		} else if(e.getSource() == btnMenu) {
-			controller.showMenu();
+			controller.showMainMenu();
 			
 		} else if(e.getSource() == btnClearLeaderboard) {
 			controller.clearLeaderboard();
