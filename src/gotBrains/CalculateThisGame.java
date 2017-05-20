@@ -164,7 +164,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 		if (this.difficulty == 10)
 			difficultyStr = "Hard";
 		gameLog.append(difficultyStr + " difficulty chosen.\n");
-		gameLog.append("Every correct answer is " + "\nworth " + difficulty + " point(s).\n");
+		gameLog.append("Every correct answer is " + "\nworth " + difficulty + " point(s).\n\n");
 		calculateThis = new CalculateThis();
 		textField.setEditable(true);
 		calculateThis.newTask();
