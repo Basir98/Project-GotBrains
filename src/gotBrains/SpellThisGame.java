@@ -247,9 +247,14 @@ public class SpellThisGame extends JPanel implements ActionListener {
 						"Five", "Wolf", "Star", "King", "Time", "Tree", "City", "Sing", "Lion", "Foot", "Cool", "Body",
 						"Golf", "Moon", "Work", "Lady", "Cake", "Blue", "High", "Rock", "Face", "Good", "Hate", "Pink",
 						"Oven", "Bear", "Snow", "Taco", "Zero", "Town", "Book", "Card", "Bomb", "Game", "Year", "Worm",
-						"Rage", "Quit", "Ugly", "Rice" };
+						"Rage", "Quit", "Ugly", "Rice", "World", "Pizza", "Water", "Month", "Angel", "Death", "Music",
+						"Sugar", "Woman", "Party", "Peace", "Tiger", "Earth", "House", "Lemon", "Watch", "Clock",
+						"Lock", "Stone", "Santa", "China", "Jesus", "South", "North", "East", "West", "Blood", "Light",
+						"India", "Power", "Anger", "Night", "April", "Puppy", "Phone", "Queen", "Pasta", "Smart",
+						"Knife", "Magic", "Black", "Media", "Truth", "Zebra", "Mango", "Dirty", "Fruit", "Panda",
+						"Radio", "Dance" };
 				Random rand = new Random();
-				int r = rand.nextInt(50);
+				int r = rand.nextInt(100);
 				rightAnswer = wordsEasy[r].toLowerCase();
 
 				System.out.println(wordsEasy[r].toLowerCase());
@@ -281,9 +286,15 @@ public class SpellThisGame extends JPanel implements ActionListener {
 						"Dolphin", "Justice", "Animal", "Mother", "Father", "Pirate", "Winter", "Summer", "Friend",
 						"Memory", "Bottle", "Couple", "Simple", "Guitar", "Police", "Bullet", "Soccer", "Hungry",
 						"Murder", "Travel", "Killer", "Finger", "Second", "First", "Shadow", "Peanut", "Zombie",
-						"Puzzle", "Vision", "Target", "Option", "Cheese", "Rocket" };
+						"Puzzle", "Vision", "Target", "Option", "Cheese", "Rocket", "Artist", "Riddle", "Subway",
+						"Player", "Temple", "Public", "Europe", "Cactus", "Prison", "Square", "Galaxy", "Empire",
+						"Genius", "Helium", "Random", "Object", "Motion", "Sports", "Rhythm", "Movies", "Cowboy",
+						"Legacy", "Trophy", "Social", "Planet", "Needle", "Boxing", "Pocket", "Jacket", "Strange",
+						"Muscle", "Effect", "Accent", "Orphan", "Karate", "Wasted", "Marine", "Advice", "Charge",
+						"Jaguar", "Reward", "Biscuit", "Tragedy", "Contact", "Trigger", "Lyrical", "Gallery", "Inspire",
+						"Society", "Sweater" };
 				Random rand1 = new Random();
-				int r1 = rand1.nextInt(50);
+				int r1 = rand1.nextInt(100);
 				rightAnswer = wordsMedium[r1].toLowerCase();
 				System.out.println(wordsMedium[r1].toLowerCase());
 
@@ -314,9 +325,16 @@ public class SpellThisGame extends JPanel implements ActionListener {
 						"Jupiter", "Mountain", "Umbrella", "Computer", "Electric", "Doughnut", "Paradise", "Keyboard",
 						"Dinosaur", "Aquarium", "Aardvark", "Predator", "Smoothie", "Military", "Festival", "Campfire",
 						"Training", "Lemonade", "Popsicle", "Broccoli", "Fraction", "Addition", "Anaconda", "Blackout",
-						"Audience", "Creative", "Division", "Goldfish", "Colorful", "Geometry" };
+						"Audience", "Creative", "Division", "Goldfish", "Colorful", "Geometry", "Nitrogen", "Fabulous",
+						"Dumpster", "Mattress", "Blizzard", "Eighteen", "Elevator", "Discover", "Register", "Gasoline",
+						"Exercise", "Question", "Bracelet", "Complain", "Antelope", "Wardrobe", "Ambiance", "Boneless",
+						"Aerobics", "Pentagon", "Backpack", "Cylinder", "Location", "Juvenile", "Universe", "Prospect",
+						"Whiskers", "Industry", "Wellness", "Conflict", "Producer", "Handsome", "Dynamite", "Mosquito",
+						"Fortress", "District", "Teamwork", "Bathroom", "Humanity", "Donation", "Moonlight",
+						"Aeroplane", "Particles", "Invention", "Milkshake", "Evolution", "Exception", "Autograph",
+						"Champagne", "Authentic" };
 				Random rand2 = new Random();
-				int r2 = rand2.nextInt(50);
+				int r2 = rand2.nextInt(100);
 				rightAnswer = wordsHard[r2].toLowerCase();
 
 				System.out.println(wordsHard[r2].toLowerCase());
