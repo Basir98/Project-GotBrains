@@ -147,7 +147,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 		logScroll.getVerticalScrollBar().setOpaque(false);
 		logScroll.setBounds(590, 367, 206, 229);
 
-		timer = new CountDownTimer(0, 10);
+		timer = new CountDownTimer(2, 0);
 		timer.start();
 	}
 
@@ -248,7 +248,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 		this.score = 0;
 		updateScore();
 		gameLog.append("\n____________________________\n\nRound restarted. \n\n");
-		timer = new CountDownTimer(0, 10);
+		timer = new CountDownTimer(2, 0);
 		timer.start();
 		calculateThis = new CalculateThis();
 		textField.setEditable(true);

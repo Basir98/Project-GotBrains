@@ -94,9 +94,12 @@ public class Leaderboard extends JPanel implements ActionListener {
 			controller.showMainMenu();
 			
 		} else if(e.getSource() == btnClearLeaderboard) {
-			controller.clearLeaderboard();
-			leaderboardPlacement.setText(controller.getLeaderboardPlacement());
-			leaderboardScore.setText(controller.getLeaderboardScore());
+			if(JOptionPane.showInputDialog("Sure? \ny = yes, clear\nn = no, don't clear").equals("y") ) {
+				controller.clearLeaderboard();
+				leaderboardPlacement.setText(controller.getLeaderboardPlacement());
+				leaderboardScore.setText(controller.getLeaderboardScore());
+			}
+			
 			
 		} else if (e.getSource() == btnMinimize) {
 			controller.minimizeApp();
