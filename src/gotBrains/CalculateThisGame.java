@@ -229,7 +229,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 		};
 		return action;
 	}
-
+	
 	public void updateScore() {
 		lblScore.setText("Score: " + score);
 	}
@@ -243,6 +243,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 	}
 
 	public void restart() {
+		controller.newCalculateThisScore(score);
 		textField.setText("");
 		timer.interrupt();
 		this.score = 0;
@@ -384,10 +385,10 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 						seconds--;
 					}
 				} while (minutes >= 0 && seconds >= 0);
-				// Ev. lägga till ljud när tiden tar slut??
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
 					public void run() {
+						controller.alarmSoundSound();
 						gameOver();
 					}
 				});

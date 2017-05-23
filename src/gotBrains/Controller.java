@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  *
  */
 public class Controller {
-	
+
 	private JFrame frame;
 	private JPanel panelContainer = new JPanel();
 	private MainMenu mainMenu;
@@ -37,6 +37,7 @@ public class Controller {
 	private File backgroundMusic = new File("sounds/backgroundMusic.wav");
 	private File correctSound = new File("sounds/correctSound.wav");
 	private File incorrectSound = new File("sounds/incorrectSound.wav");
+	private File alarmSound = new File("sounds/alarmSound.wav");
 	private Clip music;
 	private boolean mutedMusic = false;
 	private boolean mutedSound = false;
@@ -81,10 +82,11 @@ public class Controller {
 		}
 		mainMenu.fieldUsername.grabFocus();
 	}
-	
+
 	public Font getCustomFont(String filepath, int style, int size) {
 		try {
-			customFont = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File(filepath))).deriveFont(style, size);
+			customFont = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File(filepath))).deriveFont(style,
+					size);
 		} catch (FileNotFoundException e) {
 			System.out.println("ERROR: " + e);
 		} catch (FontFormatException e) {
@@ -96,7 +98,7 @@ public class Controller {
 		}
 		return customFont;
 	}
-	
+
 	public void startMusic() {
 		try {
 			AudioInputStream ais = AudioSystem.getAudioInputStream(backgroundMusic);
@@ -115,8 +117,7 @@ public class Controller {
 		if (!mutedMusic) {
 			music.stop();
 			mutedMusic = true;
-		}
-		else if (mutedMusic) {
+		} else if (mutedMusic) {
 			startMusic();
 			mutedMusic = false;
 		}
@@ -125,9 +126,10 @@ public class Controller {
 	public void toggleSound() {
 		if (mutedSound) {
 			mutedSound = false;
-		} else mutedSound = true;
+		} else
+			mutedSound = true;
 	}
-	
+
 	public void correctSound(boolean correct) {
 		if (!mutedSound) {
 			try {
@@ -148,6 +150,20 @@ public class Controller {
 		}
 	}
 
+	public void alarmSoundSound() {
+		if (!mutedSound) {
+			try {
+				AudioInputStream ais = AudioSystem.getAudioInputStream(alarmSound);
+				Clip sound = AudioSystem.getClip();
+				sound.open(ais);
+				sound.start();
+
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+	}
+
 	public void showSpellThisMenu() {
 		cl.show(panelContainer, "spellThisMenu");
 	}
@@ -159,13 +175,13 @@ public class Controller {
 	public void showCalculateThisMenu() {
 		cl.show(panelContainer, "calculateThisMenu");
 	}
-	
-	public void startSimon(){
-		simon=new Simon(this);
-		panelContainer.add(simon,"simonGame");
-		
+
+	public void startSimon() {
+		simon = new Simon(this);
+		panelContainer.add(simon, "simonGame");
+
 		cl.show(panelContainer, "simonGame");
-	} 
+	}
 
 	public void startSpellThisGame(int difficulty) {
 		spellThisGame = new SpellThisGame(this);
@@ -197,7 +213,7 @@ public class Controller {
 		cl.show(panelContainer, "mainMenu");
 		mainMenu.fieldUsername.grabFocus();
 	}
-	
+
 	public void minimizeApp() {
 		frame.setState(JFrame.ICONIFIED);
 	}

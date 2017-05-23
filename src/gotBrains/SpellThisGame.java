@@ -123,7 +123,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
 		logScroll.getVerticalScrollBar().setOpaque(false);
 		logScroll.setBounds(590, 367, 206, 229);
 
-		timer = new CountDownTimer(2, 0);
+		timer = new CountDownTimer(3, 0);
 		timer.start();
 	}
 
@@ -165,17 +165,18 @@ public class SpellThisGame extends JPanel implements ActionListener {
 		textField.setEditable(false);
 		textField.setText("");
 		gameLog.append("\nGame over, time's up!\n" + "Your result: " + score + " point(s).\n");
-		controller.newSpellThisScore(score * difficulty);
+		controller.newSpellThisScore(score);
 		timer.interrupt();
 	}
 
 	public void restart() {
+		controller.newSpellThisScore(score);
 		textField.setText("");
 		timer.interrupt();
 		this.score = 0;
 		updateScore();
 		gameLog.append("\n____________________________\n\nRound restarted. \n\n");
-		timer = new CountDownTimer(2, 0);
+		timer = new CountDownTimer(3, 0);
 		timer.start();
 		spellThis = new SpellThis();
 		textField.setEditable(true);
@@ -396,10 +397,10 @@ public class SpellThisGame extends JPanel implements ActionListener {
 						seconds--;
 					}
 				} while (minutes >= 0 && seconds >= 0);
-				// Ev. lägga till ljud när tiden tar slut??
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
 					public void run() {
+						controller.alarmSoundSound();
 						gameOver();
 					}
 				});
