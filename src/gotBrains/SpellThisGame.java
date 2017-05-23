@@ -1,12 +1,30 @@
 package gotBrains;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 public class SpellThisGame extends JPanel implements ActionListener {
 	private String rightAnswer;
@@ -19,7 +37,10 @@ public class SpellThisGame extends JPanel implements ActionListener {
 	private Color lightGrey = new Color(180, 180, 180);
 	private int difficulty;
 	private int score = 0;
-	private Random random = new Random();
+	private LinkedList<String> wordsEasy;
+	private LinkedList<String> wordsMedium;
+	private LinkedList<String> wordsHard;
+	private Random rand = new Random();
 	private Action action;
 
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
@@ -132,7 +153,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (!textField.getText().equals("")) {
 					String correctAnswer = rightAnswer;
-					String userAnswer = textField.getText();
+					String userAnswer = textField.getText().toUpperCase();
 
 					System.out.println("Your answer: " + textField.getText());
 
@@ -179,6 +200,8 @@ public class SpellThisGame extends JPanel implements ActionListener {
 		timer = new CountDownTimer(3, 0);
 		timer.start();
 		spellThis = new SpellThis();
+		loadWords();
+		spellThis = new SpellThis();
 		textField.setEditable(true);
 		spellThis.newTask();
 		textField.grabFocus();
@@ -198,9 +221,19 @@ public class SpellThisGame extends JPanel implements ActionListener {
 			difficultyStr = "Hard";
 		gameLog.append(difficultyStr + " difficulty chosen.\n");
 		gameLog.append("Every correct answer is " + "\nworth " + difficulty + " point(s).\n\n");
+		loadWords();
 		spellThis = new SpellThis();
 		textField.setEditable(true);
 		spellThis.newTask();
+		textField.grabFocus();
+
+	}
+
+	public void loadWords() {
+		SpellThisWords wordsList = new SpellThisWords();
+		wordsEasy = wordsList.getEasyWords();
+		wordsMedium = wordsList.getMediumWords();
+		wordsHard = wordsList.getHardWords();
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -245,121 +278,86 @@ public class SpellThisGame extends JPanel implements ActionListener {
 
 			switch (difficulty) {
 			case 1:
-				String[] wordsEasy = { "Sun", "Son", "Life", "Love", "Fond", "Ring", "Bag", "Cold", "Fish", "Hell",
-						"Five", "Wolf", "Star", "King", "Time", "Tree", "City", "Sing", "Lion", "Foot", "Cool", "Body",
-						"Golf", "Moon", "Work", "Lady", "Cake", "Blue", "High", "Rock", "Face", "Good", "Hate", "Pink",
-						"Oven", "Bear", "Snow", "Taco", "Zero", "Town", "Book", "Card", "Bomb", "Game", "Year", "Worm",
-						"Rage", "Quit", "Ugly", "Rice", "World", "Pizza", "Water", "Month", "Angel", "Death", "Music",
-						"Sugar", "Woman", "Party", "Peace", "Tiger", "Earth", "House", "Lemon", "Watch", "Clock",
-						"Lock", "Stone", "Santa", "China", "Jesus", "South", "North", "East", "West", "Blood", "Light",
-						"India", "Power", "Anger", "Night", "April", "Puppy", "Phone", "Queen", "Pasta", "Smart",
-						"Knife", "Magic", "Black", "Media", "Truth", "Zebra", "Mango", "Dirty", "Fruit", "Panda",
-						"Radio", "Dance" };
-				Random rand = new Random();
-				int r = rand.nextInt(100);
-				rightAnswer = wordsEasy[r].toLowerCase();
+				/*
+				 * rightAnswer används istället för att hela tiden hämta
+				 * wordsEasy[r] varje gång (optimering).
+				 */
+				Collections.shuffle(wordsEasy);
 
-				System.out.println(wordsEasy[r].toLowerCase());
+				// För att visa att orden tas ur listan för att undvika att de
+				// kommer flera gånger
+				rightAnswer = wordsEasy.poll().toUpperCase();
+				System.out.println(rightAnswer);
+				System.out.println(wordsEasy.size());
 
 				// Create a new char array with the size of the random word.
-				char[] chars = new char[wordsEasy[r].length()];
+				char[] chars1 = new char[rightAnswer.length()];
 
 				// Populate the char array.
-				for (int i = 0; i < wordsEasy[r].length(); i++) {
-					chars[i] = wordsEasy[r].toLowerCase().charAt(i);
+				for (int i = 0; i < rightAnswer.length(); i++) {
+					chars1[i] = rightAnswer.charAt(i);
 				}
-
-				for (int i = 0; i < chars.length; i++) {
-					int randomPosition = rand.nextInt(chars.length);
-					char temp = chars[i];
-					chars[i] = chars[randomPosition];
-					chars[randomPosition] = temp;
-				}
-				// Save the scrambled word in a new string.
-				String scrambledWord = new String(chars);
-
-				Scanner userAnswer = new Scanner(System.in);
-				lblText.setText(scrambledWord.toUpperCase());
+				String scrambledWord1;
+				do {
+					for (int i = 0; i < chars1.length; i++) {
+						int randomPosition = rand.nextInt(chars1.length);
+						char temp = chars1[i];
+						chars1[i] = chars1[randomPosition];
+						chars1[randomPosition] = temp;
+					}
+					// Save the scrambled word in a new string.
+					scrambledWord1 = new String(chars1);
+				} while (rightAnswer.equals(scrambledWord1));
+				lblText.setText(scrambledWord1);
 				break;
 
 			case 5:
-				String[] wordsMedium = { "Hello", "Purple", "Twelve", "Samsung", "Heaven", "Banana", "Africa", "Office",
-						"Snitch", "Pumpkin", "Perfect", "Freedom", "Nothing", "History", "Amazing", "Welcome", "Secret",
-						"Dolphin", "Justice", "Animal", "Mother", "Father", "Pirate", "Winter", "Summer", "Friend",
-						"Memory", "Bottle", "Couple", "Simple", "Guitar", "Police", "Bullet", "Soccer", "Hungry",
-						"Murder", "Travel", "Killer", "Finger", "Second", "First", "Shadow", "Peanut", "Zombie",
-						"Puzzle", "Vision", "Target", "Option", "Cheese", "Rocket", "Artist", "Riddle", "Subway",
-						"Player", "Temple", "Public", "Europe", "Cactus", "Prison", "Square", "Galaxy", "Empire",
-						"Genius", "Helium", "Random", "Object", "Motion", "Sports", "Rhythm", "Movies", "Cowboy",
-						"Legacy", "Trophy", "Social", "Planet", "Needle", "Boxing", "Pocket", "Jacket", "Strange",
-						"Muscle", "Effect", "Accent", "Orphan", "Karate", "Wasted", "Marine", "Advice", "Charge",
-						"Jaguar", "Reward", "Biscuit", "Tragedy", "Contact", "Trigger", "Lyrical", "Gallery", "Inspire",
-						"Society", "Sweater" };
-				Random rand1 = new Random();
-				int r1 = rand1.nextInt(100);
-				rightAnswer = wordsMedium[r1].toLowerCase();
-				System.out.println(wordsMedium[r1].toLowerCase());
+				Collections.shuffle(wordsMedium);
 
-				// Create a new char array with the size of the random word.
-				char[] chars1 = new char[wordsMedium[r1].length()];
-
-				// Populate the char array.
-				for (int i = 0; i < wordsMedium[r1].length(); i++) {
-					chars1[i] = wordsMedium[r1].toLowerCase().charAt(i);
+				rightAnswer = wordsMedium.poll().toUpperCase();
+				System.out.println(rightAnswer);
+				System.out.println(wordsMedium.size());
+				
+				char[] chars2 = new char[rightAnswer.length()];
+				
+				for (int i = 0; i < rightAnswer.length(); i++) {
+					chars2[i] = rightAnswer.charAt(i);
 				}
-
-				for (int i = 0; i < chars1.length; i++) {
-					int randomPosition = rand1.nextInt(chars1.length);
-					char temp = chars1[i];
-					chars1[i] = chars1[randomPosition];
-					chars1[randomPosition] = temp;
-				}
-				// Save the scrambled word in a new string.
-				String scrambledWord1 = new String(chars1);
-
-				Scanner userAnswer1 = new Scanner(System.in);
-				lblText.setText(scrambledWord1.toUpperCase());
+				String scrambledWord2;
+				do {
+					for (int i = 0; i < chars2.length; i++) {
+						int randomPosition = rand.nextInt(chars2.length);
+						char temp = chars2[i];
+						chars2[i] = chars2[randomPosition];
+						chars2[randomPosition] = temp;
+					}
+					scrambledWord2 = new String(chars2);
+				} while (rightAnswer.equals(scrambledWord2));
+				lblText.setText(scrambledWord2);
 				break;
 			case 10:
-				String[] wordsHard = { "Valkyire", "Football", "Strength", "February", "Building", "Relationship",
-						"Calendar", "November", "Everything", "Basketball", "Technology", "Watermelon", "Champion",
-						"Hospital", "Television", "Friendship", "Medicine", "University", "Blackboard", "Whiteboard",
-						"Jupiter", "Mountain", "Umbrella", "Computer", "Electric", "Doughnut", "Paradise", "Keyboard",
-						"Dinosaur", "Aquarium", "Aardvark", "Predator", "Smoothie", "Military", "Festival", "Campfire",
-						"Training", "Lemonade", "Popsicle", "Broccoli", "Fraction", "Addition", "Anaconda", "Blackout",
-						"Audience", "Creative", "Division", "Goldfish", "Colorful", "Geometry", "Nitrogen", "Fabulous",
-						"Dumpster", "Mattress", "Blizzard", "Eighteen", "Elevator", "Discover", "Register", "Gasoline",
-						"Exercise", "Question", "Bracelet", "Complain", "Antelope", "Wardrobe", "Ambiance", "Boneless",
-						"Aerobics", "Pentagon", "Backpack", "Cylinder", "Location", "Juvenile", "Universe", "Prospect",
-						"Whiskers", "Industry", "Wellness", "Conflict", "Producer", "Handsome", "Dynamite", "Mosquito",
-						"Fortress", "District", "Teamwork", "Bathroom", "Humanity", "Donation", "Moonlight",
-						"Aeroplane", "Particles", "Invention", "Milkshake", "Evolution", "Exception", "Autograph",
-						"Champagne", "Authentic" };
-				Random rand2 = new Random();
-				int r2 = rand2.nextInt(100);
-				rightAnswer = wordsHard[r2].toLowerCase();
+				Collections.shuffle(wordsHard);
 
-				System.out.println(wordsHard[r2].toLowerCase());
+				rightAnswer = wordsHard.poll().toUpperCase();
+				System.out.println(rightAnswer);
+				System.out.println(wordsHard.size());
 
-				// Create a new char array with the size of the random word.
-				char[] chars2 = new char[wordsHard[r2].length()];
+				char[] chars3 = new char[rightAnswer.length()];
 
-				// Populate the char array.
-				for (int i = 0; i < wordsHard[r2].length(); i++) {
-					chars2[i] = wordsHard[r2].toLowerCase().charAt(i);
+				for (int i = 0; i < rightAnswer.length(); i++) {
+					chars3[i] = rightAnswer.charAt(i);
 				}
-
-				for (int i = 0; i < chars2.length; i++) {
-					int randomPosition = rand2.nextInt(chars2.length);
-					char temp = chars2[i];
-					chars2[i] = chars2[randomPosition];
-					chars2[randomPosition] = temp;
-				}
-				// Save the scrambled word in a new string.
-				String scrambledWord2 = new String(chars2);
-
-				Scanner userAnswer2 = new Scanner(System.in);
-				lblText.setText(scrambledWord2.toUpperCase());
+				String scrambledWord3;
+				do {
+					for (int i = 0; i < chars3.length; i++) {
+						int randomPosition = rand.nextInt(chars3.length);
+						char temp = chars3[i];
+						chars3[i] = chars3[randomPosition];
+						chars3[randomPosition] = temp;
+					}
+					scrambledWord3 = new String(chars3);
+				} while (rightAnswer.equals(scrambledWord3));
+				lblText.setText(scrambledWord3);
 				break;
 
 			}

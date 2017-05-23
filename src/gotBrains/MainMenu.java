@@ -3,16 +3,9 @@ package gotBrains;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
 import javax.swing.*;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.PlainDocument;
+
 
 public class MainMenu extends JPanel implements ActionListener {
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
@@ -25,6 +18,7 @@ public class MainMenu extends JPanel implements ActionListener {
 	private JButton btnToggleMusic = new JButton(new ImageIcon("images/musicIcon.png"));
 	private JButton btnToggleSound = new JButton(new ImageIcon("images/soundIcon.png"));
 	JTextField fieldUsername = new JTextField();
+	private JLabel lblVersion = new JLabel("Version 0.4");
 
 	private boolean mutedMusic = false;
 	private boolean mutedSound = false;
@@ -110,6 +104,9 @@ public class MainMenu extends JPanel implements ActionListener {
 		btnToggleSound.setBorderPainted(false);
 		btnToggleSound.setBounds(40, 560, 32, 32);
 		btnToggleSound.addActionListener(this);
+		
+		add(lblVersion);
+		lblVersion.setBounds(725, 575, 75, 20);
 
 	}
 
