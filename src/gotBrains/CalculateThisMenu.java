@@ -94,16 +94,22 @@ public class CalculateThisMenu extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMenu) {
+			controller.buttonSound();
 			controller.showMainMenu();
 		} else if (e.getSource() == btnQuit) {
+			controller.buttonSound();
 			System.exit(0);
 		} else if (e.getSource() == btnStartEasy) {
+			controller.buttonSound();
 			controller.startCalculateThisGame(1);
 		} else if (e.getSource() == btnStartMedium) {
+			controller.buttonSound();
 			controller.startCalculateThisGame(5);
 		} else if (e.getSource() == btnStartHard) {
+			controller.buttonSound();
 			controller.startCalculateThisGame(10);
 		} else if (e.getSource() == btnMinimize) {
+			controller.buttonSound();
 			controller.minimizeApp();
 		}
 	}

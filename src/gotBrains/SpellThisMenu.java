@@ -80,14 +80,6 @@ public class SpellThisMenu extends JPanel implements ActionListener {
 		btnStartHard.setBounds(475, 300, 150, 40);
 		btnStartHard.addActionListener(this);
 
-		// add(btnLeaderboard);
-		// btnLeaderboard.setOpaque(true);
-		// btnLeaderboard.setContentAreaFilled(false);
-		// btnLeaderboard.setBorderPainted(true);
-
-		// btnLeaderboard.setBounds(245, 330, 310, 30);
-		// btnLeaderboard.addActionListener(this);
-
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -101,16 +93,22 @@ public class SpellThisMenu extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMenu) {
+			controller.buttonSound();
 			controller.showMainMenu();
 		} else if (e.getSource() == btnQuit) {
+			controller.buttonSound();
 			System.exit(0);
 		} else if (e.getSource() == btnStartEasy) {
+			controller.buttonSound();
 			controller.startSpellThisGame(1);
 		} else if (e.getSource() == btnStartMedium) {
+			controller.buttonSound();
 			controller.startSpellThisGame(5);
 		} else if (e.getSource() == btnStartHard) {
+			controller.buttonSound();
 			controller.startSpellThisGame(10);
 		} else if (e.getSource() == btnMinimize) {
+			controller.buttonSound();
 			controller.minimizeApp();
 		}
 	}

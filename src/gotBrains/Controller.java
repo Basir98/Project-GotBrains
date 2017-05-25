@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.sound.sampled.*;
 import javax.swing.JFrame;
@@ -38,6 +39,7 @@ public class Controller {
 	private File correctSound = new File("sounds/correctSound.wav");
 	private File incorrectSound = new File("sounds/incorrectSound.wav");
 	private File alarmSound = new File("sounds/alarmSound.wav");
+	private File buttonSound = new File("sounds/buttonSound.wav");
 	private Clip music;
 	private boolean mutedMusic = false;
 	private boolean mutedSound = false;
@@ -45,7 +47,7 @@ public class Controller {
 	private HighscoreManager hm = new HighscoreManager();
 	private CardLayout cl = new CardLayout();
 	private Font customFont;
-
+	
 	public Controller(JFrame frame) {
 		this.frame = frame;
 		panelContainer.setLayout(cl);
@@ -105,7 +107,7 @@ public class Controller {
 			music = AudioSystem.getClip();
 			music.open(ais);
 			FloatControl gainControl = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(-10.0f);
+			gainControl.setValue(-15.0f);
 			music.start();
 			music.loop(100);
 		} catch (Exception e) {
@@ -154,6 +156,20 @@ public class Controller {
 		if (!mutedSound) {
 			try {
 				AudioInputStream ais = AudioSystem.getAudioInputStream(alarmSound);
+				Clip sound = AudioSystem.getClip();
+				sound.open(ais);
+				sound.start();
+
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+	}
+	
+	public void buttonSound() {
+		if(!mutedSound) {
+			try {
+				AudioInputStream ais = AudioSystem.getAudioInputStream(buttonSound);
 				Clip sound = AudioSystem.getClip();
 				sound.open(ais);
 				sound.start();

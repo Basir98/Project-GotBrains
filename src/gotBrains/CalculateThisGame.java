@@ -281,18 +281,21 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMenu) {
+			controller.buttonSound();
 			gameOver();
 			controller.showMainMenu();
 
 		} else if (e.getSource() == btnQuit) {
+			controller.buttonSound();
 			System.exit(0);
 
 		} else if (e.getSource() == btnMinimize) {
+			controller.buttonSound();
 			controller.minimizeApp();
 
 		} else if (e.getSource() == btnRestart) {
+			controller.buttonSound();
 			restart();
-
 		}
 	}
 

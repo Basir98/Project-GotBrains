@@ -18,7 +18,7 @@ public class MainMenu extends JPanel implements ActionListener {
 	private JButton btnToggleMusic = new JButton(new ImageIcon("images/musicIcon.png"));
 	private JButton btnToggleSound = new JButton(new ImageIcon("images/soundIcon.png"));
 	JTextField fieldUsername = new JTextField();
-	private JLabel lblVersion = new JLabel("Version 0.4");
+	private JLabel lblVersion = new JLabel("Version 0.5");
 
 	private boolean mutedMusic = false;
 	private boolean mutedSound = false;
@@ -54,12 +54,12 @@ public class MainMenu extends JPanel implements ActionListener {
 		fieldUsername.setHorizontalAlignment(JTextField.CENTER);
 		fieldUsername.setFont(font);
 		fieldUsername.setDocument(new LengthRestrictedDocument(12));
-		fieldUsername.setText("ANONYMOUS");
+		fieldUsername.setUI(new JTextFieldHintUI("Enter your name.", new Color(130, 130, 130)));
 		fieldUsername.setCaretPosition(fieldUsername.getText().length());
 		fieldUsername.setSelectionColor(Color.white);
 		fieldUsername.setBorder(BorderFactory.createEmptyBorder());
 		fieldUsername.setForeground(new Color(80, 80, 80));
-		fieldUsername.setBounds(325, 260, 150, 30);
+		fieldUsername.setBounds(300, 260, 200, 30);
 		
 		add(btnCalculateThis);
 		btnCalculateThis.setOpaque(false);
@@ -118,30 +118,37 @@ public class MainMenu extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnQuit) {
+			controller.buttonSound();
 			System.exit(0);
 
 		} else if (e.getSource() == btnMinimize) {
+			controller.buttonSound();
 			controller.minimizeApp();
 			
 		} else if (e.getSource() == btnSpellThis) {
+			controller.buttonSound();
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showSpellThisMenu();
 
 		} else if (e.getSource() == btnMemorizeThis) {
+			controller.buttonSound();
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showMemorizeThisWindow();
 
 		} else if (e.getSource() == btnCalculateThis) {
+			controller.buttonSound();
 			controller.addPlayer(fieldUsername.getText());
 			controller.setCurrentUsername(fieldUsername.getText());
 			controller.showCalculateThisMenu();
 
 		} else if (e.getSource() == btnLeaderboard) {
+			controller.buttonSound();
 			controller.showLeaderboard();
 
 		} else if (e.getSource() == btnToggleMusic) {
+			controller.buttonSound();
 			controller.toggleMusic();
 			if (!mutedMusic) {
 				btnToggleMusic.setIcon(new ImageIcon("images/musicIconMuted.png"));
@@ -151,6 +158,7 @@ public class MainMenu extends JPanel implements ActionListener {
 				mutedMusic = false;
 			}
 		} else if (e.getSource() == btnToggleSound) {
+			controller.buttonSound();
 			controller.toggleSound();
 			if (!mutedSound) {
 				btnToggleSound.setIcon(new ImageIcon("images/soundIconMuted.png"));
