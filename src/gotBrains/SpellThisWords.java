@@ -10,7 +10,11 @@ public class SpellThisWords {
 			"Pizza", "Water", "Month", "Eyes", "Area", "Music", "Glow", "Woman", "Party", "Peace", "Tiger", "Dead",
 			"House", "July", "Watch", "Clock", "Lock", "June", "Santa", "Club", "Bank", "Fork", "Iris", "Cell", "Luck",
 			"Blood", "Light", "India", "Power", "Soap", "Drum", "Peak", "Puppy", "Phone", "Queen", "Army", "Bond",
-			"Knife", "Magic", "Black", "Data", "Truth", "Fake", "Gang", "Dirty", "Fruit", "Panda", "Radio", "Jazz" };
+			"Knife", "Magic", "Black", "Data", "Truth", "Fake", "Gang", "Dirty", "Fruit", "Panda", "Radio", "Jazz",
+			"Puma", "Prop", "Taxi", "Lung", "Pork", "Dirt", "Clue", "Copy", "Bash", "Yoga", "Text", "Crow", "Pray",
+			"Size", "Next", "Oval", "Zinc", "Hack", "Diss", "Fold", "Fury", "Sofa", "Numb", "Joke", "Eggs", "Comb",
+			"Whip", "Calf", "Monk", "Tomb", "Navy", "Apex", "Twin", "Pump", "Hulk", "Bulk", "Swim", "Dumb", "Pill",
+			"Lens", "Quiz", "Geek", "Halo", "Howl", "Mime", "Debt", "Pulp", "Term", "Feud", "Rich" };
 
 	String[] wordsMedium = { "Hello", "Purple", "Twelve", "Samsung", "Heaven", "Banana", "Africa", "People", "Snitch",
 			"Pumpkin", "Perfect", "Freedom", "Nothing", "History", "Amazing", "Welcome", "Turtle", "Dolphin", "Justice",
