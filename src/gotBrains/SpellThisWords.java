@@ -3,49 +3,48 @@ package gotBrains;
 import java.util.LinkedList;
 
 public class SpellThisWords {
-	String[] wordsEasy = {"Sun", "Son", "Life", "Love", "Fond", "Ring", "Bag", "Cold", "Fish", "Hell", "Five", "Wolf",
-			"Star", "King", "Time", "Tree", "City", "Sing", "Lion", "Foot", "Cool", "Body", "Golf", "Moon", "Work",
-			"Lady", "Cake", "Blue", "High", "Rock", "Face", "Good", "Hate", "Pink", "Oven", "Bear", "Snow", "Taco",
-			"Zero", "Town", "Book", "Card", "Bomb", "Game", "Year", "Worm", "Rage", "Quit", "Ugly", "Rice", "World",
-			"Pizza", "Water", "Month", "Angel", "Death", "Music", "Sugar", "Woman", "Party", "Peace", "Tiger", "Earth",
-			"House", "Lemon", "Watch", "Clock", "Lock", "Stone", "Santa", "China", "Jesus", "South", "North", "East",
-			"West", "Blood", "Light", "India", "Power", "Anger", "Night", "April", "Puppy", "Phone", "Queen", "Pasta",
-			"Smart", "Knife", "Magic", "Black", "Media", "Truth", "Zebra", "Mango", "Dirty", "Fruit", "Panda", "Radio",
-			"Dance" };
+	String[] wordsEasy = { "Sun", "Son", "Ball", "Wood", "Fond", "Nine", "Home", "Girl", "Fish", "Hell", "Five", "Hope",
+			"Wife", "King", "Wifi", "Hair", "City", "Math", "Desk", "Foot", "Cool", "Body", "Golf", "Asia", "Work",
+			"Lady", "Cake", "Band", "High", "Corn", "Word", "Good", "Gold", "Pink", "Oven", "Four", "Bath", "Yard",
+			"Zero", "Cube", "Book", "Card", "Bomb", "Sock", "Lava", "Worm", "Nova", "Quit", "Ugly", "Rice", "World",
+			"Pizza", "Water", "Month", "Eyes", "Area", "Music", "Glow", "Woman", "Party", "Peace", "Tiger", "Dead",
+			"House", "July", "Watch", "Clock", "Lock", "June", "Santa", "Club", "Bank", "Fork", "Iris", "Cell", "Luck",
+			"Blood", "Light", "India", "Power", "Soap", "Drum", "Peak", "Puppy", "Phone", "Queen", "Army", "Bond",
+			"Knife", "Magic", "Black", "Data", "Truth", "Fake", "Gang", "Dirty", "Fruit", "Panda", "Radio", "Jazz" };
 
-	String[] wordsMedium = { "Hello", "Purple", "Twelve", "Samsung", "Heaven", "Banana", "Africa", "Office", "Snitch",
-			"Pumpkin", "Perfect", "Freedom", "Nothing", "History", "Amazing", "Welcome", "Secret", "Dolphin", "Justice",
-			"Animal", "Mother", "Father", "Pirate", "Winter", "Summer", "Friend", "Memory", "Bottle", "Couple",
-			"Simple", "Guitar", "Police", "Bullet", "Soccer", "Hungry", "Murder", "Travel", "Killer", "Finger",
-			"Second", "First", "Shadow", "Peanut", "Zombie", "Puzzle", "Vision", "Target", "Option", "Cheese", "Rocket",
-			"Artist", "Riddle", "Subway", "Player", "Temple", "Public", "Europe", "Cactus", "Prison", "Square",
-			"Galaxy", "Empire", "Genius", "Helium", "Random", "Object", "Motion", "Sports", "Rhythm", "Movies",
-			"Cowboy", "Legacy", "Trophy", "Social", "Planet", "Needle", "Boxing", "Pocket", "Jacket", "Strange",
-			"Muscle", "Effect", "Accent", "Orphan", "Karate", "Wasted", "Marine", "Advice", "Charge", "Jaguar",
-			"Reward", "Biscuit", "Tragedy", "Contact", "Trigger", "Lyrical", "Gallery", "Inspire", "Society",
+	String[] wordsMedium = { "Hello", "Purple", "Twelve", "Samsung", "Heaven", "Banana", "Africa", "People", "Snitch",
+			"Pumpkin", "Perfect", "Freedom", "Nothing", "History", "Amazing", "Welcome", "Turtle", "Dolphin", "Justice",
+			"System", "Mother", "Spring", "Pirate", "Autumn", "Summer", "Season", "Memory", "Bottle", "Couple",
+			"Cookie", "Guitar", "Police", "Bullet", "Soccer", "Hungry", "Murder", "Turkey", "Killer", "Number",
+			"Spirit", "Dragon", "Shadow", "Peanut", "Zombie", "Puzzle", "Vision", "Target", "Lizard", "Cheese",
+			"Rocket", "Health", "Legend", "Subway", "Donkey", "Clever", "Public", "Europe", "Cactus", "Window",
+			"Square", "Galaxy", "League", "Genius", "Helium", "Uranus", "Object", "Motion", "Volcano", "Rhythm",
+			"Movies", "Cowboy", "Legacy", "Trophy", "Social", "Thunder", "Needle", "Boxing", "Pocket", "Jacket",
+			"Villain", "Muscle", "Effect", "Accent", "Orphan", "Karate", "Victory", "Station", "Advice", "Charge",
+			"Jaguar", "College", "Biscuit", "Central", "Contact", "Trigger", "Lyrical", "Quality", "Warrior", "Society",
 			"Sweater" };
 
 	String[] wordsHard = { "Valkyire", "Football", "Strength", "February", "Building", "Relationship", "Calendar",
-			"November", "Everything", "Basketball", "Technology", "Watermelon", "Champion", "Hospital", "Television",
-			"Friendship", "Medicine", "University", "Blackboard", "Whiteboard", "Jupiter", "Mountain", "Umbrella",
-			"Computer", "Electric", "Doughnut", "Paradise", "Keyboard", "Dinosaur", "Aquarium", "Aardvark", "Predator",
-			"Smoothie", "Military", "Festival", "Campfire", "Training", "Lemonade", "Popsicle", "Broccoli", "Fraction",
-			"Addition", "Anaconda", "Blackout", "Audience", "Creative", "Division", "Goldfish", "Colorful", "Geometry",
-			"Nitrogen", "Fabulous", "Dumpster", "Mattress", "Blizzard", "Eighteen", "Elevator", "Discover", "Register",
-			"Gasoline", "Exercise", "Question", "Bracelet", "Complain", "Antelope", "Wardrobe", "Ambiance", "Boneless",
-			"Aerobics", "Pentagon", "Backpack", "Cylinder", "Location", "Juvenile", "Universe", "Prospect", "Whiskers",
-			"Industry", "Wellness", "Conflict", "Producer", "Handsome", "Dynamite", "Mosquito", "Fortress", "District",
-			"Teamwork", "Bathroom", "Humanity", "Donation", "Moonlight", "Aeroplane", "Particles", "Invention",
-			"Milkshake", "Evolution", "Exception", "Autograph", "Champagne", "Authentic" };
+			"November", "Everything", "Basketball", "Technology", "Watermelon", "Champion", "Hospital", "Chocolate",
+			"Friendship", "Medicine", "University", "Blackboard", "Whiteboard", "Jupiter", "Mountain", "Umbilical",
+			"Computer", "Electric", "Doughnut", "Paradise", "Keyboard", "Dinosaur", "Aquarium", "Aardvark", "Australia",
+			"Smoothie", "Arachnid", "Festival", "Campfire", "Training", "Lemonade", "Popsicle", "Broccoli", "Fraction",
+			"Addition", "Anaconda", "Blackout", "Audience", "Pineapple", "Division", "Goldfish", "Colorful", "Geometry",
+			"Nitrogen", "Fabulous", "Dumpster", "Ambulance", "Blizzard", "Eighteen", "Vegetable", "Crocodile",
+			"Register", "Gasoline", "Exercise", "Question", "Bracelet", "Complain", "Antelope", "Nutrition", "Ambiance",
+			"Breakfast", "Aerobics", "Pentagon", "Backpack", "Cylinder", "Location", "Juvenile", "Universe", "Prospect",
+			"Whiskers", "Industry", "Wellness", "Conflict", "Celebrity", "Handsome", "Dynamite", "Mosquito", "Fortress",
+			"District", "Companion", "Bathroom", "Humanity", "Donation", "Moonlight", "Aeroplane", "Particles",
+			"Invention", "Milkshake", "Evolution", "Exception", "Autograph", "Champagne", "Authentic" };
 
 	LinkedList<String> easyWords = new LinkedList<String>();
 	LinkedList<String> mediumWords = new LinkedList<String>();
 	LinkedList<String> hardWords = new LinkedList<String>();
-	
+
 	public SpellThisWords() {
 		populateLists();
 	}
-	
+
 	public void populateLists() {
 		for (int i = 0; i < wordsEasy.length; i++) {
 			easyWords.add(wordsEasy[i]);
