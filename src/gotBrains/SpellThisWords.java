@@ -12,7 +12,7 @@ public class SpellThisWords {
 			"Blood", "Light", "India", "Power", "Soap", "Drum", "Peak", "Puppy", "Phone", "Queen", "Army", "Bond",
 			"Knife", "Magic", "Black", "Data", "Truth", "Fake", "Gang", "Dirty", "Fruit", "Panda", "Radio", "Jazz",
 			"Puma", "Prop", "Taxi", "Lung", "Pork", "Dirt", "Clue", "Copy", "Bash", "Yoga", "Text", "Crow", "Pray",
-			"Size", "Next", "Oval", "Zinc", "Hack", "Diss", "Fold", "Fury", "Sofa", "Numb", "Joke", "Eggs", "Comb",
+			"Size", "Next", "Oval", "Pro", "Hack", "Diss", "Fold", "Fury", "Sofa", "Numb", "Joke", "Eggs", "Comb",
 			"Whip", "Calf", "Monk", "Tomb", "Navy", "Apex", "Twin", "Pump", "Hulk", "Bulk", "Swim", "Dumb", "Pill",
 			"Lens", "Quiz", "Geek", "Halo", "Howl", "Mime", "Debt", "Pulp", "Term", "Feud", "Rich" };
 
@@ -25,7 +25,7 @@ public class SpellThisWords {
 			"Square", "Galaxy", "League", "Genius", "Helium", "Uranus", "Object", "Motion", "Volcano", "Rhythm",
 			"Movies", "Cowboy", "Legacy", "Trophy", "Social", "Thunder", "Needle", "Boxing", "Pocket", "Jacket",
 			"Villain", "Muscle", "Effect", "Accent", "Orphan", "Karate", "Victory", "Station", "Advice", "Charge",
-			"Jaguar", "College", "Biscuit", "Central", "Contact", "Trigger", "Lyrical", "Quality", "Warrior", "Society",
+			"Jaguar", "College", "Biscuit", "Central", "Contact", "Trigger", "Lyrical", "Present", "Warrior", "Society",
 			"Sweater" };
 
 	String[] wordsHard = { "Valkyire", "Football", "Strength", "February", "Building", "Relationship", "Calendar",

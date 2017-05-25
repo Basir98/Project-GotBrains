@@ -10,7 +10,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
+/**
+ * Class for the game menu you see before the game starts.
+ * 
+ * @author Alper Kilic, Farid Razwan
+ *
+ */
 public class SpellThisMenu extends JPanel implements ActionListener {
 	private Controller controller;
 

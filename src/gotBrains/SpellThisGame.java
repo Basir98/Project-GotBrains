@@ -25,7 +25,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-
+/**
+ * A class that holds the game UI and the game logic.
+ * 
+ * @author Alper Kilic, Farid Razwan, Isak Hartman
+ *
+ */
 public class SpellThisGame extends JPanel implements ActionListener {
 	private String rightAnswer;
 	private Controller controller;
@@ -148,7 +153,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
 		timer.start();
 	}
 
-	public Action action() {
+	public Action action() { //Method that gives points and checks if the User types in the right answer.
 		action = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				if (!textField.getText().equals("")) {
@@ -178,11 +183,11 @@ public class SpellThisGame extends JPanel implements ActionListener {
 		return action;
 	}
 
-	public void updateScore() {
+	public void updateScore() { //Updates the score
 		lblScore.setText("Score: " + score);
 	}
 
-	public void gameOver() {
+	public void gameOver() { //Method that stops the game when the time is up.
 		textField.setEditable(false);
 		textField.setText("");
 		gameLog.append("\nGame over, time's up!\n" + "Your result: " + score + " point(s).\n");
@@ -190,7 +195,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
 		timer.interrupt();
 	}
 
-	public void restart() {
+	public void restart() { //Method that restarts the game when the user presses the button "restart".
 		controller.newSpellThisScore(score);
 		textField.setText("");
 		timer.interrupt();
@@ -211,7 +216,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
 		this.difficulty = difficulty;
 	}
 
-	public void startLevel() {
+	public void startLevel() { //Writes out the difficulty in the gamelog and starts the game.
 		String difficultyStr = "No";
 		if (this.difficulty == 1)
 			difficultyStr = "Easy";
@@ -229,14 +234,14 @@ public class SpellThisGame extends JPanel implements ActionListener {
 
 	}
 
-	public void loadWords() {
+	public void loadWords() { //Gets the words from the class SpellThisWords.
 		SpellThisWords wordsList = new SpellThisWords();
 		wordsEasy = wordsList.getEasyWords();
 		wordsMedium = wordsList.getMediumWords();
 		wordsHard = wordsList.getHardWords();
 	}
 
-	protected void paintComponent(Graphics g) {
+	protected void paintComponent(Graphics g) { //The gameUI.
 		ImageIcon background = new ImageIcon("images/spellThisBackground.png");
 		super.paintComponent(g);
 		g.drawImage(background.getImage(), 0, 0, null);
