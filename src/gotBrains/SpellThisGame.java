@@ -375,7 +375,11 @@ public class SpellThisGame extends JPanel implements ActionListener {
 
 		}
 	}
-
+/**
+ * A private class for the timer.
+ * @author Alper Kilic, Farid Razwan
+ *
+ */
 	private class CountDownTimer extends Thread {
 		private int minutes;
 		private int seconds;
