@@ -6,12 +6,15 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-
 import javax.swing.*;
 
+/**
+ * The panel that holds the leaderboardUI
+ * @author Isak Hartman
+ *
+ */
 public class Leaderboard extends JPanel implements ActionListener {
-
+	
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
 	private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
 	private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
@@ -23,7 +26,11 @@ public class Leaderboard extends JPanel implements ActionListener {
 	private Color fontColor = new Color(80, 80, 80);
 
 	private Controller controller;
-
+	
+	/**
+	 * Places components and adds actionlisteners.
+	 * @param controller
+	 */
 	public Leaderboard(Controller controller) {
 		this.controller = controller;
 		setLayout(null);
@@ -79,13 +86,17 @@ public class Leaderboard extends JPanel implements ActionListener {
 		leaderboardScore.setText(controller.getLeaderboardScore());
 		leaderboardScore.setSelectionColor(new Color(0, 0, 0, 0));
 	}
-
+	/**
+	 * Paints the panel as desired
+	 */
 	protected void paintComponent(Graphics g) {
 		ImageIcon background = new ImageIcon("images/leaderboardBackground.png");
 		super.paintComponent(g);
 		g.drawImage(background.getImage(), 0, 0, null);
 	}
-
+	/**
+	 * Triggered when the user presses a button
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnQuit) {
 			controller.buttonSound();

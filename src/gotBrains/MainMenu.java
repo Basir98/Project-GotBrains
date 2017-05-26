@@ -6,7 +6,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-
+/**
+ * Panel that holds the components for the mainmenu.
+ * 
+ * @author Isak Hartman, Felix Jönsson
+ *
+ */
 public class MainMenu extends JPanel implements ActionListener {
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
 	private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
@@ -26,6 +31,10 @@ public class MainMenu extends JPanel implements ActionListener {
 	private Font font = new Font("Monospaced", Font.BOLD, 18);
 	private Controller controller;
 
+	/**
+	 * Places components and adds actionlistener to buttons.
+	 * @param controller
+	 */
 	public MainMenu(Controller controller) {
 		this.controller = controller;
 		setLayout(null);
@@ -48,7 +57,7 @@ public class MainMenu extends JPanel implements ActionListener {
 		btnMinimize.setBounds(716, 2, 40, 35);
 		btnMinimize.addActionListener(this);
 		btnMinimize.setRolloverIcon(new ImageIcon("images/minimizeButtonHover.png"));
-		
+
 		add(fieldUsername);
 		fieldUsername.setOpaque(false);
 		fieldUsername.setHorizontalAlignment(JTextField.CENTER);
@@ -60,7 +69,7 @@ public class MainMenu extends JPanel implements ActionListener {
 		fieldUsername.setBorder(BorderFactory.createEmptyBorder());
 		fieldUsername.setForeground(new Color(80, 80, 80));
 		fieldUsername.setBounds(300, 260, 200, 30);
-		
+
 		add(btnCalculateThis);
 		btnCalculateThis.setOpaque(false);
 		btnCalculateThis.setContentAreaFilled(false);
@@ -68,7 +77,7 @@ public class MainMenu extends JPanel implements ActionListener {
 		btnCalculateThis.setBounds(275, 300, 250, 50);
 		btnCalculateThis.addActionListener(this);
 		btnCalculateThis.setRolloverIcon(new ImageIcon("images/calculateThisButtonHover.png"));
-		
+
 		add(btnMemorizeThis);
 		btnMemorizeThis.setOpaque(false);
 		btnMemorizeThis.setContentAreaFilled(false);
@@ -76,7 +85,7 @@ public class MainMenu extends JPanel implements ActionListener {
 		btnMemorizeThis.setBounds(275, 360, 250, 50);
 		btnMemorizeThis.addActionListener(this);
 		btnMemorizeThis.setRolloverIcon(new ImageIcon("images/memorizeThisButtonHover.png"));
-		
+
 		add(btnSpellThis);
 		btnSpellThis.setOpaque(false);
 		btnSpellThis.setContentAreaFilled(false);
@@ -104,18 +113,22 @@ public class MainMenu extends JPanel implements ActionListener {
 		btnToggleSound.setBorderPainted(false);
 		btnToggleSound.setBounds(40, 560, 32, 32);
 		btnToggleSound.addActionListener(this);
-		
+
 		add(lblVersion);
 		lblVersion.setBounds(725, 575, 75, 20);
 
 	}
-
+	/**
+	 * Paints the panel as desired
+	 */
 	protected void paintComponent(Graphics g) {
 		ImageIcon background = new ImageIcon("images/openingWindowBackground.png");
 		super.paintComponent(g);
 		g.drawImage(background.getImage(), 0, 0, null);
 	}
-
+	/**
+	 * Triggered when a button is being pressed.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnQuit) {
 			controller.buttonSound();
@@ -124,7 +137,7 @@ public class MainMenu extends JPanel implements ActionListener {
 		} else if (e.getSource() == btnMinimize) {
 			controller.buttonSound();
 			controller.minimizeApp();
-			
+
 		} else if (e.getSource() == btnSpellThis) {
 			controller.buttonSound();
 			controller.addPlayer(fieldUsername.getText());

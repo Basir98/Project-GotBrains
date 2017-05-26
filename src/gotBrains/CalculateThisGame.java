@@ -47,6 +47,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 	private JLabel lblEnterIcon = new JLabel(new ImageIcon("images/enterIcon.png"));
 
 	/**
+	 * Places components and also starts the timer
 	 * 
 	 * @param controller
 	 */
@@ -151,10 +152,20 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 		timer.start();
 	}
 
+	/**
+	 * Sets the current difficulty to param difficulty
+	 * 
+	 * @param difficulty
+	 */
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
 	}
 
+	/**
+	 * Starts the game by instantiating the inner class CalculateThis. Let's the
+	 * user know what level is being played and how many points 1 correct answer
+	 * is worth.
+	 */
 	public void startLevel() {
 		String difficultyStr = "No";
 		if (this.difficulty == 1)
@@ -170,6 +181,14 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 		calculateThis.newTask();
 	}
 
+	/**
+	 * This method is triggered when the user presses "ENTER"-button in the
+	 * textfield. Figures out in the input was correct or incorrect, gives the
+	 * user the corresponding sound and info in gameLog and a new question if
+	 * answer were correct. Also manages the score count.
+	 * 
+	 * @return
+	 */
 	public Action action() {
 		action = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
@@ -229,11 +248,18 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 		};
 		return action;
 	}
-	
+
+	/**
+	 * This method is called to update the score label to current score.
+	 */
 	public void updateScore() {
 		lblScore.setText("Score: " + score);
 	}
 
+	/**
+	 * This method is called to stop the game, stop the timer and add the score
+	 * to the HighscoreManager class via controller.
+	 */
 	public void gameOver() {
 		textField.setEditable(false);
 		textField.setText("");
@@ -242,6 +268,10 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 		timer.interrupt();
 	}
 
+	/**
+	 * This method is called to restart the game. Adds the score to
+	 * HighscoreManager class and resets the game.
+	 */
 	public void restart() {
 		controller.newCalculateThisScore(score);
 		textField.setText("");
@@ -256,7 +286,9 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 		calculateThis.newTask();
 		textField.grabFocus();
 	}
-
+	/**
+	 * Paints the panel with figures and a background
+	 */
 	protected void paintComponent(Graphics g) {
 		ImageIcon background = new ImageIcon("images/calculateThisBackground.png");
 		super.paintComponent(g);
@@ -278,7 +310,9 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 		g2.drawRect(577, 365, 300, 300);
 
 	}
-
+	/**
+	 * Triggered when user presses a button
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMenu) {
 			controller.buttonSound();
@@ -298,10 +332,16 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 			restart();
 		}
 	}
-
+	/**
+	 * Inner private class that handles the new tasks for the game.
+	 * @author Hartman
+	 *
+	 */
 	private class CalculateThis {
 		int questionNbr = 1;
-
+		/**
+		 * Gives the user a new task depending on the chosen difficulty
+		 */
 		public void newTask() {
 			int range;
 			switch (difficulty) {
@@ -355,8 +395,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * A Timer class that handles the GUI game timer.
-	 * 
+	 * A  inner private Timer class that handles the game timer.
 	 * @author Isak Hartman, Felix Jönsson
 	 *
 	 */
@@ -399,7 +438,9 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 				System.out.println("Timer was interrupted.");
 			}
 		}
-
+		/**
+		 * Returns the wanted String syntax.
+		 */
 		public String toString() {
 			return minutes + " min" + ", " + seconds + " sec";
 		}

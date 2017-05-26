@@ -9,6 +9,7 @@ import javax.swing.text.DefaultStyledDocument;
  * Class that limits the amount of characters in a component.
  * @author Micha - http://www.javaworld.com/article/2075630/swing-gui-programming/jtextarea-automatic-line-break.html
  *
+ * This class is not used. 
  */
 public class LimitedRowLengthDocument extends DefaultStyledDocument {
 

@@ -9,8 +9,9 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 /**
  * Custom Scrollbar used in JScrollPanes
- * 
- * @author http://www.programcreek.com/java-api-examples/index.php?api=javax.swing.plaf.basic.BasicScrollBarUI
+ *
+ * @author http://www.programcreek.com/java-api-examples/index.php?api=javax.swing.plaf.basic.BasicScrollBarUI 
+ * -modified by @author Isak Hartman
  *
  */
 

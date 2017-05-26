@@ -16,13 +16,16 @@ public final class LengthRestrictedDocument extends PlainDocument {
 	/**
 	 * Sets the limit to the paramteter value.
 	 * 
-	 * @param int
-	 *            limit
+	 * @param limit
 	 */
 	public LengthRestrictedDocument(int limit) {
 		this.limit = limit;
 	}
 
+	/**
+	 * If the input is smaller or equal to limit, the string is inserted to the
+	 * component, otherwise it is not.
+	 */
 	public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
 		if (str == null)
 			return;

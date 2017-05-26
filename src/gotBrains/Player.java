@@ -93,15 +93,4 @@ public class Player implements Serializable {
 	public String toString() {
 		return "Result: \n\n" + "Username: " + username + "\nScrabble Score: " + scrabbleScore + "\nSimon Says score: " + simonSaysScore + "\nMath Game score: " + mathGameScore + "\nTotal score: " + getTotalScore();
 	}
-	/*
-	 * A main method we used for testing the code.
-	 */
-//	public static void main(String[] args) {
-//		Player player = new Player("Felix");
-//		player.setMathGameScore(2);
-//		player.setScrabbleScore(10);
-//		player.setSimonSaysScore(6);
-//		System.out.println(player.toString());
-//		System.out.println("Total score: " + getTotalScore();
-//	}
 }

@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.sound.sampled.*;
 import javax.swing.JFrame;
@@ -47,7 +46,7 @@ public class Controller {
 	private HighscoreManager hm = new HighscoreManager();
 	private CardLayout cl = new CardLayout();
 	private Font customFont;
-	
+
 	public Controller(JFrame frame) {
 		this.frame = frame;
 		panelContainer.setLayout(cl);
@@ -55,6 +54,10 @@ public class Controller {
 		startMusic();
 	}
 
+	/**
+	 * Instantiates the panels, adds them to the cardlayout-container, sets the
+	 * frame preferences and shows the menu
+	 */
 	public void loadApp() {
 		mainMenu = new MainMenu(this);
 		spellThisMenu = new SpellThisMenu(this);
@@ -85,6 +88,14 @@ public class Controller {
 		mainMenu.fieldUsername.grabFocus();
 	}
 
+	/**
+	 * Returns a custom font using filepath, font style and font size
+	 * 
+	 * @param filepath
+	 * @param style
+	 * @param size
+	 * @return Font
+	 */
 	public Font getCustomFont(String filepath, int style, int size) {
 		try {
 			customFont = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream(new File(filepath))).deriveFont(style,
@@ -101,6 +112,9 @@ public class Controller {
 		return customFont;
 	}
 
+	/**
+	 * Starts the background music, loops it 100 times (~60 minutes)
+	 */
 	public void startMusic() {
 		try {
 			AudioInputStream ais = AudioSystem.getAudioInputStream(backgroundMusic);
@@ -115,6 +129,9 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * Toggles the mutedMusic variable between muted and unmuted.
+	 */
 	public void toggleMusic() {
 		if (!mutedMusic) {
 			music.stop();
@@ -125,6 +142,9 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * Toggles the mutedSound variable between muted and unmuted.
+	 */
 	public void toggleSound() {
 		if (mutedSound) {
 			mutedSound = false;
@@ -132,6 +152,12 @@ public class Controller {
 			mutedSound = true;
 	}
 
+	/**
+	 * If sound is not muted the following is executed. If param is true, the
+	 * correctSound is played. Else if false, the incorrectSound is played.
+	 * 
+	 * @param correct
+	 */
 	public void correctSound(boolean correct) {
 		if (!mutedSound) {
 			try {
@@ -152,6 +178,9 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * Plays an alarmsound if the sound is not muted.
+	 */
 	public void alarmSoundSound() {
 		if (!mutedSound) {
 			try {
@@ -165,9 +194,12 @@ public class Controller {
 			}
 		}
 	}
-	
+
+	/**
+	 * Plays a buttonSound if the sound is not muted.
+	 */
 	public void buttonSound() {
-		if(!mutedSound) {
+		if (!mutedSound) {
 			try {
 				AudioInputStream ais = AudioSystem.getAudioInputStream(buttonSound);
 				Clip sound = AudioSystem.getClip();
@@ -180,18 +212,30 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * Shows the SpellThisMenu
+	 */
 	public void showSpellThisMenu() {
 		cl.show(panelContainer, "spellThisMenu");
 	}
 
+	/**
+	 * Shows the MemorizeThisWindow
+	 */
 	public void showMemorizeThisWindow() {
 		cl.show(panelContainer, "memorizeThisWindow");
 	}
 
+	/**
+	 * Shows the CalculateThisMenu
+	 */
 	public void showCalculateThisMenu() {
 		cl.show(panelContainer, "calculateThisMenu");
 	}
 
+	/**
+	 * Shows the Simon Panel
+	 */
 	public void startSimon() {
 		simon = new Simon(this);
 		panelContainer.add(simon, "simonGame");
@@ -199,6 +243,11 @@ public class Controller {
 		cl.show(panelContainer, "simonGame");
 	}
 
+	/**
+	 * Shows the SpellThisGame panel, grabs focus on the textField  and instantiates the Game
+	 * 
+	 * @param difficulty
+	 */
 	public void startSpellThisGame(int difficulty) {
 		spellThisGame = new SpellThisGame(this);
 		panelContainer.add(spellThisGame, "spellThisGame");
@@ -209,6 +258,11 @@ public class Controller {
 		spellThisGame.textField.grabFocus();
 	}
 
+	/**
+	 * Shows the CalculateThisGame panel, grabs focus on the textField  and instantiates the Game
+	 * 
+	 * @param difficulty
+	 */
 	public void startCalculateThisGame(int difficulty) {
 		calculateThisGame = new CalculateThisGame(this);
 		panelContainer.add(calculateThisGame, "calculateThisGame");
@@ -219,53 +273,107 @@ public class Controller {
 		calculateThisGame.textField.grabFocus();
 	}
 
+	/**
+	 * Shows the Leaderboard panel
+	 */
 	public void showLeaderboard() {
 		leaderboard = new Leaderboard(this);
 		panelContainer.add(leaderboard, "leaderboard");
 		cl.show(panelContainer, "leaderboard");
 	}
 
+	/**
+	 * Shows the start screen, the MainMenu
+	 */
 	public void showMainMenu() {
 		cl.show(panelContainer, "mainMenu");
 		mainMenu.fieldUsername.grabFocus();
 	}
 
+	/**
+	 * Minimizes the application to the taskbar
+	 */
 	public void minimizeApp() {
 		frame.setState(JFrame.ICONIFIED);
 	}
 
+	/**
+	 * Sets the currentUsername to param username
+	 * 
+	 * @param username
+	 */
 	public void setCurrentUsername(String username) {
 		this.currentUsername = username;
 	}
 
+	/**
+	 * Adds the player to the HighscoreManager class.
+	 * 
+	 * @param username
+	 */
 	public void addPlayer(String username) {
 		hm.addPlayer(username);
 	}
 
+	/**
+	 * Returns the leaderboard placement
+	 * 
+	 * @return
+	 */
 	public String getLeaderboardPlacement() {
 		return hm.getLeaderboardPlacement();
 	}
 
+	/**
+	 * returns the leaderboard scores
+	 * 
+	 * @return
+	 */
 	public String getLeaderboardScore() {
 		return hm.getLeaderboardScore();
 	}
 
+	/**
+	 * Clears the leaderboard by clearing the scores.dat via HighscoreManager
+	 * class
+	 */
 	public void clearLeaderboard() {
 		hm.clearScores();
 	}
 
+	/**
+	 * Adds the players score to the HighscoreManager class
+	 * 
+	 * @param score
+	 */
 	public void newCalculateThisScore(int score) {
 		hm.addCalculateThisScore(this.currentUsername, score);
 	}
 
+	/**
+	 * Adds the players score to the HighscoreManager class
+	 * 
+	 * @param score
+	 */
 	public void newSpellThisScore(int score) {
 		hm.addSpellThisScore(this.currentUsername, score);
 	}
 
+	/**
+	 * Adds the players score to the HighscoreManager class
+	 * 
+	 * @param score
+	 */
 	public void newMemorizeThisScore(int score) {
 		hm.addMemorizeThisScore(this.currentUsername, score);
 	}
 
+	/**
+	 * Main method, starts the application by creating a frame and instantiates
+	 * the controller using the frame as param.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		Controller controller = new Controller(frame);

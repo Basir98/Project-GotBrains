@@ -2,6 +2,12 @@ package gotBrains;
 
 import java.util.LinkedList;
 
+/**
+ * Holds the words for SpellThisGame
+ * 
+ * @author Isak Hartman
+ *
+ */
 public class SpellThisWords {
 	String[] wordsEasy = { "Sun", "Son", "Ball", "Wood", "Fond", "Nine", "Home", "Girl", "Fish", "Hell", "Five", "Hope",
 			"Wife", "King", "Wifi", "Hair", "City", "Math", "Desk", "Foot", "Cool", "Body", "Golf", "Asia", "Work",
@@ -49,6 +55,9 @@ public class SpellThisWords {
 		populateLists();
 	}
 
+	/**
+	 * Transfers the words[] to the corresponding lists.
+	 */
 	public void populateLists() {
 		for (int i = 0; i < wordsEasy.length; i++) {
 			easyWords.add(wordsEasy[i]);
@@ -61,14 +70,29 @@ public class SpellThisWords {
 		}
 	}
 
+	/**
+	 * Returns the easyWords-list
+	 * 
+	 * @return
+	 */
 	public LinkedList<String> getEasyWords() {
 		return easyWords;
 	}
 
+	/**
+	 * Returns the mediumWords-list
+	 * 
+	 * @return
+	 */
 	public LinkedList<String> getMediumWords() {
 		return mediumWords;
 	}
 
+	/**
+	 * Returns the hardWords-list
+	 * 
+	 * @return
+	 */
 	public LinkedList<String> getHardWords() {
 		return hardWords;
 	}

@@ -11,6 +11,12 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * The mane panel for Calculate this.
+ * 
+ * @author Isak Hartman, Felix Jönsson
+ *
+ */
 public class CalculateThisMenu extends JPanel implements ActionListener {
 	private Controller controller;
 
@@ -25,6 +31,11 @@ public class CalculateThisMenu extends JPanel implements ActionListener {
 	private JButton btnStartHard = new JButton(new ImageIcon("images/hardButton.png"));
 	private JButton btnLeaderboard = new JButton("LEADERBOARD");
 
+	/**
+	 * PLaces components and sets actionlisteners.
+	 * 
+	 * @param controller
+	 */
 	public CalculateThisMenu(Controller controller) {
 		this.controller = controller;
 		setLayout(null);
@@ -82,6 +93,9 @@ public class CalculateThisMenu extends JPanel implements ActionListener {
 
 	}
 
+	/**
+	 * Paints the panel to desired look
+	 */
 	protected void paintComponent(Graphics g) {
 		ImageIcon background = new ImageIcon("images/calculateThisBackground.png");
 		super.paintComponent(g);
@@ -92,6 +106,9 @@ public class CalculateThisMenu extends JPanel implements ActionListener {
 
 	}
 
+	/**
+	 * Triggered when the user presses a button
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnMenu) {
 			controller.buttonSound();
