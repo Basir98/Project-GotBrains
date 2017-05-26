@@ -3,6 +3,12 @@ package gotBrains;
 import java.util.*;
 import java.io.*;
 
+/**
+ * The class that handles the logic of taking game scores and writing them in the "scores"-dat file.
+ * 
+ * @author Isak Hartman, Felix Jönsson
+ *
+ */
 public class HighscoreManager {
 	private ArrayList<Player> players;
 	private static final String HIGHSCORE_FILE = "files/scores.dat";
@@ -13,17 +19,26 @@ public class HighscoreManager {
 		players = new ArrayList<Player>();
 	}
 
+	/*
+	 * A method that collects Player-objects and sorts them.
+	 */
 	public ArrayList<Player> getScores() {
 		loadScoreFile();
 		sort();
 		return players;
 	}
 
+	/*
+	 * Sorts the Player-objects.
+	 */
 	private void sort() {
 		HighscoreComparator comparator = new HighscoreComparator();
 		Collections.sort(players, comparator);
 	}
 
+	/*
+	 * Adds a new Player-object to the list if the username used is new.
+	 */
 	public void addPlayer(String username) {
 		loadScoreFile();
 		if (!usernameTaken(players, username)) {
@@ -32,6 +47,9 @@ public class HighscoreManager {
 		}
 	}
 
+	/*
+	 * If the username used has been used before this method returns the boolean "true".
+	 */
 	public boolean usernameTaken(ArrayList<Player> players, String username) {
 		for (Player object : players) {
 			if (object.getUsername().equals(username)) {
@@ -41,6 +59,10 @@ public class HighscoreManager {
 		return false;
 	}
 
+	/*
+	 * Compares the username used with the usernames in the current list. 
+	 * If the username used is a previously used one the score is compared in a method in another class and then set to be updated here.
+	 */
 	public void addCalculateThisScore(String username, int score) {
 		loadScoreFile();
 		for (int i = 0; i < players.size(); i++) {
@@ -51,6 +73,10 @@ public class HighscoreManager {
 		updateScoreFile();
 	}
 
+	/*
+	 * Compares the username used with the usernames in the current list. 
+	 * If the username used is a previously used one the score is compared in a method in another class and then set to be updated here.
+	 */
 	public void addSpellThisScore(String username, int score) {
 		loadScoreFile();
 		for (int i = 0; i < players.size(); i++) {
@@ -61,6 +87,10 @@ public class HighscoreManager {
 		updateScoreFile();
 	}
 
+	/*
+	 * Compares the username used with the usernames in the current list. 
+	 * If the username used is a previously used one the score is compared in a method in another class and then set to be updated here.
+	 */
 	public void addMemorizeThisScore(String username, int score) {
 		loadScoreFile();
 		for (int i = 0; i < players.size(); i++) {
@@ -71,12 +101,18 @@ public class HighscoreManager {
 		updateScoreFile();
 	}
 
+	/*
+	 * A method that clears the "scores"-dat file of it's current usernames.
+	 */
 	public void clearScores() {
 		loadScoreFile();
 		players.clear();
 		updateScoreFile();
 	}
 
+	/*
+	 * Loads the Player-objects from the file and stores them in the players-list.
+	 */
 	public void loadScoreFile() {
 		try {
 			inputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILE));
@@ -99,6 +135,9 @@ public class HighscoreManager {
 		}
 	}
 
+	/* 
+	 * Writes the current player-list to the dat-file.
+	 */
 	public void updateScoreFile() {
 		try {
 			outputStream = new ObjectOutputStream(new FileOutputStream(HIGHSCORE_FILE));
@@ -119,17 +158,10 @@ public class HighscoreManager {
 		}
 	}
 
-	public ArrayList getHighscoreList(int elements) {
-		ArrayList<Player> topPlayers = new ArrayList(elements);
-		if (players.size() < elements) {
-			elements = players.size();
-		}
-		for (int i = 0; i < elements; i++) {
-			topPlayers.add(players.get(i));
-		}
-		return topPlayers;
-	}
-
+	/*
+	 * A method that sorts the Player-objects based on their total scores and gives them a placement on the leaderboard.
+	 * Only gives a placement to a maximum of 10 different players.
+	 */
 	public String getLeaderboardPlacement() {
 		String leaderboardPlacement = "";
 		int max = 10;
@@ -144,20 +176,14 @@ public class HighscoreManager {
 		}
 		while (i < x) {
 			leaderboardPlacement += String.format("%4d.      %-14s\n", (i + 1), players.get(i).getUsername());
-
-			// highscoreString += String.format("%3s",(i + 1) + ".") +
-			// String.format("%-25s","\t" + players.get(i).getUsername()) + "\t"
-			// + String.format("%-4d", players.get(i).getTotalScore()) + "\n";
-
-			// + "" + String.format("%4d", players.get(i).getMathGameScore()) +
-			// "" + String.format("%4d", players.get(i).getScrabbleScore()) + ""
-			// + String.format("%4d", players.get(i).getSimonSaysScore()) +
-			// "\n";
 			i++;
 		}
 		return leaderboardPlacement;
 	}
 
+	/*
+	 * A method that sorts the scores and puts them in the order of the highest to lowest.
+	 */
 	public String getLeaderboardScore() {
 		String leaderboardScore = "";
 		int max = 10;
@@ -177,8 +203,16 @@ public class HighscoreManager {
 		return leaderboardScore;
 	}
 
+	/**
+	 * An inner class that compares the scores of players in the player-list.
+	 * @author Isak Hartman, Felix Jönsson
+	 *
+	 */
 	public class HighscoreComparator implements Comparator<Player> {
 
+		/**
+		 * The method that compares players in the player-list.
+		 */
 		public int compare(Player player1, Player player2) {
 			int sc1 = player1.getTotalScore();
 			int sc2 = player2.getTotalScore();
