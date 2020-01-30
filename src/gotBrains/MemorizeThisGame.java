@@ -100,7 +100,7 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
 	}
 	
 	protected void paintComponent(Graphics g) {
-		ImageIcon background = new ImageIcon("images/simonSaysBackground.png");
+		ImageIcon background = new ImageIcon("images/memorizeThisBackground.png");
 		super.paintComponent(g);
 		g.drawImage(background.getImage(), 0, 0, null);
 	}
