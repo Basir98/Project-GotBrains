@@ -32,7 +32,7 @@ public class Controller {
 	private CalculateThisMenu calculateThisMenu;
 	private CalculateThisGame calculateThisGame;
 	private Leaderboard leaderboard;
-	private Simon simon;
+	private MemorizeThisGame memorizeThisGame;
 	private String currentUsername;
 	private File backgroundMusic = new File("sounds/backgroundMusic.wav");
 	private File correctSound = new File("sounds/correctSound.wav");
@@ -237,8 +237,8 @@ public class Controller {
 	 * Shows the Simon Panel
 	 */
 	public void startSimon() {
-		simon = new Simon(this);
-		panelContainer.add(simon, "simonGame");
+		memorizeThisGame = new MemorizeThisGame(this);
+		panelContainer.add(memorizeThisGame, "simonGame");
 
 		cl.show(panelContainer, "simonGame");
 	}

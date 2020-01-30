@@ -24,6 +24,7 @@ public class MemorizeThisWindow extends JPanel implements ActionListener {
 	private JButton btnQuit = new JButton(iconQuit);
 	private JButton btnMenu = new JButton(iconMenu);
 	private JButton btnp = new JButton();
+	private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
 	
 	private Controller controller;
 	private int score = 0;
@@ -44,6 +45,23 @@ public class MemorizeThisWindow extends JPanel implements ActionListener {
 		btnQuit.setBounds(758, 2, 40, 35);
 		btnQuit.addActionListener(this);
 		btnQuit.setRolloverIcon(iconQuitHover);
+
+
+		/*
+		Added minimize button to this window
+		Andreas and Matilda
+		 */
+		add(btnMinimize);
+		btnMinimize.setOpaque(false);
+		btnMinimize.setContentAreaFilled(false);
+		btnMinimize.setBorderPainted(false);
+		btnMinimize.setFocusPainted(false);
+		btnMinimize.setBounds(716, 2, 40, 35);
+		btnMinimize.addActionListener((e)-> {
+			controller.buttonSound();
+			controller.minimizeApp();
+		});
+		btnMinimize.setRolloverIcon(new ImageIcon("images/minimizeButtonHover.png"));
 
 		add(btnMenu);
 		btnMenu.setOpaque(false);

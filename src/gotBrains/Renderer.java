@@ -14,9 +14,9 @@ public class Renderer extends JPanel
 	{
 		super.paintComponent(g);
 
-		if (Simon.simon != null)
+		if (MemorizeThisGame.memorizeThisGame != null)
 		{
-			Simon.simon.paint((Graphics2D) g);
+			MemorizeThisGame.memorizeThisGame.paint((Graphics2D) g);
 		}
 	}
 

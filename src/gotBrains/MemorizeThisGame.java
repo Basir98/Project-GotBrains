@@ -20,9 +20,9 @@ import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-public class Simon extends JPanel implements ActionListener, MouseListener {
+public class MemorizeThisGame extends JPanel implements ActionListener, MouseListener {
 
-	public static Simon simon;
+	public static MemorizeThisGame memorizeThisGame;
 	private JButton b1 = new JButton();
 	public Renderer renderer;
 	public static final int WIDTH = 300, HEIGHT = 300;
@@ -37,10 +37,11 @@ public class Simon extends JPanel implements ActionListener, MouseListener {
 	
 	private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
 	private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
+	private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
 
-	public Simon(Controller controller) {
+	public MemorizeThisGame(Controller controller) {
 		this.controller = controller;
-		simon = this;
+		memorizeThisGame = this;
 		setLayout(null);
 		setPreferredSize(new Dimension(800, 600));
 
@@ -55,6 +56,22 @@ public class Simon extends JPanel implements ActionListener, MouseListener {
 			 }
 		});
 		btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
+
+		/*
+		Added minimize button to this window
+		Andreas and Matilda
+		 */
+		add(btnMinimize);
+		btnMinimize.setOpaque(false);
+		btnMinimize.setContentAreaFilled(false);
+		btnMinimize.setBorderPainted(false);
+		btnMinimize.setFocusPainted(false);
+		btnMinimize.setBounds(716, 2, 40, 35);
+		btnMinimize.addActionListener((e)-> {
+			controller.buttonSound();
+			controller.minimizeApp();
+		});
+		btnMinimize.setRolloverIcon(new ImageIcon("images/minimizeButtonHover.png"));
 
 		add(btnMenu);
 		btnMenu.setOpaque(false);
