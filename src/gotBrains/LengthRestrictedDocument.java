@@ -6,32 +6,31 @@ import javax.swing.text.PlainDocument;
 
 /**
  * A class used for restricting maximum characters of a textfield etc.
- * 
- * @author Isak Hartman
  *
+ * @author Isak Hartman
  */
 public final class LengthRestrictedDocument extends PlainDocument {
-	private final int limit;
+    private final int limit;
 
-	/**
-	 * Sets the limit to the paramteter value.
-	 * 
-	 * @param limit
-	 */
-	public LengthRestrictedDocument(int limit) {
-		this.limit = limit;
-	}
+    /**
+     * Sets the limit to the paramteter value.
+     *
+     * @param limit
+     */
+    public LengthRestrictedDocument(int limit) {
+        this.limit = limit;
+    }
 
-	/**
-	 * If the input is smaller or equal to limit, the string is inserted to the
-	 * component, otherwise it is not.
-	 */
-	public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-		if (str == null)
-			return;
+    /**
+     * If the input is smaller or equal to limit, the string is inserted to the
+     * component, otherwise it is not.
+     */
+    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+        if (str == null)
+            return;
 
-		if ((getLength() + str.length()) <= limit) {
-			super.insertString(offs, str, a);
-		}
-	}
+        if ((getLength() + str.length()) <= limit) {
+            super.insertString(offs, str, a);
+        }
+    }
 }

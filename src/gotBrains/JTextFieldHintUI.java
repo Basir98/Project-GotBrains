@@ -1,20 +1,20 @@
 package gotBrains;
 
-import java.awt.Color;  
-import java.awt.Graphics;  
-import java.awt.event.FocusEvent;  
-import java.awt.event.FocusListener;  
-import javax.swing.plaf.basic.BasicTextFieldUI;  
+import javax.swing.plaf.basic.BasicTextFieldUI;
 import javax.swing.text.JTextComponent;
+import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
 /**
  * A class that sets a hint in a Textfield if the textfield is empty.
- * 
+ *
  * @author https://blogs.sequoiainc.com/java-swing-hint-text-on-a-jtextfield/
  * Modified by @author Isak Hartman
  */
-public class JTextFieldHintUI extends BasicTextFieldUI implements FocusListener {  
+public class JTextFieldHintUI extends BasicTextFieldUI implements FocusListener {
     private String hint;
-    private Color  hintColor;
+    private Color hintColor;
 
     public JTextFieldHintUI(String hint, Color hintColor) {
         this.hint = hint;
@@ -37,7 +37,7 @@ public class JTextFieldHintUI extends BasicTextFieldUI implements FocusListener 
             g.setColor(hintColor);
             int padding = (component.getHeight() - component.getFont().getSize()) / 2;
             int inset = 18;
-            g.drawString(hint, inset, component.getHeight()-3 - padding);
+            g.drawString(hint, inset, component.getHeight() - 3 - padding);
         }
     }
 
