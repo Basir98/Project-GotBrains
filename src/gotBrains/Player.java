@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class Player implements Serializable {
     private String username;
-    private int scrabbleScore = 0, mathGameScore = 0, simonSaysScore = 0, totalScore = 0;
+    private int scrabbleScore = 0, mathGameScore = 0, memorizeThisScore = 0, totalScore = 0;
 
     /**
      * Constructor gets the username from user input at game start.
@@ -25,9 +25,9 @@ public class Player implements Serializable {
      *
      * @param int score
      */
-    public void setSimonSaysScore(int score) {
-        if (score > this.simonSaysScore) {
-            this.simonSaysScore = score;
+    public void setMemorizeThisScore(int score) {
+        if (score > this.memorizeThisScore) {
+            this.memorizeThisScore = score;
         }
     }
 
@@ -57,7 +57,7 @@ public class Player implements Serializable {
      * Sets the total score to the sum of the game scores.
      */
     public void setTotalScore() {
-        totalScore = getMathGameScore() + getScrabbleScore() + getSimonSaysScore();
+        totalScore = getMathGameScore() + getScrabbleScore() + getMemorizeThis();
     }
 
     /**
@@ -92,8 +92,8 @@ public class Player implements Serializable {
      *
      * @return int simonSaysScore
      */
-    public int getSimonSaysScore() {
-        return simonSaysScore;
+    public int getMemorizeThis() {
+        return memorizeThisScore;
     }
 
     /**
@@ -110,6 +110,6 @@ public class Player implements Serializable {
      * @return String toString
      */
     public String toString() {
-        return "Result: \n\n" + "Username: " + username + "\nScrabble Score: " + scrabbleScore + "\nSimon Says score: " + simonSaysScore + "\nMath Game score: " + mathGameScore + "\nTotal score: " + getTotalScore();
+        return "Result: \n\n" + "Username: " + username + "\nScrabble Score: " + scrabbleScore + "\nMemorizeThis score: " + memorizeThisScore + "\nMath Game score: " + mathGameScore + "\nTotal score: " + getTotalScore();
     }
 }

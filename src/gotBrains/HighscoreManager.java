@@ -96,7 +96,7 @@ public class HighscoreManager {
         loadScoreFile();
         for (int i = 0; i < players.size(); i++) {
             if (players.get(i).getUsername().equals(username)) {
-                players.get(i).setSimonSaysScore(score);
+                players.get(i).setMemorizeThisScore(score);
             }
         }
         updateScoreFile();

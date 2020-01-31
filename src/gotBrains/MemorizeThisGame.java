@@ -9,8 +9,6 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-
-
 public class MemorizeThisGame extends JPanel implements ActionListener, MouseListener {
 
     public static MemorizeThisGame memorizeThisGame;
@@ -22,8 +20,9 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
     public ArrayList<Integer> pattern;
     public Random random;
     private boolean gameOver;
-    private int score = 0;
+    private int totalScore;
     private int difficulty;
+    private int pointPerRound; // Easy: 10, Medium: 15, Hard: 20
 
     private Controller controller;
 
@@ -121,11 +120,14 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
      */
     public void setDifficulty(String difficulty) {
         if(difficulty.equals("easy")){
-            this.difficulty = 20;
+            this.difficulty = 20; // Speed of the colorchanges
+            this.pointPerRound = 10;
         }else if(difficulty.equals("medium")){
             this.difficulty = 15;
+            this.pointPerRound = 15;
         }else if(difficulty.equals("hard")){
             this.difficulty = 10;
+            this.pointPerRound = 20;
         }
     }
 
@@ -155,14 +157,15 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
 
                 dark = 2;
             }
+
         } else if (indexPattern == pattern.size()) {
             creatingPattern = true;
             indexPattern = 0;
             dark = 2;
+            totalScore += pointPerRound;
         }
 
         renderer.repaint();
-
     }
 
     public void paint(Graphics2D g) {
@@ -218,18 +221,16 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
 
         if (gameOver) {
             g.drawString("Game-Over", WIDTH / 2 - 60, HEIGHT / 2 + 5);
-            controller.newMemorizeThisScore(score);
-
+            controller.newMemorizeThisScore(totalScore); // SK3 Highscores - "must" En användare ska få poäng utifrån sin prestation och svårighetsgrad.
 
         } else {
             g.drawString(indexPattern + "/" + pattern.size(), WIDTH / 2 - 20, HEIGHT / 2 + 10);
-
         }
-
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+
         int x = e.getX(), y = e.getY();
 
         if (!creatingPattern && !gameOver) {
@@ -254,6 +255,7 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
                     gameOver = true;
                 }
             }
+
         } else if (gameOver) {
             start();
             gameOver = false;
@@ -275,5 +277,4 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
     @Override
     public void mouseExited(MouseEvent e) {
     }
-
 }
