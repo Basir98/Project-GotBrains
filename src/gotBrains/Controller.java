@@ -24,7 +24,7 @@ public class Controller {
     private MainMenu mainMenu;
     private SpellThisMenu spellThisMenu;
     private SpellThisGame spellThisGame;
-    private MemorizeThisWindow memorizeThisWindow;
+    private MemorizeThisMenu memorizeThisMenu;
     private CalculateThisMenu calculateThisMenu;
     private CalculateThisGame calculateThisGame;
     private Leaderboard leaderboard;
@@ -57,12 +57,12 @@ public class Controller {
     public void loadApp() {
         mainMenu = new MainMenu(this);
         spellThisMenu = new SpellThisMenu(this);
-        memorizeThisWindow = new MemorizeThisWindow(this);
+        memorizeThisMenu = new MemorizeThisMenu(this);
         calculateThisMenu = new CalculateThisMenu(this);
 
         panelContainer.add(mainMenu, "mainMenu");
         panelContainer.add(spellThisMenu, "spellThisMenu");
-        panelContainer.add(memorizeThisWindow, "memorizeThisWindow");
+        panelContainer.add(memorizeThisMenu, "memorizeThisWindow");
         panelContainer.add(calculateThisMenu, "calculateThisMenu");
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -230,13 +230,18 @@ public class Controller {
     }
 
     /**
-     * Shows the Simon Panel
+	 * Changed from Simon to MemorizeThis
+     * Shows the MemorizeThis Panel
+	 * Matilda and Andreas
      */
-    public void startSimon() {
+    public void startMemorizeThisGame(String difficulty) {
         memorizeThisGame = new MemorizeThisGame(this);
-        panelContainer.add(memorizeThisGame, "simonGame");
+        panelContainer.add(memorizeThisGame, "memorizeThisGame");
 
-        cl.show(panelContainer, "simonGame");
+        memorizeThisGame.setDifficulty(difficulty);
+        memorizeThisGame.start();
+
+        cl.show(panelContainer, "memorizeThisGame");
     }
 
     /**

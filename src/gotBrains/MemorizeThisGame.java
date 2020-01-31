@@ -9,6 +9,8 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Random;
 
+
+
 public class MemorizeThisGame extends JPanel implements ActionListener, MouseListener {
 
     public static MemorizeThisGame memorizeThisGame;
@@ -20,7 +22,8 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
     public ArrayList<Integer> pattern;
     public Random random;
     private boolean gameOver;
-    private int score;
+    private int score = 0;
+    private int difficulty;
 
     private Controller controller;
 
@@ -46,10 +49,10 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         });
         btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
 
-		/*
+		/**
 		Added minimize button to this window
 		Andreas and Matilda
-		 */
+		 **/
         add(btnMinimize);
         btnMinimize.setOpaque(false);
         btnMinimize.setContentAreaFilled(false);
@@ -109,11 +112,28 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         ticks = 0;
     }
 
+    /**
+     * Added difficulty levels easy, medium and hard
+     * Andreas Holm and Matilda Frimodig
+     * SK2 Svårighetsgrad - “must”
+     * En användare ska kunna ändra svårighetsgraden på de olika spelen som finns.
+     * @param difficulty
+     */
+    public void setDifficulty(String difficulty) {
+        if(difficulty.equals("easy")){
+            this.difficulty = 20;
+        }else if(difficulty.equals("medium")){
+            this.difficulty = 15;
+        }else if(difficulty.equals("hard")){
+            this.difficulty = 10;
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         ticks++;
 
-        if (ticks % 20 == 0) {
+        if (ticks % this.difficulty == 0) {
             flashed = 0;
 
             if (dark >= 0) {
@@ -142,6 +162,7 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         }
 
         renderer.repaint();
+
     }
 
     public void paint(Graphics2D g) {
@@ -197,8 +218,12 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
 
         if (gameOver) {
             g.drawString("Game-Over", WIDTH / 2 - 60, HEIGHT / 2 + 5);
+            controller.newMemorizeThisScore(score);
+
+
         } else {
             g.drawString(indexPattern + "/" + pattern.size(), WIDTH / 2 - 20, HEIGHT / 2 + 10);
+
         }
 
     }
