@@ -36,3 +36,5 @@ files/scores.dat
 *.zip
 *.tar.gz
 *.rar
+*.classpath
+*.project

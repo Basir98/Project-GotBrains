@@ -113,6 +113,7 @@ public class Controller {
      */
     public void startMusic() {
         try {
+            System.out.println(backgroundMusic);
             AudioInputStream ais = AudioSystem.getAudioInputStream(backgroundMusic);
             music = AudioSystem.getClip();
             music.open(ais);
