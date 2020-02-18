@@ -22,7 +22,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-files/scores.dat
+*.dat
 *.class
 *.class
 *.class

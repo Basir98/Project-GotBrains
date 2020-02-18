@@ -86,17 +86,17 @@ public class CalculateThisGame extends JPanel implements ActionListener {
         add(lblNbr1);
         lblNbr1.setFont(font);
         lblNbr1.setForeground(darkGrey);
-        lblNbr1.setBounds(320, 320, 60, 30);
+        lblNbr1.setBounds(300, 320, 80, 30);
 
         add(lblOperation);
         lblOperation.setFont(font);
         lblOperation.setForeground(darkGrey);
-        lblOperation.setBounds(380, 320, 30, 30);
+        lblOperation.setBounds(385, 320, 30, 30);
 
         add(lblNbr2);
         lblNbr2.setFont(font);
         lblNbr2.setForeground(darkGrey);
-        lblNbr2.setBounds(410, 320, 60, 30);
+        lblNbr2.setBounds(420, 320, 80, 30);
 
         add(textField);
         textField.setOpaque(false);
@@ -350,8 +350,8 @@ public class CalculateThisGame extends JPanel implements ActionListener {
                         lblOperation.setText("-");
                         range = 9;
                     }
-                    lblNbr1.setText(Integer.toString(random.nextInt(range) + 1));
-                    lblNbr2.setText(Integer.toString(random.nextInt(range) + 1));
+                    lblNbr1.setText(Integer.toString(random.nextInt(range) + difficulty));
+                    lblNbr2.setText(Integer.toString(random.nextInt(range) + difficulty));
                     break;
                 case 5:
                     int tempChar5 = random.nextInt(3) + 1;
@@ -363,10 +363,10 @@ public class CalculateThisGame extends JPanel implements ActionListener {
                         range = 99;
                     } else {
                         lblOperation.setText("*");
-                        range = 9;
+                        range = 5;
                     }
-                    lblNbr1.setText(Integer.toString(random.nextInt(range) + 1));
-                    lblNbr2.setText(Integer.toString(random.nextInt(range) + 1));
+                    lblNbr1.setText(Integer.toString(random.nextInt(range) + difficulty));
+                    lblNbr2.setText(Integer.toString(random.nextInt(range) + difficulty));
                     break;
                 case 10:
                     int tempChar10 = random.nextInt(3) + 1;
@@ -378,10 +378,10 @@ public class CalculateThisGame extends JPanel implements ActionListener {
                         range = 999;
                     } else {
                         lblOperation.setText("*");
-                        range = 99;
+                        range = 10;
                     }
-                    lblNbr1.setText(Integer.toString(random.nextInt(range) + 1));
-                    lblNbr2.setText(Integer.toString(random.nextInt(range) + 1));
+                    lblNbr1.setText(Integer.toString(random.nextInt(range) + difficulty));
+                    lblNbr2.setText(Integer.toString(random.nextInt(range) + difficulty));
                     break;
 
             }
