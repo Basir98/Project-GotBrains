@@ -23,10 +23,14 @@ public class CalculateThisGame extends JPanel implements ActionListener {
     private Random random = new Random();
     private Action action;
 
+    private JButton btnHelp = new JButton(new ImageIcon("images/helpIcon.png"));
+
+
     private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
     private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
     private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
     private JButton btnRestart = new JButton(new ImageIcon("images/restartButton.png"));
+    private JButton btnJumpOver = new JButton(new ImageIcon("images/jumpOver.png"));
     JTextField textField = new JTextField();
     private JTextArea gameLog = new JTextArea();
     private JScrollPane logScroll;
@@ -83,6 +87,26 @@ public class CalculateThisGame extends JPanel implements ActionListener {
         btnRestart.addActionListener(this);
         btnRestart.setRolloverIcon(new ImageIcon("images/restartButtonHover.png"));
 
+        add(btnJumpOver);
+        btnJumpOver.setOpaque(false);
+        btnJumpOver.setContentAreaFilled(false);
+        btnJumpOver.setBorderPainted(false);
+        btnJumpOver.setFocusPainted(false);
+        btnJumpOver.setBounds(365, 460, 60, 60);
+        btnJumpOver.setRolloverIcon(new ImageIcon("images/jumpOverHover.png"));
+        btnJumpOver.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource()==btnJumpOver){
+                    //next question AND decrease timer with 5 seconds
+                    gameLog.append("Skips question!\n-5 seconds\n");
+                    timer.decrease5();
+                    textField.setText("");
+                    calculateThis.newTask();
+                }
+            }
+        });
+
         add(lblNbr1);
         lblNbr1.setFont(font);
         lblNbr1.setForeground(darkGrey);
@@ -106,7 +130,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
         textField.setFont(new Font("Calibri", Font.PLAIN, 28));
         textField.setForeground(darkGrey);
         textField.setBounds(300, 370, 190, 30);
-        textField.addActionListener(action());
+        textField.addActionListener(gameAction());
 
         add(lblEnterIcon);
         lblEnterIcon.setBounds(490, 372, 24, 24);
@@ -181,7 +205,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
      *
      * @return
      */
-    public Action action() {
+    public Action gameAction() {
         action = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 if (!textField.getText().equals("")) {
@@ -255,6 +279,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
     public void gameOver() {
         textField.setEditable(false);
         textField.setText("");
+        btnJumpOver.setEnabled(false);
         gameLog.append("\nGame over, time's up!\n" + "Your result: " + score + " point(s).\n\n");
         controller.newCalculateThisScore(score);
         timer.interrupt();
@@ -277,6 +302,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
         textField.setEditable(true);
         calculateThis.newTask();
         textField.grabFocus();
+        btnJumpOver.setEnabled(true);
     }
 
     /**
@@ -398,6 +424,17 @@ public class CalculateThisGame extends JPanel implements ActionListener {
     private class CountDownTimer extends Thread {
         private int minutes;
         private int seconds;
+
+        public void decrease5(){
+            if(seconds == 0) {
+                try {
+                    sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            seconds -= 4; //eftersom timern redan minskar med en varje sekund (annars ser det ut som att det minskar med 6 sekunder)
+        }
 
         public CountDownTimer(int minutes, int seconds) {
             this.minutes = minutes;

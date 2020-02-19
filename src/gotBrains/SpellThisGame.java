@@ -34,6 +34,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
     private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
     private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
     private JButton btnRestart = new JButton(new ImageIcon("images/restartButton.png"));
+    private JButton btnJumpOver = new JButton(new ImageIcon("images/jumpOver.png"));
     JTextField textField = new JTextField();
     private JTextArea gameLog = new JTextArea();
     private JScrollPane logScroll;
@@ -57,6 +58,26 @@ public class SpellThisGame extends JPanel implements ActionListener {
         btnQuit.setBounds(756, 2, 40, 35);
         btnQuit.addActionListener(this);
         btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
+
+        add(btnJumpOver);
+        btnJumpOver.setOpaque(false);
+        btnJumpOver.setContentAreaFilled(false);
+        btnJumpOver.setBorderPainted(false);
+        btnJumpOver.setFocusPainted(false);
+        btnJumpOver.setBounds(365, 460, 60, 60);
+        btnJumpOver.setRolloverIcon(new ImageIcon("images/jumpOverHover.png"));
+        btnJumpOver.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource()==btnJumpOver){
+                    //next question AND decrease timer with 5 seconds
+                    gameLog.append("Skips question!\n-5 seconds\n");
+                    timer.decrease5();
+                    textField.setText("");
+                    spellThis.newTask();
+                }
+            }
+        });
 
         add(btnMinimize);
         btnMinimize.setOpaque(false);
@@ -366,6 +387,17 @@ public class SpellThisGame extends JPanel implements ActionListener {
     private class CountDownTimer extends Thread {
         private int minutes;
         private int seconds;
+
+        public void decrease5(){
+            if(seconds == 0) {
+                try {
+                    sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            seconds -= 4; //eftersom timern redan minskar med en varje sekund (annars ser det ut som att det minskar med 6 sekunder)
+        }
 
         public CountDownTimer(int minutes, int seconds) {
             this.minutes = minutes;

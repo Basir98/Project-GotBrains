@@ -24,6 +24,10 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
     private int difficulty;
     private int pointPerRound; // Easy: 10, Medium: 15, Hard: 20
 
+    private JLabel lblScore = new JLabel("Score: " + totalScore, SwingConstants.LEFT);
+    private Color lightGrey = new Color(180, 180, 180);
+    private Color darkGrey = new Color(80, 80, 80);
+
     private Controller controller;
 
     private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
@@ -35,6 +39,12 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         memorizeThisGame = this;
         setLayout(null);
         setPreferredSize(new Dimension(800, 600));
+
+        add(lblScore);
+        lblScore.setFont(new Font("Calibri", Font.PLAIN, 24));
+        lblScore.setForeground(lightGrey);
+        lblScore.setBounds(355, 2, 200, 30);
+
 
         add(btnQuit);
         btnQuit.setOpaque(false);
@@ -48,10 +58,6 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         });
         btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
 
-		/**
-		Added minimize button to this window
-		Andreas and Matilda
-		 **/
         add(btnMinimize);
         btnMinimize.setOpaque(false);
         btnMinimize.setContentAreaFilled(false);
@@ -90,19 +96,22 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         timer.start();
     }
 
-    /**
-     * Changed the background from SimonSays to MemorizeThis
-     * Andreas and Matilda
-     *
-     * @param g the graphics component to be painted
-     */
+
     protected void paintComponent(Graphics g) {
         ImageIcon background = new ImageIcon("images/memorizeThisBackground.png");
         super.paintComponent(g);
         g.drawImage(background.getImage(), 0, 0, null);
+
+        // Coordinates that are used in painting custom Polygons
+        int x1Points[] = {275, 325, 465, 515};
+        int y1Points[] = {0, 30, 30, 0};
+        int nPoints = 4;
+        g.setColor(darkGrey);
+        g.fillPolygon(x1Points, y1Points, nPoints);
     }
 
     public void start() {
+        lblScore.setText("Score: "+totalScore);
         random = new Random();
         pattern = new ArrayList<Integer>();
         indexPattern = 0;
@@ -111,13 +120,6 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         ticks = 0;
     }
 
-    /**
-     * Added difficulty levels easy, medium and hard
-     * Andreas Holm and Matilda Frimodig
-     * SK2 Svårighetsgrad - “must”
-     * En användare ska kunna ändra svårighetsgraden på de olika spelen som finns.
-     * @param difficulty
-     */
     public void setDifficulty(String difficulty) {
         if(difficulty.equals("easy")){
             this.difficulty = 20; // Speed of the colorchanges
@@ -163,6 +165,7 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
             indexPattern = 0;
             dark = 2;
             totalScore += pointPerRound;
+            lblScore.setText("Score: "+totalScore);
         }
 
         renderer.repaint();
@@ -257,6 +260,7 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
             }
 
         } else if (gameOver) {
+            totalScore = 0;
             start();
             gameOver = false;
         }

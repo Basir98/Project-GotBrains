@@ -16,6 +16,9 @@ public class SpellThisMenu extends JPanel implements ActionListener {
     private Font font = new Font("Monospaced", Font.BOLD, 24);
     private Color fontColor = new Color(100, 100, 100);
 
+    private JButton btnHelp = new JButton(new ImageIcon("images/helpIcon.png"));
+
+
     private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
     private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
     private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
@@ -28,6 +31,13 @@ public class SpellThisMenu extends JPanel implements ActionListener {
         this.controller = controller;
         setLayout(null);
         setPreferredSize(new Dimension(800, 600));
+
+        add(btnHelp);
+        btnHelp.setOpaque(false);
+        btnHelp.setContentAreaFilled(false);
+        btnHelp.setBorderPainted(false);
+        btnHelp.setBounds(366, 510, 60, 60);
+        btnHelp.addActionListener(this);
 
         add(btnQuit);
         btnQuit.setOpaque(false);
