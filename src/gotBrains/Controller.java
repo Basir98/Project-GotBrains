@@ -74,6 +74,8 @@ public class Controller {
         frame.pack();
         frame.setVisible(true);
         frame.setResizable(false);
+	frame.setIconImage(new ImageIcon("images/logo.png").getImage());  
+
 
         cl.show(panelContainer, "mainMenu");
         try {
