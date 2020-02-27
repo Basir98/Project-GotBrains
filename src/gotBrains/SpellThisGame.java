@@ -152,7 +152,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
         logScroll.getVerticalScrollBar().setOpaque(false);
         logScroll.setBounds(590, 367, 206, 229);
 
-        timer = new CountDownTimer(3, 0);
+        timer = new CountDownTimer(2, 0);
         timer.start();
     }
 
@@ -205,7 +205,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
         this.score = 0;
         updateScore();
         gameLog.append("\n____________________________\n\nRound restarted. \n\n");
-        timer = new CountDownTimer(3, 0);
+        timer = new CountDownTimer(2, 0);
         timer.start();
         spellThis = new SpellThis();
         loadWords();
