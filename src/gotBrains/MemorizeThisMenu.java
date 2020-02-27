@@ -108,13 +108,13 @@ public class MemorizeThisMenu extends JPanel implements ActionListener {
             System.exit(0);
         } else if (e.getSource() == btnStartEasy) {
             controller.buttonSound();
-            controller.startMemorizeThisGame("easy");
+            controller.startMemorizeThisGame("Easy");
         } else if (e.getSource() == btnStartMedium) {
             controller.buttonSound();
-            controller.startMemorizeThisGame("medium");
+            controller.startMemorizeThisGame("Medium");
         } else if (e.getSource() == btnStartHard) {
             controller.buttonSound();
-            controller.startMemorizeThisGame("hard");
+            controller.startMemorizeThisGame("Hard");
         } else if (e.getSource() == btnMinimize) {
             controller.buttonSound();
             controller.minimizeApp();

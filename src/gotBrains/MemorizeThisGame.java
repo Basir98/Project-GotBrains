@@ -26,6 +26,7 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
     private int totalScore;
     private int difficulty;
     private int pointPerRound; // Easy: 10, Medium: 15, Hard: 20
+    private int round;
     
     private JScrollPane logScroll;
     private JTextArea gameLog = new JTextArea();
@@ -161,15 +162,15 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
     }
 
     public void setDifficulty(String difficulty) {
-        if(difficulty.equals("easy")){
+        if(difficulty.equals("Easy")){
             this.difficulty = 20; // Speed of the colorchanges
             this.pointPerRound = 10;
 
-        }else if(difficulty.equals("medium")){
+        }else if(difficulty.equals("Medium")){
             this.difficulty = 15;
             this.pointPerRound = 15;
 
-        }else if(difficulty.equals("hard")){
+        }else if(difficulty.equals("Hard")){
             this.difficulty = 10;
             this.pointPerRound = 20;
         }
@@ -179,6 +180,7 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
 
     public void restart() {
     	gameOver = false;
+    	round = 0;
     	gameLog.append("\n____________________________\n\nRound restarted. \n\n");
     	controller.newMemorizeThisScore(totalScore);
     	this.totalScore = 0;
@@ -225,6 +227,8 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
             dark = 2;
             totalScore += pointPerRound;
             lblScore.setText("Score: "+totalScore);
+            round++;
+			gameLog.append("\nRound " + round  + " Completed");
         }
 
         renderer.repaint();
