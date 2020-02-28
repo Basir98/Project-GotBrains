@@ -109,13 +109,13 @@ public class SpellThisMenu extends JPanel implements ActionListener {
             System.exit(0);
         } else if (e.getSource() == btnStartEasy) {
             controller.buttonSound();
-            controller.startSpellThisGame(1);
+            controller.startSpellThisGame(5);
         } else if (e.getSource() == btnStartMedium) {
             controller.buttonSound();
-            controller.startSpellThisGame(5);
+            controller.startSpellThisGame(10);
         } else if (e.getSource() == btnStartHard) {
             controller.buttonSound();
-            controller.startSpellThisGame(10);
+            controller.startSpellThisGame(20);
         } else if (e.getSource() == btnMinimize) {
             controller.buttonSound();
             controller.minimizeApp();

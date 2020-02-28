@@ -164,11 +164,11 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
     public void setDifficulty(String difficulty) {
         if(difficulty.equals("Easy")){
             this.difficulty = 20; // Speed of the colorchanges
-            this.pointPerRound = 10;
+            this.pointPerRound = 5;
 
         }else if(difficulty.equals("Medium")){
             this.difficulty = 15;
-            this.pointPerRound = 15;
+            this.pointPerRound = 10;
 
         }else if(difficulty.equals("Hard")){
             this.difficulty = 10;
