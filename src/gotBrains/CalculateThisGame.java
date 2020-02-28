@@ -25,7 +25,6 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 
     private JButton btnHelp = new JButton(new ImageIcon("images/helpIcon.png"));
 
-
     private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
     private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
     private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
@@ -351,6 +350,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
             controller.buttonSound();
             restart();
         }
+        
     }
 
     /**

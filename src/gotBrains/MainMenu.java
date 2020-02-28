@@ -20,6 +20,8 @@ public class MainMenu extends JPanel implements ActionListener {
 
     private JButton btnToggleMusic = new JButton(new ImageIcon("images/musicIcon.png"));
     private JButton btnToggleSound = new JButton(new ImageIcon("images/soundIcon.png"));
+    
+    private JButton btnInfo = new JButton(new ImageIcon("images/icon_quq.png"));
     JTextField fieldUsername = new JTextField();
     private JLabel lblVersion = new JLabel("Version 0.5");
 
@@ -112,7 +114,13 @@ public class MainMenu extends JPanel implements ActionListener {
         btnToggleSound.setBorderPainted(false);
         btnToggleSound.setBounds(40, 560, 32, 32);
         btnToggleSound.addActionListener(this);
-
+        
+        add(btnInfo);
+        btnInfo.setContentAreaFilled(false);
+        btnInfo.setBorderPainted(false);
+        btnInfo.setBounds(75, 560, 32, 32);
+        btnInfo.addActionListener(this);
+        
         add(lblVersion);
         lblVersion.setBounds(725, 575, 75, 20);
 
@@ -181,6 +189,9 @@ public class MainMenu extends JPanel implements ActionListener {
                 btnToggleSound.setIcon(new ImageIcon("images/soundIcon.png"));
                 mutedSound = false;
             }
+        }
+        else if(e.getSource() == btnInfo) {
+        	controller.mainInfoPanel();
         }
     }
 }
