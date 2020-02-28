@@ -152,7 +152,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
         logScroll.getVerticalScrollBar().setOpaque(false);
         logScroll.setBounds(590, 367, 206, 229);
 
-        timer = new CountDownTimer(3, 0);
+        timer = new CountDownTimer(2, 0);
         timer.start();
     }
 
@@ -205,7 +205,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
         this.score = 0;
         updateScore();
         gameLog.append("\n____________________________\n\nRound restarted. \n\n");
-        timer = new CountDownTimer(3, 0);
+        timer = new CountDownTimer(2, 0);
         timer.start();
         spellThis = new SpellThis();
         loadWords();
@@ -221,11 +221,11 @@ public class SpellThisGame extends JPanel implements ActionListener {
 
     public void startLevel() { //Writes out the difficulty in the gamelog and starts the game.
         String difficultyStr = "No";
-        if (this.difficulty == 1)
-            difficultyStr = "Easy";
         if (this.difficulty == 5)
-            difficultyStr = "Medium";
+            difficultyStr = "Easy";
         if (this.difficulty == 10)
+            difficultyStr = "Medium";
+        if (this.difficulty == 20)
             difficultyStr = "Hard";
         gameLog.append(difficultyStr + " difficulty chosen.\n");
         gameLog.append("Every correct answer is " + "\nworth " + difficulty + " point(s).\n\n");
@@ -289,7 +289,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
         public void newTask() {
 
             switch (difficulty) {
-                case 1:
+                case 5:
                     /*
                      * rightAnswer används istället för att hela tiden hämta
                      * wordsEasy[r] varje gång (optimering).
@@ -323,7 +323,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
                     lblText.setText(scrambledWord1);
                     break;
 
-                case 5:
+                case 10:
                     Collections.shuffle(wordsMedium);
 
                     rightAnswer = wordsMedium.poll().toUpperCase();
@@ -347,7 +347,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
                     } while (rightAnswer.equals(scrambledWord2));
                     lblText.setText(scrambledWord2);
                     break;
-                case 10:
+                case 20:
                     Collections.shuffle(wordsHard);
 
                     rightAnswer = wordsHard.poll().toUpperCase();

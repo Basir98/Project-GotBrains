@@ -245,6 +245,7 @@ public class Controller {
         memorizeThisGame.start();
 
         cl.show(panelContainer, "memorizeThisGame");
+    
     }
 
     /**
