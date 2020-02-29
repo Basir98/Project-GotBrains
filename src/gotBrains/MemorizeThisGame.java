@@ -1,6 +1,9 @@
 package gotBrains;
 
 import javax.swing.*;
+
+
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +26,11 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
     private int totalScore;
     private int difficulty;
     private int pointPerRound; // Easy: 10, Medium: 15, Hard: 20
-
+    private int round;
+    
+    private JScrollPane logScroll;
+    private JTextArea gameLog = new JTextArea();
+    
     private JLabel lblScore = new JLabel("Score: " + totalScore, SwingConstants.LEFT);
     private Color lightGrey = new Color(180, 180, 180);
     private Color darkGrey = new Color(80, 80, 80);
@@ -33,7 +40,8 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
     private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
     private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
     private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
-
+    private JButton btnRestart = new JButton(new ImageIcon("images/restartButton.png"));
+    
     public MemorizeThisGame(Controller controller) {
         this.controller = controller;
         memorizeThisGame = this;
@@ -77,11 +85,21 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         btnMenu.setBounds(-2, -2, 120, 30);
         btnMenu.addActionListener((e) -> {
             if (e.getSource() == btnMenu) {
+            	controller.newMemorizeThisScore(totalScore);
                 controller.showMainMenu();
             }
         });
         btnMenu.setRolloverIcon(new ImageIcon("images/menuButtonHover.png"));
 
+        add(btnRestart);
+        btnRestart.setOpaque(false);
+        btnRestart.setContentAreaFilled(false);
+        btnRestart.setBorderPainted(false);
+        btnRestart.setFocusPainted(false);
+        btnRestart.setBounds(576, 325, 220, 40);
+        btnRestart.addActionListener(this);
+        btnRestart.setRolloverIcon(new ImageIcon("images/restartButtonHover.png"));
+        
         Timer timer = new Timer(20, this);
         renderer = new Renderer();
 
@@ -92,16 +110,39 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         renderer.addMouseListener(this);
         renderer.setVisible(true);
 
+		add(gameLog);
+		gameLog.setFont(new Font("Monospaced", Font.BOLD, 12));
+		gameLog.setForeground(new Color(80, 80, 80));
+		gameLog.setOpaque(false);
+		gameLog.setBorder(BorderFactory.createEmptyBorder());
+		gameLog.setEditable(false);
+		gameLog.setSelectionColor(new Color(0, 0, 0, 0));
+		gameLog.setBounds(0, 0, 190, 210);
+		logScroll = new JScrollPane(gameLog);
+		add(logScroll);
+		logScroll.setOpaque(false);
+		logScroll.getViewport().setOpaque(false);
+		logScroll.setBorder(BorderFactory.createEmptyBorder());
+		logScroll.setHorizontalScrollBar(null);
+		logScroll.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+		logScroll.getVerticalScrollBar().setOpaque(false);
+		logScroll.setBounds(590, 367, 206, 229);
+
         start();
         timer.start();
     }
-
-
-    protected void paintComponent(Graphics g) {
+    
+    protected void paintComponent(Graphics g) { 	
         ImageIcon background = new ImageIcon("images/memorizeThisBackground.png");
         super.paintComponent(g);
         g.drawImage(background.getImage(), 0, 0, null);
 
+        // Window for game info
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setStroke(new BasicStroke(3));
+        g2.setPaint(darkGrey);
+        g2.drawRect(577, 365, 300, 300);
+        
         // Coordinates that are used in painting custom Polygons
         int x1Points[] = {275, 325, 465, 515};
         int y1Points[] = {0, 30, 30, 0};
@@ -121,22 +162,42 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
     }
 
     public void setDifficulty(String difficulty) {
-        if(difficulty.equals("easy")){
+        if(difficulty.equals("Easy")){
             this.difficulty = 20; // Speed of the colorchanges
-            this.pointPerRound = 10;
-        }else if(difficulty.equals("medium")){
+            this.pointPerRound = 5;
+
+        }else if(difficulty.equals("Medium")){
             this.difficulty = 15;
-            this.pointPerRound = 15;
-        }else if(difficulty.equals("hard")){
+            this.pointPerRound = 10;
+
+        }else if(difficulty.equals("Hard")){
             this.difficulty = 10;
             this.pointPerRound = 20;
         }
+        gameLog.append(difficulty + " difficulty chosen.\n");
+        gameLog.append("Every correct answer is " + "\nworth " + pointPerRound + " point(s).\n\n");
     }
 
+    public void restart() {
+    	gameOver = false;
+    	round = 0;
+    	gameLog.append("\n____________________________\n\nRound restarted. \n\n");
+    	controller.newMemorizeThisScore(totalScore);
+    	this.totalScore = 0;
+        lblScore.setText("Score: " + totalScore);
+        start();
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         ticks++;
 
+     if (e.getSource() == btnRestart) {
+        controller.buttonSound();
+        System.out.println("Startar om");
+        restart();
+    }
+        
         if (ticks % this.difficulty == 0) {
             flashed = 0;
 
@@ -166,6 +227,8 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
             dark = 2;
             totalScore += pointPerRound;
             lblScore.setText("Score: "+totalScore);
+            round++;
+			gameLog.append("\nRound " + round  + " Completed");
         }
 
         renderer.repaint();
@@ -216,7 +279,7 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         g.drawOval(-100, -100, WIDTH + 200, HEIGHT + 200);
 
         g.setColor(Color.BLACK);
-        g.setStroke(new BasicStroke(10));
+        g.setStroke(new BasicStroke(5));
         g.drawOval(0, 0, WIDTH, HEIGHT);
 
         g.setColor(Color.WHITE);
@@ -225,7 +288,6 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         if (gameOver) {
             g.drawString("Game-Over", WIDTH / 2 - 60, HEIGHT / 2 + 5);
             controller.newMemorizeThisScore(totalScore); // SK3 Highscores - "must" En användare ska få poäng utifrån sin prestation och svårighetsgrad.
-
         } else {
             g.drawString(indexPattern + "/" + pattern.size(), WIDTH / 2 - 20, HEIGHT / 2 + 10);
         }
@@ -254,8 +316,10 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
             if (flashed != 0) {
                 if (pattern.get(indexPattern) == flashed) {
                     indexPattern++;
+                    controller.correctSound(true);
                 } else {
                     gameOver = true;
+                    controller.correctSound(false);
                 }
             }
 
