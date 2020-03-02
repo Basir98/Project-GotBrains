@@ -439,4 +439,37 @@ public class SpellThisGame extends JPanel implements ActionListener {
             return minutes + " min" + ", " + seconds + " sec";
         }
     }
+
+    // Test methods
+
+    public void createMockGame(int score) {
+        timer.decrease5();
+        this.score = score;
+        textField.setText("TESTTEXT");
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public String getTextField() {
+        return textField.getText();
+    }
+
+    public void clickMenu() {
+        btnMenu.doClick();
+    }
+
+    public String getRightAnswer() {
+        return rightAnswer;
+    }
+
+    public void inputString(String string) {
+        textField.setText(string);
+        textField.postActionEvent();
+    }
 }

@@ -115,7 +115,6 @@ public class MainMenu extends JPanel implements ActionListener {
 
         add(lblVersion);
         lblVersion.setBounds(725, 575, 75, 20);
-
     }
 
     /**
@@ -182,5 +181,43 @@ public class MainMenu extends JPanel implements ActionListener {
                 mutedSound = false;
             }
         }
+    }
+
+    // Test methods
+    public void clickQuit() {
+        btnQuit.doClick();
+    }
+
+    public void clickMinimize() {
+        btnMinimize.doClick();
+    }
+
+    public void clickCalculateThis() {
+        btnCalculateThis.doClick();
+    }
+
+    public void clickMemorizeThis() {
+        btnMemorizeThis.doClick();
+    }
+
+    public void clickSpellThis() {
+        btnSpellThis.doClick();
+    }
+
+    public void clickLeaderboard() {
+        btnLeaderboard.doClick();
+    }
+
+    public void clickToggleMusic() {
+        btnToggleMusic.doClick();
+    }
+
+    public void clickToggleSound() {
+        btnToggleSound.doClick();
+    }
+
+    public void setUsername(String username) {
+        fieldUsername.setText(username);
+        clickCalculateThis();
     }
 }

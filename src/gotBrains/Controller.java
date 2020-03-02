@@ -310,6 +310,10 @@ public class Controller {
         this.currentUsername = username;
     }
 
+    public String getCurrentUsername() {
+        return this.currentUsername;
+    }
+
     /**
      * Adds the player to the HighscoreManager class.
      *
@@ -383,4 +387,37 @@ public class Controller {
         Controller controller = new Controller(frame);
     }
 
+    // Test methods
+
+    public MainMenu getMainMenu() {
+        return this.mainMenu;
+    }
+
+    public JPanel getPanelContainer() {
+        return this.panelContainer;
+    }
+
+    public int getPanelState() {
+        return frame.getState();
+    }
+
+    public boolean musicMuted() {
+        return mutedMusic;
+    }
+
+    public boolean soundMuted() {
+        return mutedSound;
+    }
+
+    public SpellThisGame getSpellThisGame() {
+        return spellThisGame;
+    }
+
+    public CalculateThisGame getCalculateThisGame() {
+        return calculateThisGame;
+    }
+
+    public MemorizeThisGame getMemorizeThisGame() {
+        return memorizeThisGame;
+    }
 }
