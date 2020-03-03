@@ -139,7 +139,6 @@ public class CalculateThisMenu extends JPanel implements ActionListener {
         			+ " skip you lose 5 seconds from timer", 2, 10);
         	JLabel label = new JLabel();
         	label.setText("     Solve as many equations as possible");
-    
         	controller.getInfo(textArea, label);	
         }
     }

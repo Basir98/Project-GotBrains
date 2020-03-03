@@ -23,7 +23,7 @@ public class MainMenu extends JPanel implements ActionListener {
     
     private JButton btnInfo = new JButton(new ImageIcon("images/icon_quq.png"));
     JTextField fieldUsername = new JTextField();
-    private JLabel lblVersion = new JLabel("Version 0.5");
+    private JLabel lblVersion = new JLabel("Version 2.0");
 
     private boolean mutedMusic = false;
     private boolean mutedSound = false;
