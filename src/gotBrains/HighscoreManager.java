@@ -118,6 +118,7 @@ public class HighscoreManager {
         try {
             inputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILE));
             players = (ArrayList<Player>) inputStream.readObject();
+            System.out.println("hiscoremanager " +players.get(1));
         } catch (FileNotFoundException e) {
             System.out.println("FNF Error: " + e.getMessage());
         } catch (IOException e) {

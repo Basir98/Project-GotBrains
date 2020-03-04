@@ -230,7 +230,6 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
             round++;
 			gameLog.append("\nRound " + round  + " Completed");
         }
-
         renderer.repaint();
     }
 
@@ -291,6 +290,7 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         } else {
             g.drawString(indexPattern + "/" + pattern.size(), WIDTH / 2 - 20, HEIGHT / 2 + 10);
         }
+       
     }
 
     @Override
