@@ -420,4 +420,12 @@ public class Controller {
     public MemorizeThisGame getMemorizeThisGame() {
         return memorizeThisGame;
     }
+
+    public SpellThisMenu getSpellThisMenu() {
+        return spellThisMenu;
+    }
+
+    public CalculateThisMenu getCalculateThisMenu() {
+        return calculateThisMenu;
+    }
 }

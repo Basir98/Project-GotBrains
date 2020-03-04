@@ -24,18 +24,21 @@ class MainMenuTest {
     // Testing F-UI-4
     @org.junit.jupiter.api.Test
     void chooseGames() {
+        assertTrue(mainMenu.getBtnCalculateThis().isEnabled());
         mainMenu.clickCalculateThis();
         for (Component comp : controller.getPanelContainer().getComponents()) {
             if (comp.isVisible()) {
                 assertEquals("CalculateThisMenu", comp.toString().substring(comp.toString().indexOf('.') + 1, comp.toString().indexOf('[')));
             }
         }
+        assertTrue(mainMenu.getBtnMemorizeThis().isEnabled());
         mainMenu.clickMemorizeThis();
         for (Component comp : controller.getPanelContainer().getComponents()) {
             if (comp.isVisible()) {
                 assertEquals("MemorizeThisMenu", comp.toString().substring(comp.toString().indexOf('.') + 1, comp.toString().indexOf('[')));
             }
         }
+        assertTrue(mainMenu.getBtnSpellThis().isEnabled());
         mainMenu.clickSpellThis();
         for (Component comp : controller.getPanelContainer().getComponents()) {
             if (comp.isVisible()) {

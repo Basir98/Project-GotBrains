@@ -220,4 +220,17 @@ public class MainMenu extends JPanel implements ActionListener {
         fieldUsername.setText(username);
         clickCalculateThis();
     }
+
+    public JButton getBtnSpellThis() {
+        return btnSpellThis;
+    }
+
+    public JButton getBtnCalculateThis() {
+        return btnCalculateThis;
+    }
+
+    public JButton getBtnMemorizeThis() {
+        return btnMemorizeThis;
+    }
+
 }

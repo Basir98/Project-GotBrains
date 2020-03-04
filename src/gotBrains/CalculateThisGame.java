@@ -479,4 +479,93 @@ public class CalculateThisGame extends JPanel implements ActionListener {
             return minutes + " min" + ", " + seconds + " sec";
         }
     }
+
+    // Test methods
+
+    public void createMockGame(int score) {
+        timer.decrease5();
+        this.score = score;
+        textField.setText("99999");
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public JTextField getTextField() {
+        return textField;
+    }
+
+    public void clickMenu() {
+        btnMenu.doClick();
+    }
+
+    public int getRightAnswer() {
+        switch (lblOperation.getText()) {
+            case "+":
+                return Integer.parseInt(lblNbr1.getText()) + Integer.parseInt(lblNbr2.getText());
+            case "-":
+                return Integer.parseInt(lblNbr1.getText()) - Integer.parseInt(lblNbr2.getText());
+            case "*":
+                return Integer.parseInt(lblNbr1.getText()) * Integer.parseInt(lblNbr2.getText());
+            case "/":
+                return Integer.parseInt(lblNbr1.getText()) / Integer.parseInt(lblNbr2.getText());
+            default:
+                return 0;
+        }
+    }
+
+    public void inputString(String string) {
+        textField.setText(string);
+        textField.postActionEvent();
+    }
+
+    public int getTimerMinutes() {
+        return timer.minutes;
+    }
+
+    public int getTimerSeconds() {
+        return timer.seconds;
+    }
+
+    public void setTimerZero() {
+        timer.seconds = 0;
+        timer.minutes = 0;
+    }
+
+    public void clickSkip() {
+        btnJumpOver.doClick();
+    }
+
+    public JButton getBtnRestart() {
+        return btnRestart;
+    }
+
+    public JLabel getLblScore() {
+        return lblScore;
+    }
+
+    public JButton getBtnJumpOver() {
+        return btnJumpOver;
+    }
+
+    public JTextArea getGameLog() {
+        return gameLog;
+    }
+
+    public String getOperation() {
+        return lblOperation.getText();
+    }
+
+    public String getNbr1() {
+        return lblNbr1.getText();
+    }
+
+    public String getNbr2() {
+        return lblNbr2.getText();
+    }
 }
