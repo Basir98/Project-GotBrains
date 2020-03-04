@@ -440,7 +440,7 @@ public class Controller {
     	spellLabel.setHorizontalAlignment(SwingConstants.CENTER);
     	pointsLabel.setHorizontalAlignment(SwingConstants.CENTER);
        	
-    	JTextArea calTextArea = new JTextArea("3 minutes to solve as many equations as possible. "
+    	JTextArea calTextArea = new JTextArea("2 minutes to solve as many equations as possible. "
     			+ "Show your math skills and gain points!", 2, 8);
     	
     	textAreaFilter(calTextArea);
@@ -448,11 +448,11 @@ public class Controller {
     	JTextArea memoTextArea = new JTextArea("");
     	textAreaFilter(memoTextArea);
     	
-    	JTextArea spellTextArea = new JTextArea("Want to challange you word skills? You have 3 minutes"
+    	JTextArea spellTextArea = new JTextArea("Want to challange you word skills? You have 2 minutes"
     			+ " to spell as many words as possible and gain points.", 2, 8);
     	textAreaFilter(spellTextArea);
     	
-    	JTextArea pointsArea = new JTextArea("\tEasy level = 1 point\n\tMedium level = 5 points\n\tHard level = 10 points", 3, 5);
+    	JTextArea pointsArea = new JTextArea("\tEasy level = 5 points\n\tMedium level = 10 points\n\tHard level = 20 points", 3, 5);
     	textAreaFilter(pointsArea);
     	
     	pnlCenter.add(calLabel);    
