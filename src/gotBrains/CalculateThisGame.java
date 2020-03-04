@@ -25,7 +25,6 @@ public class CalculateThisGame extends JPanel implements ActionListener {
 
     private JButton btnHelp = new JButton(new ImageIcon("images/helpIcon.png"));
 
-
     private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
     private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
     private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
@@ -184,11 +183,11 @@ public class CalculateThisGame extends JPanel implements ActionListener {
      */
     public void startLevel() {
         String difficultyStr = "No";
-        if (this.difficulty == 1)
-            difficultyStr = "Easy";
         if (this.difficulty == 5)
-            difficultyStr = "Medium";
+            difficultyStr = "Easy";
         if (this.difficulty == 10)
+            difficultyStr = "Medium";
+        if (this.difficulty == 20)
             difficultyStr = "Hard";
         gameLog.append(difficultyStr + " difficulty chosen.\n");
         gameLog.append("Every correct answer is " + "\nworth " + difficulty + " point(s).\n\n");
@@ -351,6 +350,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
             controller.buttonSound();
             restart();
         }
+        
     }
 
     /**
@@ -367,7 +367,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
         public void newTask() {
             int range;
             switch (difficulty) {
-                case 1:
+                case 5:
                     int tempChar1 = random.nextInt(2) + 1;
                     if (tempChar1 == 1) {
                         lblOperation.setText("+");
@@ -376,38 +376,47 @@ public class CalculateThisGame extends JPanel implements ActionListener {
                         lblOperation.setText("-");
                         range = 9;
                     }
-                    lblNbr1.setText(Integer.toString(random.nextInt(range) + difficulty));
-                    lblNbr2.setText(Integer.toString(random.nextInt(range) + difficulty));
+                    lblNbr1.setText(Integer.toString(random.nextInt(range)+1));
+                    lblNbr2.setText(Integer.toString(random.nextInt(range)+1));
                     break;
-                case 5:
+                case 10:
                     int tempChar5 = random.nextInt(3) + 1;
+                    System.out.println(tempChar5);
                     if (tempChar5 == 1) {
                         lblOperation.setText("+");
-                        range = 99;
+                        range = 79;
+                        lblNbr1.setText(Integer.toString(random.nextInt(range) + 20));
+                        lblNbr2.setText(Integer.toString(random.nextInt(range) + 20));
                     } else if (tempChar5 == 2) {
                         lblOperation.setText("-");
-                        range = 99;
+                        range = 79;
+                        lblNbr1.setText(Integer.toString(random.nextInt(range) + 20));
+                        lblNbr2.setText(Integer.toString(random.nextInt(range) + 20));
                     } else {
                         lblOperation.setText("*");
                         range = 5;
+                        lblNbr1.setText(Integer.toString(random.nextInt(range)+5));
+                        lblNbr2.setText(Integer.toString(random.nextInt(range)+5));
                     }
-                    lblNbr1.setText(Integer.toString(random.nextInt(range) + difficulty));
-                    lblNbr2.setText(Integer.toString(random.nextInt(range) + difficulty));
                     break;
-                case 10:
+                case 20:
                     int tempChar10 = random.nextInt(3) + 1;
                     if (tempChar10 == 1) {
                         lblOperation.setText("+");
-                        range = 999;
+                        range = 100;
+                        lblNbr1.setText(Integer.toString(random.nextInt(range) + 100));
+                        lblNbr2.setText(Integer.toString(random.nextInt(range) + 100));
                     } else if (tempChar10 == 2) {
                         lblOperation.setText("-");
-                        range = 999;
+                        range = 100;
+                        lblNbr1.setText(Integer.toString(random.nextInt(range) + 100));
+                        lblNbr2.setText(Integer.toString(random.nextInt(range) + 100));
                     } else {
                         lblOperation.setText("*");
                         range = 10;
+                        lblNbr1.setText(Integer.toString(random.nextInt(range)+10));
+                        lblNbr2.setText(Integer.toString(random.nextInt(range)+10));
                     }
-                    lblNbr1.setText(Integer.toString(random.nextInt(range) + difficulty));
-                    lblNbr2.setText(Integer.toString(random.nextInt(range) + difficulty));
                     break;
 
             }
@@ -433,7 +442,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
                     e.printStackTrace();
                 }
             }
-            seconds -= 4; //eftersom timern redan minskar med en varje sekund (annars ser det ut som att det minskar med 6 sekunder)
+            seconds -= 4; 
         }
 
         public CountDownTimer(int minutes, int seconds) {
@@ -453,10 +462,10 @@ public class CalculateThisGame extends JPanel implements ActionListener {
                     lblTimer.setText(toString());
                     Thread.sleep(999);
 
-                    if (seconds == 0) {
+                    if (seconds <= 0) {
                         minutes--;
                         seconds = 59;
-                    } else if (seconds != 0) {
+                    } else if (seconds > 0) {
                         seconds--;
                     }
                 } while (minutes >= 0 && seconds >= 0);

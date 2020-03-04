@@ -108,17 +108,26 @@ public class MemorizeThisMenu extends JPanel implements ActionListener {
             System.exit(0);
         } else if (e.getSource() == btnStartEasy) {
             controller.buttonSound();
-            controller.startMemorizeThisGame("easy");
+            controller.startMemorizeThisGame("Easy");
         } else if (e.getSource() == btnStartMedium) {
             controller.buttonSound();
-            controller.startMemorizeThisGame("medium");
+            controller.startMemorizeThisGame("Medium");
         } else if (e.getSource() == btnStartHard) {
             controller.buttonSound();
-            controller.startMemorizeThisGame("hard");
+            controller.startMemorizeThisGame("Hard");
         } else if (e.getSource() == btnMinimize) {
             controller.buttonSound();
             controller.minimizeApp();
+        }else if(e.getSource() == btnHelp ) {
+        	
+        	JTextArea textArea = new JTextArea("\nYou gain points for every round with right colors", 2, 10);
+        	JLabel label = new JLabel();
+        	label.setText("     Memorize as many color as possible");
+        	
+        	controller.getInfo(textArea, label);
         }
     }
+    
+
 
 }

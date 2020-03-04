@@ -1,6 +1,8 @@
 package gotBrains;
 
 import javax.swing.*;
+import javax.swing.text.StyledEditorKit.BoldAction;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -120,18 +122,28 @@ public class CalculateThisMenu extends JPanel implements ActionListener {
             System.exit(0);
         } else if (e.getSource() == btnStartEasy) {
             controller.buttonSound();
-            controller.startCalculateThisGame(1);
+            controller.startCalculateThisGame(5);
         } else if (e.getSource() == btnStartMedium) {
             controller.buttonSound();
-            controller.startCalculateThisGame(5);
+            controller.startCalculateThisGame(10);
         } else if (e.getSource() == btnStartHard) {
             controller.buttonSound();
-            controller.startCalculateThisGame(10);
+            controller.startCalculateThisGame(20);
         } else if (e.getSource() == btnMinimize) {
             controller.buttonSound();
             controller.minimizeApp();
         }
+        else if(e.getSource() == btnHelp) {
+        	
+        	JTextArea textArea = new JTextArea("\n  You gain points for every right answer. If you choose to"
+        			+ " skip you lose 5 seconds from timer", 2, 10);
+        	JLabel label = new JLabel();
+        	label.setText("     Solve as many equations as possible");
+        	controller.getInfo(textArea, label);	
+        }
     }
+    
+  
 
     // Test methods
 

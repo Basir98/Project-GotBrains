@@ -38,7 +38,6 @@ public class Controller {
     private Clip music;
     private boolean mutedMusic = false;
     private boolean mutedSound = false;
-
     private HighscoreManager hm = new HighscoreManager();
     private CardLayout cl = new CardLayout();
     private Font customFont;
@@ -74,7 +73,7 @@ public class Controller {
         frame.pack();
         frame.setVisible(true);
         frame.setResizable(false);
-	frame.setIconImage(new ImageIcon("images/logo.png").getImage());  
+        frame.setIconImage(new ImageIcon("images/logo.png").getImage());  
 
 
         cl.show(panelContainer, "mainMenu");
@@ -245,6 +244,7 @@ public class Controller {
         memorizeThisGame.start();
 
         cl.show(panelContainer, "memorizeThisGame");
+    
     }
 
     /**
@@ -374,6 +374,117 @@ public class Controller {
      */
     public void newMemorizeThisScore(int score) {
         hm.addMemorizeThisScore(this.currentUsername, score);
+    }
+    
+    /**
+     * Info panel for every game
+     * @param txtArea
+     * @param lbl
+     */
+    public void getInfo(JTextArea txtArea, JLabel lbl) {
+    	JFrame frame = new JFrame();
+    	
+    	JPanel pnl = new JPanel();
+    	JPanel pnlLeft = new JPanel();
+    	pnlLeft.add(new JLabel());
+    	
+    	txtArea.setFont(new Font("Calibri", Font.ITALIC, 16));
+        txtArea.setLineWrap(true);
+        txtArea.setWrapStyleWord(true);
+        txtArea.setOpaque(false);
+        txtArea.setEditable(false);
+    	
+		lbl.setFont(new Font("Calibri", Font.PLAIN, 18));
+		lbl.setForeground(Color.RED);
+    	
+    	pnl.setLayout(new BorderLayout());
+    	pnl.add(lbl, BorderLayout.NORTH);
+    	pnl.add(txtArea, BorderLayout.CENTER);
+    	pnl.add(pnlLeft, BorderLayout.WEST);
+    	
+     	ImageIcon imgFile = new ImageIcon("images/logo.png");
+        Image imgfile = imgFile.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+        imgFile = new ImageIcon(imgfile);     
+//    	frame.setContentPane(new JLabel(imgFile));
+//    	frame.add(new JLabel(imgFile), BorderLayout.CENTER);
+    	pnl.add(new JLabel(imgFile), BorderLayout.SOUTH);
+    	
+    	frame.add(pnl);
+    	frame.setTitle("Info");
+    	frame.setVisible(true);
+    	frame.setSize(330, 200);
+    	frame.setLocationRelativeTo(null);
+    	frame.setResizable(false);
+    	frame.setIconImage(new ImageIcon("images/iconf_info.png").getImage());
+    }
+    
+    /**
+     * info panel in the main screen
+     */
+    public void mainInfoPanel() {
+    	JFrame frame = new JFrame();
+    	JPanel pnl = new JPanel();
+    	JPanel pnlCenter = new JPanel();
+    
+    	pnlCenter.setLayout(new GridLayout(8,1));
+    	pnl.setLayout(new BorderLayout());
+    	
+    	pnl.add(pnlCenter, BorderLayout.CENTER);
+    	pnl.add(new JPanel(), BorderLayout.WEST);
+    	pnl.add(new JPanel(), BorderLayout.EAST);
+    	pnl.add(new JPanel(), BorderLayout.SOUTH);
+    	JLabel calLabel = new JLabel(new ImageIcon("images/calculateThisButton.png"));
+    	JLabel memoLabel = new JLabel(new ImageIcon("images/memorizeThisButton.png"));
+    	JLabel spellLabel = new JLabel(new ImageIcon("images/spellThisButton.png"));
+    	JLabel pointsLabel = new JLabel("Points!");
+    	pointsLabel.setFont(new Font("Time New Roman", Font.BOLD, 32));
+
+    	calLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    	memoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    	spellLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    	pointsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+       	
+    	JTextArea calTextArea = new JTextArea("2 minutes to solve as many equations as possible. "
+    			+ "Show your math skills and gain points!", 2, 8);
+    	
+    	textAreaFilter(calTextArea);
+    	
+    	JTextArea memoTextArea = new JTextArea("");
+    	textAreaFilter(memoTextArea);
+    	
+    	JTextArea spellTextArea = new JTextArea("Want to challange you word skills? You have 2 minutes"
+    			+ " to spell as many words as possible and gain points.", 2, 8);
+    	textAreaFilter(spellTextArea);
+    	
+    	JTextArea pointsArea = new JTextArea("\tEasy level = 5 points\n\tMedium level = 10 points\n\tHard level = 20 points", 3, 5);
+    	textAreaFilter(pointsArea);
+    	
+    	
+    	pnlCenter.add(calLabel);    
+    	pnlCenter.add(calTextArea);
+    	pnlCenter.add(memoLabel);
+    	pnlCenter.add(memoTextArea);
+    	pnlCenter.add(spellLabel);
+    	pnlCenter.add(spellTextArea);
+    	pnlCenter.add(pointsLabel);
+    	pnlCenter.add(pointsArea);
+    	
+    	frame.add(pnl);
+    	frame.setTitle("How to play?");
+    	frame.setVisible(true);
+    	frame.setSize(400, 500);
+    	frame.setLocationRelativeTo(null);
+    	frame.setResizable(false);
+        frame.setIconImage(new ImageIcon("images/icon_que.png").getImage());  
+    }
+    
+    
+    public void textAreaFilter(JTextArea text) {
+    	text.setFont(new Font("Calibri", Font.ITALIC, 16));
+    	text.setLineWrap(true);
+    	text.setWrapStyleWord(true);
+    	text.setOpaque(false);
+    	text.setEditable(false);
     }
 
     /**

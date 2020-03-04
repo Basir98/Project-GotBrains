@@ -20,16 +20,16 @@ class CalculateThisGameTest {
     // Testing F-S-1 + F-S-1.1
     @org.junit.jupiter.api.Test
     void gameSpellThisStartAndRestart() {
-        controller.startCalculateThisGame(1);
+        controller.startCalculateThisGame(5);
         CalculateThisGame game = controller.getCalculateThisGame();
         game.createMockGame(50);
         assertEquals("99999", controller.getCalculateThisGame().getTextField().getText());
         assertEquals(true, controller.getCalculateThisGame().getTextField().isEditable());
-        assertEquals(1, game.getDifficulty());
+        assertEquals(5, game.getDifficulty());
         assertEquals(50, game.getScore());
         assertEquals(true, game.getBtnRestart().isEnabled());
         game.getBtnRestart().doClick();
-        assertEquals(1, game.getDifficulty());
+        assertEquals(5, game.getDifficulty());
         assertEquals(0, game.getScore());
         game.gameOver();
     }
@@ -56,7 +56,7 @@ class CalculateThisGameTest {
         CalculateThisMenu gameMenu = controller.getCalculateThisMenu();
         assertTrue(gameMenu.getBtnStartEasy().isEnabled());
         gameMenu.getBtnStartEasy().doClick();
-        assertEquals(1, controller.getCalculateThisGame().getDifficulty());
+        assertEquals(5, controller.getCalculateThisGame().getDifficulty());
     }
 
     // Testing F-S-6
@@ -66,8 +66,8 @@ class CalculateThisGameTest {
         menu.clickCalculateThis();
         CalculateThisMenu gameMenu = controller.getCalculateThisMenu();
         assertTrue(gameMenu.getBtnStartMedium().isEnabled());
-        gameMenu.getBtnStartHard().doClick();
-        assertEquals(5, controller.getCalculateThisGame().getDifficulty());
+        gameMenu.getBtnStartMedium().doClick();
+        assertEquals(10, controller.getCalculateThisGame().getDifficulty());
     }
 
     // Testing F-S-6
@@ -78,7 +78,7 @@ class CalculateThisGameTest {
         CalculateThisMenu gameMenu = controller.getCalculateThisMenu();
         assertTrue(gameMenu.getBtnStartHard().isEnabled());
         gameMenu.getBtnStartHard().doClick();
-        assertEquals(10, controller.getCalculateThisGame().getDifficulty());
+        assertEquals(20, controller.getCalculateThisGame().getDifficulty());
     }
 
     // Testing F-S-4
@@ -91,9 +91,9 @@ class CalculateThisGameTest {
     // Testing F-S-7
     @org.junit.jupiter.api.Test
     void gameLogInfo() {
-        gameLogTest(1);
         gameLogTest(5);
         gameLogTest(10);
+        gameLogTest(20);
     }
 
     // Testing F-S-8
@@ -106,7 +106,7 @@ class CalculateThisGameTest {
     // Testing F-S-CT-1 + F-S-CT-1.1
     @org.junit.jupiter.api.Test
     void gameSpellThisQuestionsEasy() {
-        controller.startCalculateThisGame(1);
+        controller.startCalculateThisGame(5);
         CalculateThisGame game = controller.getCalculateThisGame();
         String rightAnswer = "";
         String operator = game.getOperation();
@@ -125,7 +125,7 @@ class CalculateThisGameTest {
     // Testing F-S-CT-1 + F-S-CT-1.2
     @org.junit.jupiter.api.Test
     void gameSpellThisQuestionsMedium() {
-        controller.startCalculateThisGame(5);
+        controller.startCalculateThisGame(10);
         CalculateThisGame game = controller.getCalculateThisGame();
         String rightAnswer = "";
         String operator = game.getOperation();
@@ -149,7 +149,7 @@ class CalculateThisGameTest {
     // Testing F-S-CT-1 + F-S-CT-1.3
     @org.junit.jupiter.api.Test
     void gameSpellThisQuestionsHard() {
-        controller.startCalculateThisGame(10);
+        controller.startCalculateThisGame(20);
         CalculateThisGame game = controller.getCalculateThisGame();
         String rightAnswer = "";
         String operator = game.getOperation();
@@ -173,7 +173,7 @@ class CalculateThisGameTest {
     // Testing F-S-ST-1.4
     @org.junit.jupiter.api.Test
     void skipQuestion() {
-        controller.startCalculateThisGame(1);
+        controller.startCalculateThisGame(5);
         CalculateThisGame game = controller.getCalculateThisGame();
         assertEquals(true , game.getBtnJumpOver().isEnabled());
         int minutes = game.getTimerMinutes();
@@ -200,17 +200,17 @@ class CalculateThisGameTest {
     // Testing F-S-CT-2
     @org.junit.jupiter.api.Test
     void gameSpellThisInput() {
-        controller.startCalculateThisGame(1);
+        controller.startCalculateThisGame(5);
         CalculateThisGame game = controller.getCalculateThisGame();
         assertEquals(true, game.getTextField().isEditable());
         assertEquals(true, game.getTextField().getActionListeners()[0] != null); // Kollar om det finns en listener bunden till Textfield-objektet
         game.gameOver();
-        controller.startCalculateThisGame(5);
+        controller.startCalculateThisGame(10);
         game = controller.getCalculateThisGame();
         assertEquals(true, game.getTextField().isEditable());
         assertEquals(true, game.getTextField().getActionListeners()[0] != null);
         game.gameOver();
-        controller.startCalculateThisGame(10);
+        controller.startCalculateThisGame(20);
         game = controller.getCalculateThisGame();
         assertEquals(true, game.getTextField().isEditable());
         assertEquals(true, game.getTextField().getActionListeners()[0] != null);
@@ -220,7 +220,7 @@ class CalculateThisGameTest {
     // Testing F-S-CT-2.2 + F-S-CT-3.1 + F-S-5
     @org.junit.jupiter.api.Test
     void gameSpellThisCorrectInputEasy() {
-        controller.startCalculateThisGame(1);
+        controller.startCalculateThisGame(5);
         CalculateThisGame game = controller.getCalculateThisGame();
         String rightAnswer = "";
         int score = 0;
@@ -231,7 +231,7 @@ class CalculateThisGameTest {
             score += game.getDifficulty();
             assertEquals(false, String.valueOf(game.getRightAnswer()).equals(rightAnswer));
         }
-        assertEquals(String.valueOf(score), game.getLblScore().getText());
+        assertEquals("Score: " + score, game.getLblScore().getText());
         assertEquals(true, game.getLblScore().isVisible());
         game.gameOver();
     }
@@ -239,7 +239,7 @@ class CalculateThisGameTest {
     // Testing F-S-CT-2.2 + F-S-CT-3.2 + F-S-5
     @org.junit.jupiter.api.Test
     void gameSpellThisCorrectInputMedium() {
-        controller.startCalculateThisGame(5);
+        controller.startCalculateThisGame(10);
         CalculateThisGame game = controller.getCalculateThisGame();
         String rightAnswer = "";
         int score = 0;
@@ -250,7 +250,7 @@ class CalculateThisGameTest {
             score += game.getDifficulty();
             assertEquals(false, String.valueOf(game.getRightAnswer()).equals(rightAnswer));
         }
-        assertEquals(String.valueOf(score), game.getLblScore().getText());
+        assertEquals("Score: " + score, game.getLblScore().getText());
         assertEquals(true, game.getLblScore().isVisible());
         game.gameOver();
     }
@@ -258,7 +258,7 @@ class CalculateThisGameTest {
     // Testing F-S-CT-2.2 + F-S-CT-3.3 + F-S-5
     @org.junit.jupiter.api.Test
     void gameSpellThisCorrectInputHard() {
-        controller.startCalculateThisGame(10);
+        controller.startCalculateThisGame(20);
         CalculateThisGame game = controller.getCalculateThisGame();
         String rightAnswer = "";
         int score = 0;
@@ -269,7 +269,7 @@ class CalculateThisGameTest {
             score += game.getDifficulty();
             assertEquals(false, String.valueOf(game.getRightAnswer()).equals(rightAnswer));
         }
-        assertEquals(String.valueOf(score), game.getLblScore().getText());
+        assertEquals("Score: " + score, game.getLblScore().getText());
         assertEquals(true, game.getLblScore().isVisible());
         game.gameOver();
     }
@@ -277,7 +277,7 @@ class CalculateThisGameTest {
     // Testing F-S-CT-2.1
     @org.junit.jupiter.api.Test
     void gameSpellThisWrongInput() {
-        controller.startCalculateThisGame(1);
+        controller.startCalculateThisGame(5);
         CalculateThisGame game = controller.getCalculateThisGame();
         String rightAnswer = "";
         int score = 0;
@@ -307,7 +307,7 @@ class CalculateThisGameTest {
     // Testing F-S-CT-4
     @org.junit.jupiter.api.Test
     void gameSpellThisTimer() throws InterruptedException {
-        controller.startCalculateThisGame(1);
+        controller.startCalculateThisGame(5);
         assertEquals(2, controller.getCalculateThisGame().getTimerMinutes());
         assertEquals(0, controller.getCalculateThisGame().getTimerSeconds());
         controller.getCalculateThisGame().setTimerZero();
@@ -322,13 +322,13 @@ class CalculateThisGameTest {
         CalculateThisGame game = controller.getCalculateThisGame();
         JTextArea gameLog = game.getGameLog();
         switch (difficulty) {
-            case 1:
+            case 5:
                 assertEquals("Easy difficulty chosen.\nEvery correct answer is \nworth 5 point(s).\n\nQuestion 1:\n", gameLog.getText());
                 break;
-            case 5:
+            case 10:
                 assertEquals("Medium difficulty chosen.\nEvery correct answer is \nworth 10 point(s).\n\nQuestion 1:\n", gameLog.getText());
                 break;
-            case 10:
+            case 20:
                 assertEquals("Hard difficulty chosen.\nEvery correct answer is \nworth 20 point(s).\n\nQuestion 1:\n", gameLog.getText());
                 break;
             default:
@@ -337,13 +337,13 @@ class CalculateThisGameTest {
         int rightAnswer = game.getRightAnswer();
         game.inputString(String.valueOf(rightAnswer));
         switch (difficulty) {
-            case 1:
+            case 5:
                 assertEquals("Easy difficulty chosen.\nEvery correct answer is \nworth 5 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\n", gameLog.getText());
                 break;
-            case 5:
+            case 10:
                 assertEquals("Medium difficulty chosen.\nEvery correct answer is \nworth 10 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\n", gameLog.getText());
                 break;
-            case 10:
+            case 20:
                 assertEquals("Hard difficulty chosen.\nEvery correct answer is \nworth 20 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\n", gameLog.getText());
                 break;
             default:
@@ -351,28 +351,28 @@ class CalculateThisGameTest {
         }
         game.clickSkip();
         switch (difficulty) {
-            case 1:
-                assertEquals("Easy difficulty chosen.\nEvery correct answer is \nworth 5 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips Question!\n-5 seconds\nQuestion 3:\n", gameLog.getText());
-                break;
             case 5:
-                assertEquals("Medium difficulty chosen.\nEvery correct answer is \nworth 10 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips Question!\n-5 seconds\nQuestion 3:\n", gameLog.getText());
+                assertEquals("Easy difficulty chosen.\nEvery correct answer is \nworth 5 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips question!\n-5 seconds\nQuestion 3:\n", gameLog.getText());
                 break;
             case 10:
-                assertEquals("Hard difficulty chosen.\nEvery correct answer is \nworth 20 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips Question!\n-5 seconds\nQuestion 3:\n", gameLog.getText());
+                assertEquals("Medium difficulty chosen.\nEvery correct answer is \nworth 10 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips question!\n-5 seconds\nQuestion 3:\n", gameLog.getText());
+                break;
+            case 20:
+                assertEquals("Hard difficulty chosen.\nEvery correct answer is \nworth 20 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips question!\n-5 seconds\nQuestion 3:\n", gameLog.getText());
                 break;
             default:
                 break;
         }
         game.gameOver();
         switch (difficulty) {
-            case 1:
-                assertEquals("Easy difficulty chosen.\nEvery correct answer is \nworth 5 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips Question!\n-5 seconds\nQuestion 3:\n\nGame over, time's up!\nYour result: 5 point(s).\n", gameLog.getText());
-                break;
             case 5:
-                assertEquals("Medium difficulty chosen.\nEvery correct answer is \nworth 10 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips Question!\n-5 seconds\nQuestion 3:\n\nGame over, time's up!\nYour result: 5 point(s).\n", gameLog.getText());
+                assertEquals("Easy difficulty chosen.\nEvery correct answer is \nworth 5 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips question!\n-5 seconds\nQuestion 3:\n\nGame over, time's up!\nYour result: 5 point(s).\n", gameLog.getText());
                 break;
             case 10:
-                assertEquals("Hard difficulty chosen.\nEvery correct answer is \nworth 20 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips Question!\n-5 seconds\nQuestion 3:\n\nGame over, time's up!\nYour result: 5 point(s).\n", gameLog.getText());
+                assertEquals("Medium difficulty chosen.\nEvery correct answer is \nworth 10 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips question!\n-5 seconds\nQuestion 3:\n\nGame over, time's up!\nYour result: 5 point(s).\n", gameLog.getText());
+                break;
+            case 20:
+                assertEquals("Hard difficulty chosen.\nEvery correct answer is \nworth 20 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips question!\n-5 seconds\nQuestion 3:\n\nGame over, time's up!\nYour result: 5 point(s).\n", gameLog.getText());
                 break;
             default:
                 break;

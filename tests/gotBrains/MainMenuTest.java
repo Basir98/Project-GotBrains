@@ -105,7 +105,7 @@ class MainMenuTest {
     // Testing F-S-3
     @org.junit.jupiter.api.Test
     void showGameInfo() {
-        // Not implemented
+        // TODO
         fail();
     }
 }

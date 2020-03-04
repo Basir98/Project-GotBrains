@@ -109,16 +109,24 @@ public class SpellThisMenu extends JPanel implements ActionListener {
             System.exit(0);
         } else if (e.getSource() == btnStartEasy) {
             controller.buttonSound();
-            controller.startSpellThisGame(1);
+            controller.startSpellThisGame(5);
         } else if (e.getSource() == btnStartMedium) {
             controller.buttonSound();
-            controller.startSpellThisGame(5);
+            controller.startSpellThisGame(10);
         } else if (e.getSource() == btnStartHard) {
             controller.buttonSound();
-            controller.startSpellThisGame(10);
+            controller.startSpellThisGame(20);
         } else if (e.getSource() == btnMinimize) {
             controller.buttonSound();
             controller.minimizeApp();
+        } else if(e.getSource() == btnHelp) {
+        	
+        	JTextArea textArea = new JTextArea("\n  You gain points for every right answer. If you choose to"
+        			+ " skip you lose 5 seconds from timer", 2, 10);
+        	JLabel label = new JLabel();
+        	label.setText("       Spell as many words as possible");
+        	
+        	controller.getInfo(textArea, label);
         }
     }
 

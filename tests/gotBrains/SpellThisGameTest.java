@@ -20,16 +20,16 @@ class SpellThisGameTest {
     // Testing F-S-1 + F-S-1.1
     @org.junit.jupiter.api.Test
     void gameSpellThisStartAndRestart() {
-        controller.startSpellThisGame(1);
+        controller.startSpellThisGame(5);
         SpellThisGame game = controller.getSpellThisGame();
         game.createMockGame(50);
         assertEquals("TESTTEXT", controller.getSpellThisGame().getTextField().getText());
         assertEquals(true, controller.getSpellThisGame().getTextField().isEditable());
-        assertEquals(1, game.getDifficulty());
+        assertEquals(5, game.getDifficulty());
         assertEquals(50, game.getScore());
         assertEquals(true, game.getBtnRestart().isEnabled());
         game.getBtnRestart().doClick();
-        assertEquals(1, game.getDifficulty());
+        assertEquals(5, game.getDifficulty());
         assertEquals(0, game.getScore());
         game.gameOver();
     }
@@ -56,7 +56,7 @@ class SpellThisGameTest {
         SpellThisMenu gameMenu = controller.getSpellThisMenu();
         assertTrue(gameMenu.getBtnStartEasy().isEnabled());
         gameMenu.getBtnStartEasy().doClick();
-        assertEquals(1, controller.getSpellThisGame().getDifficulty());
+        assertEquals(5, controller.getSpellThisGame().getDifficulty());
     }
 
     // Testing F-S-6
@@ -67,7 +67,7 @@ class SpellThisGameTest {
         SpellThisMenu gameMenu = controller.getSpellThisMenu();
         assertTrue(gameMenu.getBtnStartMedium().isEnabled());
         gameMenu.getBtnStartMedium().doClick();
-        assertEquals(5, controller.getSpellThisGame().getDifficulty());
+        assertEquals(10, controller.getSpellThisGame().getDifficulty());
     }
 
     // Testing F-S-6
@@ -78,13 +78,13 @@ class SpellThisGameTest {
         SpellThisMenu gameMenu = controller.getSpellThisMenu();
         assertTrue(gameMenu.getBtnStartHard().isEnabled());
         gameMenu.getBtnStartHard().doClick();
-        assertEquals(10, controller.getSpellThisGame().getDifficulty());
+        assertEquals(20, controller.getSpellThisGame().getDifficulty());
     }
 
     // Testing F-S-ST-1 + F-S-ST-1.1
     @org.junit.jupiter.api.Test
     void gameSpellThisQuestionsEasy() {
-        controller.startSpellThisGame(1);
+        controller.startSpellThisGame(5);
         SpellThisGame game = controller.getSpellThisGame();
         String rightAnswer = "";
         for (int i = 0; i < 100; i++) {
@@ -98,7 +98,7 @@ class SpellThisGameTest {
     // Testing F-S-ST-1 + F-S-ST-1.2
     @org.junit.jupiter.api.Test
     void gameSpellThisQuestionsMedium() {
-        controller.startSpellThisGame(5);
+        controller.startSpellThisGame(10);
         SpellThisGame game = controller.getSpellThisGame();
         String rightAnswer = "";
         for (int i = 0; i < 100; i++) {
@@ -112,7 +112,7 @@ class SpellThisGameTest {
     // Testing F-S-ST-1 + F-S-ST-1.3
     @org.junit.jupiter.api.Test
     void gameSpellThisQuestionsHard() {
-        controller.startSpellThisGame(10);
+        controller.startSpellThisGame(20);
         SpellThisGame game = controller.getSpellThisGame();
         String rightAnswer = "";
         for (int i = 0; i < 100; i++) {
@@ -126,17 +126,17 @@ class SpellThisGameTest {
     // Testing F-S-ST-2
     @org.junit.jupiter.api.Test
     void gameSpellThisInput() {
-        controller.startSpellThisGame(1);
+        controller.startSpellThisGame(5);
         SpellThisGame game = controller.getSpellThisGame();
         assertEquals(true, game.getTextField().isEditable());
         assertEquals(true, game.getTextField().getActionListeners()[0] != null); // Kollar om det finns en listener bunden till Textfield-objektet
         game.gameOver();
-        controller.startSpellThisGame(5);
+        controller.startSpellThisGame(10);
         game = controller.getSpellThisGame();
         assertEquals(true, game.getTextField().isEditable());
         assertEquals(true, game.getTextField().getActionListeners()[0] != null);
         game.gameOver();
-        controller.startSpellThisGame(10);
+        controller.startSpellThisGame(20);
         game = controller.getSpellThisGame();
         assertEquals(true, game.getTextField().isEditable());
         assertEquals(true, game.getTextField().getActionListeners()[0] != null);
@@ -146,7 +146,7 @@ class SpellThisGameTest {
     // Testing F-S-ST-2.2 + F-S-ST-3.1 + F-S-5
     @org.junit.jupiter.api.Test
     void gameSpellThisCorrectInputEasy() {
-        controller.startSpellThisGame(1);
+        controller.startSpellThisGame(5);
         SpellThisGame game = controller.getSpellThisGame();
         String rightAnswer = "";
         int score = 0;
@@ -157,7 +157,7 @@ class SpellThisGameTest {
             score += game.getDifficulty();
             assertEquals(false, game.getRightAnswer() == rightAnswer);
         }
-        assertEquals(String.valueOf(score), game.getLblScore().getText());
+        assertEquals("Score: " + score, game.getLblScore().getText());
         assertEquals(true, game.getLblScore().isVisible());
         game.gameOver();
     }
@@ -165,7 +165,7 @@ class SpellThisGameTest {
     // Testing F-S-ST-2.2 + F-S-ST-3.2 + F-S-5
     @org.junit.jupiter.api.Test
     void gameSpellThisCorrectInputMedium() {
-        controller.startSpellThisGame(5);
+        controller.startSpellThisGame(10);
         SpellThisGame game = controller.getSpellThisGame();
         String rightAnswer = "";
         int score = 0;
@@ -176,7 +176,7 @@ class SpellThisGameTest {
             score += game.getDifficulty();
             assertEquals(false, game.getRightAnswer() == rightAnswer);
         }
-        assertEquals(String.valueOf(score), game.getLblScore().getText());
+        assertEquals("Score: " + score, game.getLblScore().getText());
         assertEquals(true, game.getLblScore().isVisible());
         game.gameOver();
     }
@@ -184,7 +184,7 @@ class SpellThisGameTest {
     // Testing F-S-ST-2.2 + F-S-ST-3.3 + F-S-5
     @org.junit.jupiter.api.Test
     void gameSpellThisCorrectInputHard() {
-        controller.startSpellThisGame(10);
+        controller.startSpellThisGame(20);
         SpellThisGame game = controller.getSpellThisGame();
         String rightAnswer = "";
         int score = 0;
@@ -195,7 +195,7 @@ class SpellThisGameTest {
             score += game.getDifficulty();
             assertEquals(false, game.getRightAnswer() == rightAnswer);
         }
-        assertEquals(String.valueOf(score), game.getLblScore().getText());
+        assertEquals("Score: " + score, game.getLblScore().getText());
         assertEquals(true, game.getLblScore().isVisible());
         game.gameOver();
     }
@@ -203,7 +203,7 @@ class SpellThisGameTest {
     // Testing F-S-ST-2.1
     @org.junit.jupiter.api.Test
     void gameSpellThisWrongInput() {
-        controller.startSpellThisGame(1);
+        controller.startSpellThisGame(5);
         SpellThisGame game = controller.getSpellThisGame();
         String rightAnswer = "";
         int score = 0;
@@ -219,7 +219,7 @@ class SpellThisGameTest {
     // Testing F-S-ST-4
     @org.junit.jupiter.api.Test
     void gameSpellThisTimer() throws InterruptedException {
-        controller.startSpellThisGame(1);
+        controller.startSpellThisGame(5);
         assertEquals(2, controller.getSpellThisGame().getTimerMinutes());
         assertEquals(0, controller.getSpellThisGame().getTimerSeconds());
         controller.getSpellThisGame().setTimerZero();
@@ -230,7 +230,7 @@ class SpellThisGameTest {
     // Testing F-S-ST-1.4
     @org.junit.jupiter.api.Test
     void skipQuestion() {
-        controller.startSpellThisGame(1);
+        controller.startSpellThisGame(5);
         SpellThisGame game = controller.getSpellThisGame();
         assertEquals(true , game.getBtnJumpOver().isEnabled());
         int minutes = game.getTimerMinutes();
@@ -257,16 +257,16 @@ class SpellThisGameTest {
     // Testing F-S-4
     @org.junit.jupiter.api.Test
     void showGameInstructions() {
-        // Not implemented
+        // TODO
         fail();
     }
 
     // Testing F-S-7
     @org.junit.jupiter.api.Test
     void gameLogInfo() {
-        gameLogTest(1);
         gameLogTest(5);
         gameLogTest(10);
+        gameLogTest(20);
     }
 
     // Testing F-S-8
@@ -284,13 +284,13 @@ class SpellThisGameTest {
         SpellThisGame game = controller.getSpellThisGame();
         JTextArea gameLog = game.getGameLog();
         switch (difficulty) {
-            case 1:
+            case 5:
                 assertEquals("Easy difficulty chosen.\nEvery correct answer is \nworth 5 point(s).\n\nQuestion 1:\n", gameLog.getText());
                 break;
-            case 5:
+            case 10:
                 assertEquals("Medium difficulty chosen.\nEvery correct answer is \nworth 10 point(s).\n\nQuestion 1:\n", gameLog.getText());
                 break;
-            case 10:
+            case 20:
                 assertEquals("Hard difficulty chosen.\nEvery correct answer is \nworth 20 point(s).\n\nQuestion 1:\n", gameLog.getText());
                 break;
             default:
@@ -299,13 +299,13 @@ class SpellThisGameTest {
         String rightAnswer = game.getRightAnswer();
         game.inputString(rightAnswer);
         switch (difficulty) {
-            case 1:
+            case 5:
                 assertEquals("Easy difficulty chosen.\nEvery correct answer is \nworth 5 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\n", gameLog.getText());
                 break;
-            case 5:
+            case 10:
                 assertEquals("Medium difficulty chosen.\nEvery correct answer is \nworth 10 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\n", gameLog.getText());
                 break;
-            case 10:
+            case 20:
                 assertEquals("Hard difficulty chosen.\nEvery correct answer is \nworth 20 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\n", gameLog.getText());
                 break;
             default:
@@ -313,28 +313,28 @@ class SpellThisGameTest {
         }
         game.clickSkip();
         switch (difficulty) {
-            case 1:
-                assertEquals("Easy difficulty chosen.\nEvery correct answer is \nworth 5 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips Question!\n-5 seconds\nQuestion 3:\n", gameLog.getText());
-                break;
             case 5:
-                assertEquals("Medium difficulty chosen.\nEvery correct answer is \nworth 10 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips Question!\n-5 seconds\nQuestion 3:\n", gameLog.getText());
+                assertEquals("Easy difficulty chosen.\nEvery correct answer is \nworth 5 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips question!\n-5 seconds\nQuestion 3:\n", gameLog.getText());
                 break;
             case 10:
-                assertEquals("Hard difficulty chosen.\nEvery correct answer is \nworth 20 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips Question!\n-5 seconds\nQuestion 3:\n", gameLog.getText());
+                assertEquals("Medium difficulty chosen.\nEvery correct answer is \nworth 10 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips question!\n-5 seconds\nQuestion 3:\n", gameLog.getText());
+                break;
+            case 20:
+                assertEquals("Hard difficulty chosen.\nEvery correct answer is \nworth 20 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips question!\n-5 seconds\nQuestion 3:\n", gameLog.getText());
                 break;
             default:
                 break;
         }
         game.gameOver();
         switch (difficulty) {
-            case 1:
-                assertEquals("Easy difficulty chosen.\nEvery correct answer is \nworth 5 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips Question!\n-5 seconds\nQuestion 3:\n\nGame over, time's up!\nYour result: 5 point(s).\n", gameLog.getText());
-                break;
             case 5:
-                assertEquals("Medium difficulty chosen.\nEvery correct answer is \nworth 10 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips Question!\n-5 seconds\nQuestion 3:\n\nGame over, time's up!\nYour result: 5 point(s).\n", gameLog.getText());
+                assertEquals("Easy difficulty chosen.\nEvery correct answer is \nworth 5 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips question!\n-5 seconds\nQuestion 3:\n\nGame over, time's up!\nYour result: 5 point(s).\n", gameLog.getText());
                 break;
             case 10:
-                assertEquals("Hard difficulty chosen.\nEvery correct answer is \nworth 20 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips Question!\n-5 seconds\nQuestion 3:\n\nGame over, time's up!\nYour result: 5 point(s).\n", gameLog.getText());
+                assertEquals("Medium difficulty chosen.\nEvery correct answer is \nworth 10 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips question!\n-5 seconds\nQuestion 3:\n\nGame over, time's up!\nYour result: 5 point(s).\n", gameLog.getText());
+                break;
+            case 20:
+                assertEquals("Hard difficulty chosen.\nEvery correct answer is \nworth 20 point(s).\n\nQuestion 1:\nCorrect!\nQuestion 2:\nSkips question!\n-5 seconds\nQuestion 3:\n\nGame over, time's up!\nYour result: 5 point(s).\n", gameLog.getText());
                 break;
             default:
                 break;
