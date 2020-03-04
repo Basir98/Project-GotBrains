@@ -456,8 +456,8 @@ public class SpellThisGame extends JPanel implements ActionListener {
         return difficulty;
     }
 
-    public String getTextField() {
-        return textField.getText();
+    public JTextField getTextField() {
+        return textField;
     }
 
     public void clickMenu() {
@@ -471,5 +471,38 @@ public class SpellThisGame extends JPanel implements ActionListener {
     public void inputString(String string) {
         textField.setText(string);
         textField.postActionEvent();
+    }
+
+    public int getTimerMinutes() {
+        return timer.minutes;
+    }
+
+    public int getTimerSeconds() {
+        return timer.seconds;
+    }
+
+    public void setTimerZero() {
+        timer.seconds = 0;
+        timer.minutes = 0;
+    }
+
+    public void clickSkip() {
+        btnJumpOver.doClick();
+    }
+
+    public JButton getBtnRestart() {
+        return btnRestart;
+    }
+
+    public JLabel getLblScore() {
+        return lblScore;
+    }
+
+    public JButton getBtnJumpOver() {
+        return btnJumpOver;
+    }
+
+    public JTextArea getGameLog() {
+        return gameLog;
     }
 }

@@ -21,6 +21,7 @@ class MainMenuTest {
         mainMenu = controller.getMainMenu();
     }
 
+    // Testing F-UI-4
     @org.junit.jupiter.api.Test
     void chooseGames() {
         mainMenu.clickCalculateThis();
@@ -43,12 +44,14 @@ class MainMenuTest {
         }
     }
 
+    // Testing F-UI-5
     @org.junit.jupiter.api.Test
     void chooseUsernameSuccess() {
         controller.getMainMenu().setUsername("TestUsername");
         assertEquals("TestUsername", controller.getCurrentUsername());
     }
 
+    // Testing F-UI-2
     @org.junit.jupiter.api.Test
     void minimizeApp() {
         controller.getMainMenu().clickMinimize();
@@ -57,6 +60,7 @@ class MainMenuTest {
         mainMenu = controller.getMainMenu();
     }
 
+    // "Stänga av musik" är inget krav, men borde vara det.
     @org.junit.jupiter.api.Test
     void toggleMusic() {
         controller.getMainMenu().clickToggleMusic();
@@ -65,11 +69,40 @@ class MainMenuTest {
         assertEquals(false, controller.musicMuted());
     }
 
+    // Testing F-A-2
     @org.junit.jupiter.api.Test
     void toggleSound() {
         controller.getMainMenu().clickToggleSound();
         assertEquals(true, controller.soundMuted());
         controller.getMainMenu().clickToggleSound();
         assertEquals(false, controller.soundMuted());
+    }
+
+    // Testing F-A-3
+    @org.junit.jupiter.api.Test
+    void changeMusicVolume() {
+        // Not implemented
+        fail();
+    }
+
+    // Testing F-A-3
+    @org.junit.jupiter.api.Test
+    void changeSoundVolume() {
+        // Not implemented
+        fail();
+    }
+
+    // Testing F-A-1
+    @org.junit.jupiter.api.Test
+    void changeMusic() {
+        // Not implemented
+        fail();
+    }
+
+    // Testing F-S-3
+    @org.junit.jupiter.api.Test
+    void showGameInfo() {
+        // Not implemented
+        fail();
     }
 }
