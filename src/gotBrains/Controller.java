@@ -455,6 +455,7 @@ public class Controller {
     	JTextArea pointsArea = new JTextArea("\tEasy level = 5 points\n\tMedium level = 10 points\n\tHard level = 20 points", 3, 5);
     	textAreaFilter(pointsArea);
     	
+    	
     	pnlCenter.add(calLabel);    
     	pnlCenter.add(calTextArea);
     	pnlCenter.add(memoLabel);
