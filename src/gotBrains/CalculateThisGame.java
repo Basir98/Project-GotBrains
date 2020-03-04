@@ -442,7 +442,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
                     e.printStackTrace();
                 }
             }
-            seconds -= 4; //eftersom timern redan minskar med en varje sekund (annars ser det ut som att det minskar med 6 sekunder)
+            seconds -= 4; 
         }
 
         public CountDownTimer(int minutes, int seconds) {
@@ -462,7 +462,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
                     lblTimer.setText(toString());
                     Thread.sleep(999);
 
-                    if (seconds == 0) {
+                    if (seconds <= 0) {
                         minutes--;
                         seconds = 59;
                     } else if (seconds > 0) {
