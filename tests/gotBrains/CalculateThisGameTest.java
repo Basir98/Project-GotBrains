@@ -19,7 +19,7 @@ class CalculateThisGameTest {
 
     // Testing F-S-1 + F-S-1.1
     @org.junit.jupiter.api.Test
-    void gameSpellThisStartAndRestart() {
+    void gameCalculateThisStartAndRestart() {
         controller.startCalculateThisGame(5);
         CalculateThisGame game = controller.getCalculateThisGame();
         game.createMockGame(50);
@@ -36,7 +36,7 @@ class CalculateThisGameTest {
 
     // Testing F-S-2
     @org.junit.jupiter.api.Test
-    void gameSpellThisExitToMenu() {
+    void gameCalculateThisExitToMenu() {
         controller.startCalculateThisGame(10);
         CalculateThisGame game = controller.getCalculateThisGame();
         game.createMockGame(80);
@@ -105,7 +105,7 @@ class CalculateThisGameTest {
 
     // Testing F-S-CT-1 + F-S-CT-1.1
     @org.junit.jupiter.api.Test
-    void gameSpellThisQuestionsEasy() {
+    void gameCalculateThisQuestionsEasy() {
         controller.startCalculateThisGame(5);
         CalculateThisGame game = controller.getCalculateThisGame();
         String rightAnswer = "";
@@ -124,7 +124,7 @@ class CalculateThisGameTest {
 
     // Testing F-S-CT-1 + F-S-CT-1.2
     @org.junit.jupiter.api.Test
-    void gameSpellThisQuestionsMedium() {
+    void gameCalculateThisQuestionsMedium() {
         controller.startCalculateThisGame(10);
         CalculateThisGame game = controller.getCalculateThisGame();
         String rightAnswer = "";
@@ -148,7 +148,7 @@ class CalculateThisGameTest {
 
     // Testing F-S-CT-1 + F-S-CT-1.3
     @org.junit.jupiter.api.Test
-    void gameSpellThisQuestionsHard() {
+    void gameCalculateThisQuestionsHard() {
         controller.startCalculateThisGame(20);
         CalculateThisGame game = controller.getCalculateThisGame();
         String rightAnswer = "";
@@ -170,7 +170,7 @@ class CalculateThisGameTest {
         game.gameOver();
     }
 
-    // Testing F-S-ST-1.4
+    // Testing F-S-CT-1.4
     @org.junit.jupiter.api.Test
     void skipQuestion() {
         controller.startCalculateThisGame(5);
@@ -199,7 +199,7 @@ class CalculateThisGameTest {
 
     // Testing F-S-CT-2
     @org.junit.jupiter.api.Test
-    void gameSpellThisInput() {
+    void gameCalculateThisInput() {
         controller.startCalculateThisGame(5);
         CalculateThisGame game = controller.getCalculateThisGame();
         assertEquals(true, game.getTextField().isEditable());
@@ -219,7 +219,7 @@ class CalculateThisGameTest {
 
     // Testing F-S-CT-2.2 + F-S-CT-3.1 + F-S-5
     @org.junit.jupiter.api.Test
-    void gameSpellThisCorrectInputEasy() {
+    void gameCalculateThisCorrectInputEasy() {
         controller.startCalculateThisGame(5);
         CalculateThisGame game = controller.getCalculateThisGame();
         String rightAnswer = "";
@@ -238,7 +238,7 @@ class CalculateThisGameTest {
 
     // Testing F-S-CT-2.2 + F-S-CT-3.2 + F-S-5
     @org.junit.jupiter.api.Test
-    void gameSpellThisCorrectInputMedium() {
+    void gameCalculateThisCorrectInputMedium() {
         controller.startCalculateThisGame(10);
         CalculateThisGame game = controller.getCalculateThisGame();
         String rightAnswer = "";
@@ -257,7 +257,7 @@ class CalculateThisGameTest {
 
     // Testing F-S-CT-2.2 + F-S-CT-3.3 + F-S-5
     @org.junit.jupiter.api.Test
-    void gameSpellThisCorrectInputHard() {
+    void gameCalculateThisCorrectInputHard() {
         controller.startCalculateThisGame(20);
         CalculateThisGame game = controller.getCalculateThisGame();
         String rightAnswer = "";
@@ -276,7 +276,7 @@ class CalculateThisGameTest {
 
     // Testing F-S-CT-2.1
     @org.junit.jupiter.api.Test
-    void gameSpellThisWrongInput() {
+    void gameCalculateThisWrongInput() {
         controller.startCalculateThisGame(5);
         CalculateThisGame game = controller.getCalculateThisGame();
         String rightAnswer = "";
@@ -306,7 +306,7 @@ class CalculateThisGameTest {
 
     // Testing F-S-CT-4
     @org.junit.jupiter.api.Test
-    void gameSpellThisTimer() throws InterruptedException {
+    void gameCalculateThisTimer() throws InterruptedException {
         controller.startCalculateThisGame(5);
         assertEquals(2, controller.getCalculateThisGame().getTimerMinutes());
         assertEquals(0, controller.getCalculateThisGame().getTimerSeconds());
