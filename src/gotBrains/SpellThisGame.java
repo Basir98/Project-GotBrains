@@ -439,4 +439,70 @@ public class SpellThisGame extends JPanel implements ActionListener {
             return minutes + " min" + ", " + seconds + " sec";
         }
     }
+
+    // Test methods
+
+    public void createMockGame(int score) {
+        timer.decrease5();
+        this.score = score;
+        textField.setText("TESTTEXT");
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public JTextField getTextField() {
+        return textField;
+    }
+
+    public void clickMenu() {
+        btnMenu.doClick();
+    }
+
+    public String getRightAnswer() {
+        return rightAnswer;
+    }
+
+    public void inputString(String string) {
+        textField.setText(string);
+        textField.postActionEvent();
+    }
+
+    public int getTimerMinutes() {
+        return timer.minutes;
+    }
+
+    public int getTimerSeconds() {
+        return timer.seconds;
+    }
+
+    public void setTimerZero() {
+        timer.seconds = 0;
+        timer.minutes = 0;
+    }
+
+    public void clickSkip() {
+        btnJumpOver.doClick();
+    }
+
+    public JButton getBtnRestart() {
+        return btnRestart;
+    }
+
+    public JLabel getLblScore() {
+        return lblScore;
+    }
+
+    public JButton getBtnJumpOver() {
+        return btnJumpOver;
+    }
+
+    public JTextArea getGameLog() {
+        return gameLog;
+    }
 }
