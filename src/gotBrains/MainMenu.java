@@ -191,6 +191,7 @@ public class MainMenu extends JPanel implements ActionListener {
             }
         }
         else if(e.getSource() == btnInfo) {
+        	controller.buttonSound();
         	controller.mainInfoPanel();
         }
     }

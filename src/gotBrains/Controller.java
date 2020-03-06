@@ -399,11 +399,20 @@ public class Controller {
     	pnl.add(pnlLeft, BorderLayout.WEST);
     	
      	ImageIcon imgFile = new ImageIcon("images/logo.png");
-        Image imgfile = imgFile.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
-        imgFile = new ImageIcon(imgfile);     
-//    	frame.setContentPane(new JLabel(imgFile));
-//    	frame.add(new JLabel(imgFile), BorderLayout.CENTER);
+        
+    	Image iconImage = imgFile.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+        imgFile = new ImageIcon(iconImage);  
+
     	pnl.add(new JLabel(imgFile), BorderLayout.SOUTH);
+    	
+//    	Image img = Toolkit.getDefaultToolkit().getImage("images/logo.png");
+//    	frame.setContentPane(new JPanel() {
+//    		public void paintComponent(Graphics g) {
+//    			super.paintComponent(g);
+//    			g.drawImage(iconImage, 0,0,null);
+//    		}
+//    	});
+    	
     	
     	frame.add(pnl);
     	frame.setTitle("Info");

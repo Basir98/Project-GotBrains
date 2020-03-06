@@ -120,7 +120,7 @@ public class SpellThisMenu extends JPanel implements ActionListener {
             controller.buttonSound();
             controller.minimizeApp();
         } else if(e.getSource() == btnHelp) {
-        	
+        	controller.buttonSound();
         	JTextArea textArea = new JTextArea("\n  You gain points for every right answer. If you choose to"
         			+ " skip you lose 5 seconds from timer", 2, 10);
         	JLabel label = new JLabel();
