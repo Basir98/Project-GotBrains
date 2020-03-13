@@ -51,13 +51,16 @@ public class SpellThisGame extends JPanel implements ActionListener {
         setPreferredSize(new Dimension(800, 600));
 
         add(btnQuit);
-        btnQuit.setOpaque(false);
-        btnQuit.setContentAreaFilled(false);
-        btnQuit.setBorderPainted(false);
-        btnQuit.setFocusPainted(false);
-        btnQuit.setBounds(756, 2, 40, 35);
+        controller.exitBtnFilter(btnQuit);
         btnQuit.addActionListener(this);
-        btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
+
+        add(btnMinimize);
+        controller.miniBtnFilter(btnMinimize);
+        btnMinimize.addActionListener(this);
+
+        add(btnMenu);
+        controller.mainMenuBtnFilter(btnMenu);
+        btnMenu.addActionListener(this);
 
         add(btnJumpOver);
         btnJumpOver.setOpaque(false);
@@ -78,23 +81,6 @@ public class SpellThisGame extends JPanel implements ActionListener {
                 }
             }
         });
-
-        add(btnMinimize);
-        btnMinimize.setOpaque(false);
-        btnMinimize.setContentAreaFilled(false);
-        btnMinimize.setBorderPainted(false);
-        btnMinimize.setFocusPainted(false);
-        btnMinimize.setBounds(716, 2, 40, 35);
-        btnMinimize.addActionListener(this);
-        btnMinimize.setRolloverIcon(new ImageIcon("images/minimizeButtonHover.png"));
-
-        add(btnMenu);
-        btnMenu.setOpaque(false);
-        btnMenu.setContentAreaFilled(false);
-        btnMenu.setBorderPainted(false);
-        btnMenu.setBounds(4, 4, 120, 30);
-        btnMenu.addActionListener(this);
-        btnMenu.setRolloverIcon(new ImageIcon("images/menuButtonHover.png"));
 
         add(btnRestart);
         btnRestart.setOpaque(false);

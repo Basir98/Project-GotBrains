@@ -53,43 +53,30 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         lblScore.setForeground(lightGrey);
         lblScore.setBounds(355, 2, 200, 30);
 
-
         add(btnQuit);
-        btnQuit.setOpaque(false);
-        btnQuit.setContentAreaFilled(false);
-        btnQuit.setBorderPainted(false);
-        btnQuit.setBounds(758, 2, 40, 35);
+        controller.exitBtnFilter(btnQuit);
         btnQuit.addActionListener((e) -> {
             if (e.getSource() == btnQuit) {
                 System.exit(0);
             }
         });
-        btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
-
+        
         add(btnMinimize);
-        btnMinimize.setOpaque(false);
-        btnMinimize.setContentAreaFilled(false);
-        btnMinimize.setBorderPainted(false);
-        btnMinimize.setFocusPainted(false);
-        btnMinimize.setBounds(716, 2, 40, 35);
+        controller.miniBtnFilter(btnMinimize);
         btnMinimize.addActionListener((e) -> {
             controller.buttonSound();
             controller.minimizeApp();
         });
-        btnMinimize.setRolloverIcon(new ImageIcon("images/minimizeButtonHover.png"));
-
+        
         add(btnMenu);
-        btnMenu.setOpaque(false);
-        btnMenu.setContentAreaFilled(false);
-        btnMenu.setBorderPainted(false);
-        btnMenu.setBounds(-2, -2, 120, 30);
+        controller.mainMenuBtnFilter(btnMenu);
         btnMenu.addActionListener((e) -> {
             if (e.getSource() == btnMenu) {
             	controller.newMemorizeThisScore(totalScore);
                 controller.showMainMenu();
             }
         });
-        btnMenu.setRolloverIcon(new ImageIcon("images/menuButtonHover.png"));
+        
 
         add(btnRestart);
         btnRestart.setOpaque(false);

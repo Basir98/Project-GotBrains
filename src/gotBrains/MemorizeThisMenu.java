@@ -39,30 +39,16 @@ public class MemorizeThisMenu extends JPanel implements ActionListener {
         btnHelp.addActionListener(this);
 
         add(btnQuit);
-        btnQuit.setOpaque(false);
-        btnQuit.setContentAreaFilled(false);
-        btnQuit.setBorderPainted(false);
-        btnQuit.setFocusPainted(false);
-        btnQuit.setBounds(756, 2, 40, 35);
+        controller.exitBtnFilter(btnQuit);
         btnQuit.addActionListener(this);
-        btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
-
-        add(btnMenu);
-        btnMenu.setOpaque(false);
-        btnMenu.setContentAreaFilled(false);
-        btnMenu.setBorderPainted(false);
-        btnMenu.setBounds(4, 4, 120, 30);
-        btnMenu.addActionListener(this);
-        btnMenu.setRolloverIcon(new ImageIcon("images/menuButtonHover.png"));
 
         add(btnMinimize);
-        btnMinimize.setOpaque(false);
-        btnMinimize.setContentAreaFilled(false);
-        btnMinimize.setBorderPainted(false);
-        btnMinimize.setFocusPainted(false);
-        btnMinimize.setBounds(716, 2, 40, 35);
+        controller.miniBtnFilter(btnMinimize);
         btnMinimize.addActionListener(this);
-        btnMinimize.setRolloverIcon(new ImageIcon("images/minimizeButtonHover.png"));
+
+        add(btnMenu);
+        controller.mainMenuBtnFilter(btnMenu);
+        btnMenu.addActionListener(this);
 
         add(btnStartEasy);
         btnStartEasy.setOpaque(true);
