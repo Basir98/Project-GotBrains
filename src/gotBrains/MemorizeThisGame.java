@@ -41,6 +41,11 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
     private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
     private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
     private JButton btnRestart = new JButton(new ImageIcon("images/restartButton.png"));
+    private JButton btnToggleMusic = new JButton(new ImageIcon("images/musicIcon.png"));
+    private JButton btnToggleSound = new JButton(new ImageIcon("images/soundIcon.png"));
+    
+    private boolean mutedMusic = false;
+    private boolean mutedSound = false;
     
     public MemorizeThisGame(Controller controller) {
         this.controller = controller;
@@ -52,6 +57,54 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         lblScore.setFont(new Font("Calibri", Font.PLAIN, 24));
         lblScore.setForeground(lightGrey);
         lblScore.setBounds(355, 2, 200, 30);
+        
+        add(btnToggleMusic);
+        btnToggleMusic.setContentAreaFilled(false);
+        btnToggleMusic.setBorderPainted(false);
+        btnToggleMusic.setBounds(5, 560, 32, 32);
+        btnToggleMusic.addActionListener(this);
+        btnToggleMusic.addActionListener((e) -> {
+        	if (e.getSource() == btnToggleMusic) {
+        		controller.buttonSound();
+        		controller.toggleMusic();
+        		if (!mutedMusic) {
+        			btnToggleMusic.setIcon(new ImageIcon("images/musicIconMuted.png"));
+        			mutedMusic = true;
+        		} else if (mutedMusic) {
+        			btnToggleMusic.setIcon(new ImageIcon("images/musicIcon.png"));
+        			mutedMusic = false;
+
+        		}
+
+        	}
+        });
+        
+        add(btnToggleSound);
+        btnToggleSound.setContentAreaFilled(false);
+        btnToggleSound.setBorderPainted(false);
+        btnToggleSound.setBounds(40, 560, 32, 32);
+        btnToggleSound.addActionListener(this);
+        btnToggleSound.addActionListener((e) -> {
+        	if (e.getSource() == btnToggleSound) {
+        		controller.buttonSound();
+        		controller.toggleSound();
+        		if (!mutedSound) {
+        			btnToggleSound.setIcon(new ImageIcon("images/soundIconMuted.png"));
+        			mutedSound = true;
+        		} else if (mutedSound) {
+        			btnToggleSound.setIcon(new ImageIcon("images/soundIcon.png"));
+        			mutedSound = false;
+
+        		}
+        	}
+
+        });
+
+        add(btnToggleSound);
+        btnToggleSound.setContentAreaFilled(false);
+        btnToggleSound.setBorderPainted(false);
+        btnToggleSound.setBounds(40, 560, 32, 32);
+        btnToggleSound.addActionListener(this);
 
 
         add(btnQuit);
@@ -99,6 +152,8 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         btnRestart.setBounds(576, 325, 220, 40);
         btnRestart.addActionListener(this);
         btnRestart.setRolloverIcon(new ImageIcon("images/restartButtonHover.png"));
+        
+        
         
         Timer timer = new Timer(20, this);
         renderer = new Renderer();
@@ -229,9 +284,32 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
             lblScore.setText("Score: "+totalScore);
             round++;
 			gameLog.append("\nRound " + round  + " Completed");
-        }
+
+            }
         renderer.repaint();
-    }
+        }
+        
+    
+//    else if (e.getSource() == btnToggleMusic) {
+//        controller.buttonSound();
+//        controller.toggleMusic();
+//        if (!mutedMusic) {
+//            btnToggleMusic.setIcon(new ImageIcon("images/musicIconMuted.png"));
+//            mutedMusic = true;
+//        } else if (mutedMusic) {
+//            btnToggleMusic.setIcon(new ImageIcon("images/musicIcon.png"));
+//            mutedMusic = false;
+//        }
+//    } else if (e.getSource() == btnToggleSound) {
+//        controller.buttonSound();
+//        controller.toggleSound();
+//        if (!mutedSound) {
+//            btnToggleSound.setIcon(new ImageIcon("images/soundIconMuted.png"));
+//            mutedSound = true;
+//        } else if (mutedSound) {
+//            btnToggleSound.setIcon(new ImageIcon("images/soundIcon.png"));
+//            mutedSound = false;
+//        }
 
     public void paint(Graphics2D g) {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

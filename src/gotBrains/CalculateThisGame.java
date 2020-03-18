@@ -30,9 +30,14 @@ public class CalculateThisGame extends JPanel implements ActionListener {
     private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
     private JButton btnRestart = new JButton(new ImageIcon("images/restartButton.png"));
     private JButton btnJumpOver = new JButton(new ImageIcon("images/jumpOver.png"));
+    private JButton btnToggleMusic = new JButton(new ImageIcon("images/musicIcon.png"));
+    private JButton btnToggleSound = new JButton(new ImageIcon("images/soundIcon.png"));
     JTextField textField = new JTextField();
     private JTextArea gameLog = new JTextArea();
     private JScrollPane logScroll;
+    
+    private boolean mutedMusic = false;
+    private boolean mutedSound = false;
 
     private JLabel lblNbr1 = new JLabel("", SwingConstants.RIGHT);
     private JLabel lblNbr2 = new JLabel("", SwingConstants.LEFT);
@@ -53,6 +58,18 @@ public class CalculateThisGame extends JPanel implements ActionListener {
         this.controller = controller;
         setLayout(null);
         setPreferredSize(new Dimension(800, 600));
+        
+        add(btnToggleMusic);
+        btnToggleMusic.setContentAreaFilled(false);
+        btnToggleMusic.setBorderPainted(false);
+        btnToggleMusic.setBounds(5, 560, 32, 32);
+        btnToggleMusic.addActionListener(this);
+
+        add(btnToggleSound);
+        btnToggleSound.setContentAreaFilled(false);
+        btnToggleSound.setBorderPainted(false);
+        btnToggleSound.setBounds(40, 560, 32, 32);
+        btnToggleSound.addActionListener(this);
 
         add(btnQuit);
         btnQuit.setOpaque(false);
@@ -382,6 +399,27 @@ public class CalculateThisGame extends JPanel implements ActionListener {
             controller.buttonSound();
             restart();
         }
+     else if (e.getSource() == btnToggleMusic) {
+        controller.buttonSound();
+        controller.toggleMusic();
+        if (!mutedMusic) {
+            btnToggleMusic.setIcon(new ImageIcon("images/musicIconMuted.png"));
+            mutedMusic = true;
+        } else if (mutedMusic) {
+            btnToggleMusic.setIcon(new ImageIcon("images/musicIcon.png"));
+            mutedMusic = false;
+        }
+    } else if (e.getSource() == btnToggleSound) {
+        controller.buttonSound();
+        controller.toggleSound();
+        if (!mutedSound) {
+            btnToggleSound.setIcon(new ImageIcon("images/soundIconMuted.png"));
+            mutedSound = true;
+        } else if (mutedSound) {
+            btnToggleSound.setIcon(new ImageIcon("images/soundIcon.png"));
+            mutedSound = false;
+        }
+    }
         
     }
 
