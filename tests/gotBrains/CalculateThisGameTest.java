@@ -2,9 +2,12 @@ package gotBrains;
 
 import org.junit.jupiter.api.TestInstance;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 import java.awt.*;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,7 +16,7 @@ class CalculateThisGameTest {
     private Controller controller;
 
     @org.junit.jupiter.api.BeforeAll
-    public void init() {
+    public void init() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         controller = new Controller(new JFrame());
     }
 

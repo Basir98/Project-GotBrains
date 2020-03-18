@@ -40,6 +40,9 @@ public class CalculateThisGame extends JPanel implements ActionListener {
     private JLabel lblScore = new JLabel("Score: " + score, SwingConstants.LEFT);
     private JLabel lblTimer = new JLabel("", SwingConstants.CENTER);
     private JLabel lblEnterIcon = new JLabel(new ImageIcon("images/enterIcon.png"));
+    private JLabel lblCorrectAnswer = new JLabel("", SwingConstants.CENTER);
+
+    private Timer t = new Timer(2000, e1 -> lblCorrectAnswer.setText(""));
 
     /**
      * Places components and also starts the timer
@@ -105,6 +108,10 @@ public class CalculateThisGame extends JPanel implements ActionListener {
                 }
             }
         });
+        add(lblCorrectAnswer);
+        lblCorrectAnswer.setFont(font);
+        lblCorrectAnswer.setForeground(Color.RED);
+        lblCorrectAnswer.setBounds(200, 260, 400, 40);
 
         add(lblNbr1);
         lblNbr1.setFont(font);
@@ -223,7 +230,15 @@ public class CalculateThisGame extends JPanel implements ActionListener {
                                     calculateThis.newTask();
                                 } else {
                                     controller.correctSound(false);
-                                    gameLog.append("Incorrect, try again!\n");
+                                    gameLog.append("Incorrect, right answer was\n" + correctAnswer  + "!\n");
+                                    if(difficulty == 20 && score > difficulty - 1) {
+                                        score -= 5;
+                                    }
+                                    lblCorrectAnswer.setText("INCORRECT: " + correctAnswer);
+                                    t.stop();
+                                    t.setRepeats(false);
+                                    t.start();
+                                    calculateThis.newTask();
                                 }
                                 break;
                             case "-":
@@ -235,7 +250,15 @@ public class CalculateThisGame extends JPanel implements ActionListener {
                                     calculateThis.newTask();
                                 } else {
                                     controller.correctSound(false);
-                                    gameLog.append("Incorrect, try again!\n");
+                                    gameLog.append("Incorrect, right answer was\n" + correctAnswer  + "!\n");
+                                    if(difficulty == 20 && score > difficulty - 1) {
+                                        score -= 5;
+                                    }
+                                    lblCorrectAnswer.setText("INCORRECT: " + correctAnswer);
+                                    t.stop();
+                                    t.setRepeats(false);
+                                    t.start();
+                                    calculateThis.newTask();
                                 }
                                 break;
                             case "*":
@@ -247,7 +270,15 @@ public class CalculateThisGame extends JPanel implements ActionListener {
                                     calculateThis.newTask();
                                 } else {
                                     controller.correctSound(false);
-                                    gameLog.append("Incorrect, try again!\n");
+                                    gameLog.append("Incorrect, right answer was\n" + correctAnswer  + "!\n");
+                                    if(difficulty == 20 && score > 4) {
+                                        score -= 5;
+                                    }
+                                    lblCorrectAnswer.setText("INCORRECT: " + correctAnswer);
+                                    t.stop();
+                                    t.setRepeats(false);
+                                    t.start();
+                                    calculateThis.newTask();
                                 }
                                 break;
                         }
@@ -302,6 +333,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
         calculateThis.newTask();
         textField.grabFocus();
         btnJumpOver.setEnabled(true);
+        lblTimer.setForeground(lightGrey);
     }
 
     /**
@@ -433,6 +465,7 @@ public class CalculateThisGame extends JPanel implements ActionListener {
     private class CountDownTimer extends Thread {
         private int minutes;
         private int seconds;
+        private boolean ticking = false;
 
         public void decrease5(){
             if(seconds == 0) {
@@ -467,6 +500,12 @@ public class CalculateThisGame extends JPanel implements ActionListener {
                         seconds = 59;
                     } else if (seconds > 0) {
                         seconds--;
+                    }
+
+                    if(!ticking && minutes == 0 && seconds < 11) {
+                        controller.tickingSound();
+                        lblTimer.setForeground(Color.RED);
+                        ticking = true;
                     }
                 } while (minutes >= 0 && seconds >= 0);
                 SwingUtilities.invokeLater(new Runnable() {

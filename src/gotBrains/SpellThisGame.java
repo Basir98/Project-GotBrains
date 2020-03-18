@@ -213,6 +213,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
         textField.setEditable(true);
         spellThis.newTask();
         textField.grabFocus();
+        lblTimer.setForeground(lightGrey);
     }
 
     public void setDifficulty(int difficulty) {
@@ -387,6 +388,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
     private class CountDownTimer extends Thread {
         private int minutes;
         private int seconds;
+        private boolean ticking = false;
 
         public void decrease5(){
             if(seconds == 0) {
@@ -421,6 +423,12 @@ public class SpellThisGame extends JPanel implements ActionListener {
                         seconds = 59;
                     } else if (seconds > 0) {
                         seconds--;
+                    }
+
+                    if(!ticking && minutes == 0 && seconds < 11) {
+                        controller.tickingSound();
+                        lblTimer.setForeground(Color.RED);
+                        ticking = true;
                     }
                 } while (minutes >= 0 && seconds >= 0);
                 SwingUtilities.invokeLater(new Runnable() {

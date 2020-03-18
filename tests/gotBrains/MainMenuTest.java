@@ -2,9 +2,12 @@ package gotBrains;
 
 import org.junit.jupiter.api.TestInstance;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 import java.awt.*;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +19,7 @@ class MainMenuTest {
 
 
     @org.junit.jupiter.api.BeforeAll
-    public void init() {
+    public void init() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         controller = new Controller(new JFrame());
         mainMenu = controller.getMainMenu();
     }
@@ -56,7 +59,7 @@ class MainMenuTest {
 
     // Testing F-UI-2
     @org.junit.jupiter.api.Test
-    void minimizeApp() {
+    void minimizeApp() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         controller.getMainMenu().clickMinimize();
         assertEquals(JFrame.ICONIFIED, controller.getPanelState());
         controller = new Controller(new JFrame());

@@ -1,9 +1,6 @@
 package gotBrains;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -35,6 +32,7 @@ public class Controller {
     private File incorrectSound = new File("sounds/incorrectSound.wav");
     private File alarmSound = new File("sounds/alarmSound.wav");
     private File buttonSound = new File("sounds/buttonSound.wav");
+    private File tickingSound = new File("sounds/tickingSound.wav");
     private Clip music;
     private boolean mutedMusic = false;
     private boolean mutedSound = false;
@@ -42,7 +40,11 @@ public class Controller {
     private CardLayout cl = new CardLayout();
     private Font customFont;
 
-    public Controller(JFrame frame) {
+    private FloatControl musicGainControl;
+
+    private int soundVolume = 35;
+
+    public Controller(JFrame frame) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         this.frame = frame;
         panelContainer.setLayout(cl);
         loadApp();
@@ -53,7 +55,7 @@ public class Controller {
      * Instantiates the panels, adds them to the cardlayout-container, sets the
      * frame preferences and shows the menu
      */
-    public void loadApp() {
+    public void loadApp() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         mainMenu = new MainMenu(this);
         spellThisMenu = new SpellThisMenu(this);
         memorizeThisMenu = new MemorizeThisMenu(this);
@@ -83,6 +85,13 @@ public class Controller {
             e.printStackTrace();
         }
         mainMenu.fieldUsername.grabFocus();
+
+        System.out.println(backgroundMusic);
+        AudioInputStream ais = AudioSystem.getAudioInputStream(backgroundMusic);
+        music = AudioSystem.getClip();
+        music.open(ais);
+        musicGainControl = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
+        musicGainControl.setValue(-15.0f);
     }
 
     /**
@@ -114,12 +123,6 @@ public class Controller {
      */
     public void startMusic() {
         try {
-            System.out.println(backgroundMusic);
-            AudioInputStream ais = AudioSystem.getAudioInputStream(backgroundMusic);
-            music = AudioSystem.getClip();
-            music.open(ais);
-            FloatControl gainControl = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-15.0f);
             music.start();
             music.loop(100);
         } catch (Exception e) {
@@ -137,6 +140,27 @@ public class Controller {
         } else if (mutedMusic) {
             startMusic();
             mutedMusic = false;
+        }
+    }
+
+    public void setMusicVolume(int volume) {
+        if(volume == 0) {
+            musicGainControl.setValue(musicGainControl.getMinimum());
+        } else {
+            float fVolume = volume;
+            musicGainControl.setValue(-50.0f + volume);
+        }
+    }
+
+    public void setSoundVolume(int volume) {
+        soundVolume = volume;
+    }
+
+    public float generateFloatVolume() {
+        if(soundVolume == 0) {
+            return 0.0f;
+        } else {
+            return -50.0f + soundVolume;
         }
     }
 
@@ -163,11 +187,15 @@ public class Controller {
                     AudioInputStream ais = AudioSystem.getAudioInputStream(correctSound);
                     Clip sound = AudioSystem.getClip();
                     sound.open(ais);
+                    FloatControl gainControl = (FloatControl) sound.getControl(FloatControl.Type.MASTER_GAIN);
+                    gainControl.setValue(generateFloatVolume());
                     sound.start();
                 } else if (!correct) {
                     AudioInputStream ais = AudioSystem.getAudioInputStream(incorrectSound);
                     Clip sound = AudioSystem.getClip();
                     sound.open(ais);
+                    FloatControl gainControl = (FloatControl) sound.getControl(FloatControl.Type.MASTER_GAIN);
+                    gainControl.setValue(generateFloatVolume());
                     sound.start();
                 }
             } catch (Exception e) {
@@ -185,6 +213,8 @@ public class Controller {
                 AudioInputStream ais = AudioSystem.getAudioInputStream(alarmSound);
                 Clip sound = AudioSystem.getClip();
                 sound.open(ais);
+                FloatControl gainControl = (FloatControl) sound.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(generateFloatVolume());
                 sound.start();
 
             } catch (Exception e) {
@@ -202,6 +232,27 @@ public class Controller {
                 AudioInputStream ais = AudioSystem.getAudioInputStream(buttonSound);
                 Clip sound = AudioSystem.getClip();
                 sound.open(ais);
+                FloatControl gainControl = (FloatControl) sound.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(generateFloatVolume());
+                sound.start();
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    /**
+     * Plays a tickingSound if the sound is not muted.
+     */
+    public void tickingSound() {
+        if (!mutedSound) {
+            try {
+                AudioInputStream ais = AudioSystem.getAudioInputStream(tickingSound);
+                Clip sound = AudioSystem.getClip();
+                sound.open(ais);
+                FloatControl gainControl = (FloatControl) sound.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(generateFloatVolume());
                 sound.start();
 
             } catch (Exception e) {
@@ -449,7 +500,8 @@ public class Controller {
     	
     	textAreaFilter(calTextArea);
     	
-    	JTextArea memoTextArea = new JTextArea("");
+    	JTextArea memoTextArea = new JTextArea("Click the colors in the sequence they've been shown."
+                + " After every round, another color is added! Can you remember them all?", 2, 8);
     	textAreaFilter(memoTextArea);
     	
     	JTextArea spellTextArea = new JTextArea("Want to challange you word skills? You have 2 minutes"
@@ -493,7 +545,7 @@ public class Controller {
      *
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         JFrame frame = new JFrame();
         Controller controller = new Controller(frame);
     }

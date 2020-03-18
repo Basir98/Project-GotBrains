@@ -2,9 +2,12 @@ package gotBrains;
 
 import org.junit.jupiter.api.TestInstance;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,7 +16,7 @@ class SpellThisGameTest {
     private Controller controller;
 
     @org.junit.jupiter.api.BeforeAll
-    public void init() {
+    public void init() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         controller = new Controller(new JFrame());
     }
 
@@ -87,7 +90,7 @@ class SpellThisGameTest {
         controller.startSpellThisGame(5);
         SpellThisGame game = controller.getSpellThisGame();
         String rightAnswer = "";
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 80; i++) {
             rightAnswer = game.getRightAnswer();
             assertEquals(true, rightAnswer.length() > 3 && rightAnswer.length() < 6);
             game.inputString(rightAnswer);
@@ -101,7 +104,7 @@ class SpellThisGameTest {
         controller.startSpellThisGame(10);
         SpellThisGame game = controller.getSpellThisGame();
         String rightAnswer = "";
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 80; i++) {
             rightAnswer = game.getRightAnswer();
             assertEquals(true, rightAnswer.length() > 5 && rightAnswer.length() < 8);
             game.inputString(rightAnswer);
@@ -115,7 +118,7 @@ class SpellThisGameTest {
         controller.startSpellThisGame(20);
         SpellThisGame game = controller.getSpellThisGame();
         String rightAnswer = "";
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 80; i++) {
             rightAnswer = game.getRightAnswer();
             assertEquals(true, rightAnswer.length() > 7 && rightAnswer.length() < 11);
             game.inputString(rightAnswer);
