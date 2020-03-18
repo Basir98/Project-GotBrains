@@ -35,9 +35,14 @@ public class SpellThisGame extends JPanel implements ActionListener {
     private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
     private JButton btnRestart = new JButton(new ImageIcon("images/restartButton.png"));
     private JButton btnJumpOver = new JButton(new ImageIcon("images/jumpOver.png"));
+    private JButton btnToggleMusic = new JButton(new ImageIcon("images/musicIcon.png"));
+    private JButton btnToggleSound = new JButton(new ImageIcon("images/soundIcon.png"));
     JTextField textField = new JTextField();
     private JTextArea gameLog = new JTextArea();
     private JScrollPane logScroll;
+    
+    private boolean mutedMusic = false;
+    private boolean mutedSound = false;
 
     private JLabel lblText = new JLabel("", SwingConstants.CENTER);
     private JLabel lblScore = new JLabel("Score: " + score, SwingConstants.LEFT);
@@ -58,6 +63,18 @@ public class SpellThisGame extends JPanel implements ActionListener {
         btnQuit.setBounds(756, 2, 40, 35);
         btnQuit.addActionListener(this);
         btnQuit.setRolloverIcon(new ImageIcon("images/quitButtonHover.png"));
+        
+        add(btnToggleMusic);
+        btnToggleMusic.setContentAreaFilled(false);
+        btnToggleMusic.setBorderPainted(false);
+        btnToggleMusic.setBounds(5, 560, 32, 32);
+        btnToggleMusic.addActionListener(this);
+
+        add(btnToggleSound);
+        btnToggleSound.setContentAreaFilled(false);
+        btnToggleSound.setBorderPainted(false);
+        btnToggleSound.setBounds(40, 560, 32, 32);
+        btnToggleSound.addActionListener(this);
 
         add(btnJumpOver);
         btnJumpOver.setOpaque(false);
@@ -280,7 +297,28 @@ public class SpellThisGame extends JPanel implements ActionListener {
         } else if (e.getSource() == btnRestart) {
             controller.buttonSound();
             restart();
+        } else if (e.getSource() == btnToggleMusic) {
+        controller.buttonSound();
+        controller.toggleMusic();
+        if (!mutedMusic) {
+            btnToggleMusic.setIcon(new ImageIcon("images/musicIconMuted.png"));
+            mutedMusic = true;
+        } else if (mutedMusic) {
+            btnToggleMusic.setIcon(new ImageIcon("images/musicIcon.png"));
+            mutedMusic = false;
         }
+    } else if (e.getSource() == btnToggleSound) {
+        controller.buttonSound();
+        controller.toggleSound();
+        if (!mutedSound) {
+            btnToggleSound.setIcon(new ImageIcon("images/soundIconMuted.png"));
+            mutedSound = true;
+        } else if (mutedSound) {
+            btnToggleSound.setIcon(new ImageIcon("images/soundIcon.png"));
+            mutedSound = false;
+        }
+    }
+        
     }
 
     private class SpellThis {
