@@ -121,6 +121,11 @@ public class MainMenu extends JPanel implements ActionListener {
                 musicVolumeSlider.setVisible(true);
                 soundVolumeSlider.setVisible(false);
             }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+            }
         });
 
         add(btnToggleSound);
@@ -134,6 +139,11 @@ public class MainMenu extends JPanel implements ActionListener {
                 musicVolumeSlider.setVisible(false);
                 soundVolumeSlider.setVisible(true);
             }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                soundVolumeSlider.setVisible(false);
+            }
         });
 
         add(musicVolumeSlider);
@@ -142,6 +152,11 @@ public class MainMenu extends JPanel implements ActionListener {
         musicVolumeSlider.addChangeListener(changeEvent -> controller.setMusicVolume(musicVolumeSlider.getValue()));
         musicVolumeSlider.setVisible(false);
         musicVolumeSlider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(true);
+            }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 musicVolumeSlider.setVisible(false);
@@ -154,6 +169,11 @@ public class MainMenu extends JPanel implements ActionListener {
         soundVolumeSlider.addChangeListener(changeEvent -> controller.setSoundVolume(soundVolumeSlider.getValue()));
         soundVolumeSlider.setVisible(false);
         soundVolumeSlider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                soundVolumeSlider.setVisible(true);
+            }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 soundVolumeSlider.setVisible(false);
