@@ -456,8 +456,8 @@ public class SpellThisGame extends JPanel implements ActionListener {
                     // För att visa att orden tas ur listan för att undvika att de
                     // kommer flera gånger
                     rightAnswer = wordsEasy.poll().toUpperCase();
-                    System.out.println(rightAnswer);
-                    System.out.println(wordsEasy.size());
+//                    System.out.println(rightAnswer);
+//                    System.out.println(wordsEasy.size());
 
                     // Create a new char array with the size of the random word.
                     char[] chars1 = new char[rightAnswer.length()];
