@@ -241,7 +241,7 @@ public class MainMenu extends JPanel implements ActionListener {
 
 		}    else if (e.getSource() == btnSpellThis) {
 			if(fieldUsername.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Please enter username");
+				controller.usernamePanel();
 			} else {
 				controller.buttonSound();
 				controller.addPlayer(fieldUsername.getText());
@@ -252,7 +252,7 @@ public class MainMenu extends JPanel implements ActionListener {
 
 		}  else if (e.getSource() == btnMemorizeThis) {
 			if(fieldUsername.getText().isEmpty()){
-				JOptionPane.showMessageDialog(null, "Please enter username");
+				controller.usernamePanel();
 			}else {
 				controller.buttonSound();
 				controller.addPlayer(fieldUsername.getText());
@@ -262,7 +262,7 @@ public class MainMenu extends JPanel implements ActionListener {
 
 		} else if (e.getSource() == btnCalculateThis) {
 			if(fieldUsername.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Please enter username");
+				controller.usernamePanel();
 			} else {
 				controller.buttonSound();
 				controller.addPlayer(fieldUsername.getText());

@@ -587,6 +587,14 @@ public class Controller {
 		btn.setBounds(4, 4, 120, 30);
 		btn.setRolloverIcon(new ImageIcon("images/menuButtonHover.png"));
 	}
+	
+	/*
+	 * Enter Username message
+	 */
+	public void usernamePanel() {
+		String str = "Please enter a Username";
+		JOptionPane.showMessageDialog(frame, str, "No Username", JOptionPane.WARNING_MESSAGE);
+	}
     
 
     /**
@@ -641,4 +649,5 @@ public class Controller {
     public CalculateThisMenu getCalculateThisMenu() {
         return calculateThisMenu;
     }
+  
 }
