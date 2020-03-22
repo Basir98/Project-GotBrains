@@ -369,6 +369,7 @@ public class Controller {
 	 */
 	public void newMemorizeThisScore(int score) {
 		hm.addMemorizeThisScore(this.currentUsername, score);
+
 	}
 
 	/**
