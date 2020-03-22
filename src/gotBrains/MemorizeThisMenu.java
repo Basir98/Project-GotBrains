@@ -120,7 +120,7 @@ public class MemorizeThisMenu extends JPanel implements ActionListener {
             controller.minimizeApp();
         }else if(e.getSource() == btnHelp ) {
         	
-        	JTextArea textArea = new JTextArea("\nYou gain points for every round with right colors", 2, 10);
+        	JTextArea textArea = new JTextArea("\nYou gain points for every round with right colors.               Try memorize all the colors", 2, 10);
         	JLabel label = new JLabel();
         	label.setText("     Memorize as many color as possible");
         	

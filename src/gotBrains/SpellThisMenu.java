@@ -122,7 +122,7 @@ public class SpellThisMenu extends JPanel implements ActionListener {
         } else if(e.getSource() == btnHelp) {
         	
         	JTextArea textArea = new JTextArea("\n  You gain points for every right answer. If you choose to"
-        			+ " skip you lose 5 seconds from timer", 2, 10);
+        			+ " skip you lose 5 seconds from timer.         You have 3 hints every game rounds", 2, 10);
         	JLabel label = new JLabel();
         	label.setText("       Spell as many words as possible");
         	

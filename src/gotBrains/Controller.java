@@ -466,7 +466,7 @@ public class Controller {
     	pnl.add(pnlLeft, BorderLayout.WEST);
     	
      	ImageIcon imgFile = new ImageIcon("images/logo.png");
-        Image imgfile = imgFile.getImage().getScaledInstance(75, 75, Image.SCALE_SMOOTH);
+        Image imgfile = imgFile.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         imgFile = new ImageIcon(imgfile);     
 //    	frame.setContentPane(new JLabel(imgFile));
 //    	frame.add(new JLabel(imgFile), BorderLayout.CENTER);
