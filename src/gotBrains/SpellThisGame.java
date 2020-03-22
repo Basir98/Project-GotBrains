@@ -1,6 +1,8 @@
 package gotBrains;
 
 import javax.swing.*;
+import javax.swing.border.AbstractBorder;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,6 +33,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
     private LinkedList<String> wordsHard;
     private Random rand = new Random();
     private Action action;
+    private int hintsLeft = 3;
 
     private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
     private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
@@ -50,6 +53,8 @@ public class SpellThisGame extends JPanel implements ActionListener {
     private JLabel lblScore = new JLabel("Score: " + score, SwingConstants.LEFT);
     private JLabel lblTimer = new JLabel("", SwingConstants.CENTER);
     private JLabel lblEnterIcon = new JLabel(new ImageIcon("images/enterIcon.png"));
+    private JLabel lblHintButton = new JLabel("HINT " + hintsLeft + "/" + hintsLeft, SwingConstants.CENTER);
+    private JLabel lblHint = new JLabel("", SwingConstants.CENTER);
 
     private JSlider musicVolumeSlider = new JSlider(JSlider.VERTICAL, 0, 35, 35);
     private JSlider soundVolumeSlider = new JSlider(JSlider.VERTICAL, 0, 50, 50);
@@ -203,6 +208,31 @@ public class SpellThisGame extends JPanel implements ActionListener {
         lblTimer.setForeground(lightGrey);
         lblTimer.setBounds(315, 2, 160, 30);
 
+        add(lblHintButton);
+        lblHintButton.setFont(new Font("Calibri", Font.PLAIN, 24));
+        lblHintButton.setForeground(Color.BLACK);
+        lblHintButton.setBounds(324, 530, 140, 40);
+        lblHintButton.setBorder(new RoundedLineBorder(Color.BLACK, 2, 10, true));
+        lblHintButton.setHorizontalAlignment(JLabel.CENTER);
+        lblHintButton.setVerticalAlignment(JLabel.CENTER);
+        lblHintButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                getHint();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                lblHintButton.setForeground(Color.darkGray);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                lblHintButton.setForeground(Color.BLACK);
+            }
+        });
+
+
         add(textField);
         textField.setOpaque(false);
         textField.setBorder(BorderFactory.createEmptyBorder());
@@ -232,8 +262,25 @@ public class SpellThisGame extends JPanel implements ActionListener {
         logScroll.getVerticalScrollBar().setOpaque(false);
         logScroll.setBounds(590, 367, 206, 229);
 
+        add(lblHint);
+        lblHint.setFont(font);
+        lblHint.setForeground(new Color(48, 108, 48));
+        lblHint.setBounds(186, 260, 400, 40);
+
         timer = new CountDownTimer(2, 0);
         timer.start();
+    }
+
+    private void getHint() {
+        controller.buttonSound();
+        String text = "" + rightAnswer.charAt(0);
+        for (int i = 1; i < rightAnswer.length(); i++) {
+            text += " _";
+        }
+        lblHint.setText(text);
+        hintsLeft -= 1;
+        lblHintButton.setText("HINT " + hintsLeft + "/3");
+        lblHintButton.setVisible(false);
     }
 
     public Action action() { //Method that gives points and checks if the User types in the right answer.
@@ -253,6 +300,10 @@ public class SpellThisGame extends JPanel implements ActionListener {
                         controller.correctSound(true);
                         gameLog.append("Correct!\n");
                         spellThis.newTask();
+                        if(hintsLeft > 0) {
+                            lblHintButton.setVisible(true);
+                        }
+                        lblHint.setText("");
                     } else {
                         controller.correctSound(false);
                         gameLog.append("Incorrect, try again!\n");
@@ -294,6 +345,10 @@ public class SpellThisGame extends JPanel implements ActionListener {
         spellThis.newTask();
         textField.grabFocus();
         lblTimer.setForeground(lightGrey);
+        hintsLeft = 3;
+        lblHintButton.setVisible(true);
+        lblHintButton.setText("HINT " + hintsLeft + "/" + hintsLeft);
+        lblHint.setText("");
     }
 
     public void setDifficulty(int difficulty) {
@@ -556,6 +611,56 @@ public class SpellThisGame extends JPanel implements ActionListener {
     public void setSoundVolumeSlider(int volume) {
         soundVolumeSlider.setValue(volume);
     }
+
+    public class RoundedLineBorder extends AbstractBorder {
+        int lineSize, cornerSize;
+        Paint fill;
+        Stroke stroke;
+        private Object aaHint;
+
+        public RoundedLineBorder(Paint fill, int lineSize, int cornerSize) {
+            this.fill = fill;
+            this.lineSize = lineSize;
+            this.cornerSize = cornerSize;
+            stroke = new BasicStroke(lineSize);
+        }
+        public RoundedLineBorder(Paint fill, int lineSize, int cornerSize, boolean antiAlias) {
+            this.fill = fill;
+            this.lineSize = lineSize;
+            this.cornerSize = cornerSize;
+            stroke = new BasicStroke(lineSize);
+            aaHint = antiAlias? RenderingHints.VALUE_ANTIALIAS_ON: RenderingHints.VALUE_ANTIALIAS_OFF;
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c, Insets insets) {
+            int size = Math.max(lineSize, cornerSize);
+            if(insets == null) insets = new Insets(size, size, size, size);
+            else insets.left = insets.top = insets.right = insets.bottom = size;
+            return insets;
+        }
+
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            Graphics2D g2d = (Graphics2D)g;
+            Paint oldPaint = g2d.getPaint();
+            Stroke oldStroke = g2d.getStroke();
+            Object oldAA = g2d.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+            try {
+                g2d.setPaint(fill!=null? fill: c.getForeground());
+                g2d.setStroke(stroke);
+                if(aaHint != null) g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, aaHint);
+                int off = lineSize >> 1;
+                g2d.drawRoundRect(x+off, y+off, width-lineSize, height-lineSize, cornerSize, cornerSize);
+            }
+            finally {
+                g2d.setPaint(oldPaint);
+                g2d.setStroke(oldStroke);
+                if(aaHint != null) g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldAA);
+            }
+        }
+    }
+
 
     // Test methods
 
