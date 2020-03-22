@@ -5,10 +5,7 @@ import javax.swing.*;
 
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -43,6 +40,9 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
     private JButton btnRestart = new JButton(new ImageIcon("images/restartButton.png"));
     private JButton btnToggleMusic = new JButton(new ImageIcon("images/musicIcon.png"));
     private JButton btnToggleSound = new JButton(new ImageIcon("images/soundIcon.png"));
+
+    private JSlider musicVolumeSlider = new JSlider(JSlider.VERTICAL, 0, 35, 35);
+    private JSlider soundVolumeSlider = new JSlider(JSlider.VERTICAL, 0, 50, 50);
     
     private boolean mutedMusic = false;
     private boolean mutedSound = false;
@@ -78,6 +78,18 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
 
         	}
         });
+        btnToggleMusic.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(true);
+                soundVolumeSlider.setVisible(false);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+            }
+        });
         
         add(btnToggleSound);
         btnToggleSound.setContentAreaFilled(false);
@@ -98,6 +110,52 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         		}
         	}
 
+        });
+        btnToggleSound.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+                soundVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                soundVolumeSlider.setVisible(false);
+            }
+        });
+
+        add(musicVolumeSlider);
+        musicVolumeSlider.setBounds(8, 460, 32, 100);
+        musicVolumeSlider.setOpaque(false);
+        musicVolumeSlider.addChangeListener(changeEvent -> controller.setMusicVolume(musicVolumeSlider.getValue()));
+        musicVolumeSlider.setVisible(false);
+        musicVolumeSlider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+            }
+        });
+
+        add(soundVolumeSlider);
+        soundVolumeSlider.setBounds(40, 460, 32, 100);
+        soundVolumeSlider.setOpaque(false);
+        soundVolumeSlider.addChangeListener(changeEvent -> controller.setSoundVolume(soundVolumeSlider.getValue()));
+        soundVolumeSlider.setVisible(false);
+        soundVolumeSlider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                soundVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                soundVolumeSlider.setVisible(false);
+            }
         });
 
         add(btnToggleSound);
@@ -241,6 +299,14 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
     	this.totalScore = 0;
         lblScore.setText("Score: " + totalScore);
         start();
+    }
+
+    public void setMusicVolumeSlider(int volume) {
+        musicVolumeSlider.setValue(volume);
+    }
+
+    public void setSoundVolumeSlider(int volume) {
+        soundVolumeSlider.setValue(volume);
     }
     
     @Override

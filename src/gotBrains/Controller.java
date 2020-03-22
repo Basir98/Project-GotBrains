@@ -42,7 +42,8 @@ public class Controller {
 
     private FloatControl musicGainControl;
 
-    private int soundVolume = 35;
+    public int soundVolume = 50;
+    public int musicVolume = 35;
 
     public Controller(JFrame frame) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         this.frame = frame;
@@ -150,6 +151,7 @@ public class Controller {
             float fVolume = volume;
             musicGainControl.setValue(-50.0f + volume);
         }
+        musicVolume = volume;
     }
 
     public void setSoundVolume(int volume) {
@@ -295,7 +297,9 @@ public class Controller {
         memorizeThisGame.start();
 
         cl.show(panelContainer, "memorizeThisGame");
-    
+
+        memorizeThisGame.setSoundVolumeSlider(soundVolume);
+        memorizeThisGame.setMusicVolumeSlider(musicVolume);
     }
 
     /**
@@ -311,6 +315,9 @@ public class Controller {
         spellThisGame.startLevel();
         cl.show(panelContainer, "spellThisGame");
         spellThisGame.textField.grabFocus();
+
+        spellThisGame.setSoundVolumeSlider(soundVolume);
+        spellThisGame.setMusicVolumeSlider(musicVolume);
     }
 
     /**
@@ -326,6 +333,9 @@ public class Controller {
         calculateThisGame.startLevel();
         cl.show(panelContainer, "calculateThisGame");
         calculateThisGame.textField.grabFocus();
+
+        calculateThisGame.setSoundVolumeSlider(soundVolume);
+        calculateThisGame.setMusicVolumeSlider(musicVolume);
     }
 
     /**
@@ -343,6 +353,8 @@ public class Controller {
     public void showMainMenu() {
         cl.show(panelContainer, "mainMenu");
         mainMenu.fieldUsername.grabFocus();
+        mainMenu.setSoundVolumeSlider(soundVolume);
+        mainMenu.setMusicVolumeSlider(musicVolume);
     }
 
     /**

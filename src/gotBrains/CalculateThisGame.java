@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 
 /**
@@ -47,6 +49,9 @@ public class CalculateThisGame extends JPanel implements ActionListener {
     private JLabel lblEnterIcon = new JLabel(new ImageIcon("images/enterIcon.png"));
     private JLabel lblCorrectAnswer = new JLabel("", SwingConstants.CENTER);
 
+    private JSlider musicVolumeSlider = new JSlider(JSlider.VERTICAL, 0, 35, 35);
+    private JSlider soundVolumeSlider = new JSlider(JSlider.VERTICAL, 0, 50, 50);
+
     private Timer t = new Timer(2000, e1 -> lblCorrectAnswer.setText(""));
 
     /**
@@ -58,18 +63,76 @@ public class CalculateThisGame extends JPanel implements ActionListener {
         this.controller = controller;
         setLayout(null);
         setPreferredSize(new Dimension(800, 600));
+
+        add(musicVolumeSlider);
+        musicVolumeSlider.setBounds(8, 460, 32, 100);
+        musicVolumeSlider.setOpaque(false);
+        musicVolumeSlider.addChangeListener(changeEvent -> controller.setMusicVolume(musicVolumeSlider.getValue()));
+        musicVolumeSlider.setVisible(false);
+        musicVolumeSlider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+            }
+        });
+
+        add(soundVolumeSlider);
+        soundVolumeSlider.setBounds(40, 460, 32, 100);
+        soundVolumeSlider.setOpaque(false);
+        soundVolumeSlider.addChangeListener(changeEvent -> controller.setSoundVolume(soundVolumeSlider.getValue()));
+        soundVolumeSlider.setVisible(false);
+        soundVolumeSlider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                soundVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                soundVolumeSlider.setVisible(false);
+            }
+        });
         
         add(btnToggleMusic);
         btnToggleMusic.setContentAreaFilled(false);
         btnToggleMusic.setBorderPainted(false);
         btnToggleMusic.setBounds(5, 560, 32, 32);
         btnToggleMusic.addActionListener(this);
+        btnToggleMusic.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(true);
+                soundVolumeSlider.setVisible(false);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+            }
+        });
 
         add(btnToggleSound);
         btnToggleSound.setContentAreaFilled(false);
         btnToggleSound.setBorderPainted(false);
         btnToggleSound.setBounds(40, 560, 32, 32);
         btnToggleSound.addActionListener(this);
+        btnToggleSound.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+                soundVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                soundVolumeSlider.setVisible(false);
+            }
+        });
 
         add(btnQuit);
         btnQuit.setOpaque(false);
@@ -564,6 +627,14 @@ public class CalculateThisGame extends JPanel implements ActionListener {
         public String toString() {
             return minutes + " min" + ", " + seconds + " sec";
         }
+    }
+
+    public void setMusicVolumeSlider(int volume) {
+        musicVolumeSlider.setValue(volume);
+    }
+
+    public void setSoundVolumeSlider(int volume) {
+        soundVolumeSlider.setValue(volume);
     }
 
     // Test methods

@@ -259,6 +259,14 @@ public class MainMenu extends JPanel implements ActionListener {
         }
     }
 
+    public void setMusicVolumeSlider(int volume) {
+        musicVolumeSlider.setValue(volume);
+    }
+
+    public void setSoundVolumeSlider(int volume) {
+        soundVolumeSlider.setValue(volume);
+    }
+
     // Test methods
     public void clickQuit() {
         btnQuit.doClick();
