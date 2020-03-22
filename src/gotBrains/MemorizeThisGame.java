@@ -5,10 +5,7 @@ import javax.swing.*;
 
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -41,6 +38,14 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
     private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
     private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
     private JButton btnRestart = new JButton(new ImageIcon("images/restartButton.png"));
+    private JButton btnToggleMusic = new JButton(new ImageIcon("images/musicIcon.png"));
+    private JButton btnToggleSound = new JButton(new ImageIcon("images/soundIcon.png"));
+
+    private JSlider musicVolumeSlider = new JSlider(JSlider.VERTICAL, 0, 35, 35);
+    private JSlider soundVolumeSlider = new JSlider(JSlider.VERTICAL, 0, 50, 50);
+    
+    private boolean mutedMusic = false;
+    private boolean mutedSound = false;
     
     public MemorizeThisGame(Controller controller) {
         this.controller = controller;
@@ -52,6 +57,112 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         lblScore.setFont(new Font("Calibri", Font.PLAIN, 24));
         lblScore.setForeground(lightGrey);
         lblScore.setBounds(355, 2, 200, 30);
+        
+        add(btnToggleMusic);
+        btnToggleMusic.setContentAreaFilled(false);
+        btnToggleMusic.setBorderPainted(false);
+        btnToggleMusic.setBounds(5, 560, 32, 32);
+        btnToggleMusic.addActionListener(this);
+        btnToggleMusic.addActionListener((e) -> {
+        	if (e.getSource() == btnToggleMusic) {
+        		controller.buttonSound();
+        		controller.toggleMusic();
+        		if (!mutedMusic) {
+        			btnToggleMusic.setIcon(new ImageIcon("images/musicIconMuted.png"));
+        			mutedMusic = true;
+        		} else if (mutedMusic) {
+        			btnToggleMusic.setIcon(new ImageIcon("images/musicIcon.png"));
+        			mutedMusic = false;
+
+        		}
+
+        	}
+        });
+        btnToggleMusic.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(true);
+                soundVolumeSlider.setVisible(false);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+            }
+        });
+        
+        add(btnToggleSound);
+        btnToggleSound.setContentAreaFilled(false);
+        btnToggleSound.setBorderPainted(false);
+        btnToggleSound.setBounds(40, 560, 32, 32);
+        btnToggleSound.addActionListener(this);
+        btnToggleSound.addActionListener((e) -> {
+        	if (e.getSource() == btnToggleSound) {
+        		controller.buttonSound();
+        		controller.toggleSound();
+        		if (!mutedSound) {
+        			btnToggleSound.setIcon(new ImageIcon("images/soundIconMuted.png"));
+        			mutedSound = true;
+        		} else if (mutedSound) {
+        			btnToggleSound.setIcon(new ImageIcon("images/soundIcon.png"));
+        			mutedSound = false;
+
+        		}
+        	}
+
+        });
+        btnToggleSound.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+                soundVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                soundVolumeSlider.setVisible(false);
+            }
+        });
+
+        add(musicVolumeSlider);
+        musicVolumeSlider.setBounds(8, 460, 32, 100);
+        musicVolumeSlider.setOpaque(false);
+        musicVolumeSlider.addChangeListener(changeEvent -> controller.setMusicVolume(musicVolumeSlider.getValue()));
+        musicVolumeSlider.setVisible(false);
+        musicVolumeSlider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+            }
+        });
+
+        add(soundVolumeSlider);
+        soundVolumeSlider.setBounds(40, 460, 32, 100);
+        soundVolumeSlider.setOpaque(false);
+        soundVolumeSlider.addChangeListener(changeEvent -> controller.setSoundVolume(soundVolumeSlider.getValue()));
+        soundVolumeSlider.setVisible(false);
+        soundVolumeSlider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                soundVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                soundVolumeSlider.setVisible(false);
+            }
+        });
+
+        add(btnToggleSound);
+        btnToggleSound.setContentAreaFilled(false);
+        btnToggleSound.setBorderPainted(false);
+        btnToggleSound.setBounds(40, 560, 32, 32);
+        btnToggleSound.addActionListener(this);
 
         add(btnQuit);
         controller.exitBtnFilter(btnQuit);
@@ -86,6 +197,8 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         btnRestart.setBounds(576, 325, 220, 40);
         btnRestart.addActionListener(this);
         btnRestart.setRolloverIcon(new ImageIcon("images/restartButtonHover.png"));
+        
+        
         
         Timer timer = new Timer(20, this);
         renderer = new Renderer();
@@ -174,6 +287,14 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         lblScore.setText("Score: " + totalScore);
         start();
     }
+
+    public void setMusicVolumeSlider(int volume) {
+        musicVolumeSlider.setValue(volume);
+    }
+
+    public void setSoundVolumeSlider(int volume) {
+        soundVolumeSlider.setValue(volume);
+    }
     
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -216,10 +337,32 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
             lblScore.setText("Score: "+totalScore);
             round++;
 			gameLog.append("\nRound " + round  + " Completed");
-        }
 
+            }
         renderer.repaint();
-    }
+        }
+        
+    
+//    else if (e.getSource() == btnToggleMusic) {
+//        controller.buttonSound();
+//        controller.toggleMusic();
+//        if (!mutedMusic) {
+//            btnToggleMusic.setIcon(new ImageIcon("images/musicIconMuted.png"));
+//            mutedMusic = true;
+//        } else if (mutedMusic) {
+//            btnToggleMusic.setIcon(new ImageIcon("images/musicIcon.png"));
+//            mutedMusic = false;
+//        }
+//    } else if (e.getSource() == btnToggleSound) {
+//        controller.buttonSound();
+//        controller.toggleSound();
+//        if (!mutedSound) {
+//            btnToggleSound.setIcon(new ImageIcon("images/soundIconMuted.png"));
+//            mutedSound = true;
+//        } else if (mutedSound) {
+//            btnToggleSound.setIcon(new ImageIcon("images/soundIcon.png"));
+//            mutedSound = false;
+//        }
 
     public void paint(Graphics2D g) {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -278,6 +421,7 @@ public class MemorizeThisGame extends JPanel implements ActionListener, MouseLis
         } else {
             g.drawString(indexPattern + "/" + pattern.size(), WIDTH / 2 - 20, HEIGHT / 2 + 10);
         }
+       
     }
 
     @Override

@@ -1,9 +1,13 @@
 package gotBrains;
 
 import javax.swing.*;
+import javax.swing.border.AbstractBorder;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
@@ -29,20 +33,31 @@ public class SpellThisGame extends JPanel implements ActionListener {
     private LinkedList<String> wordsHard;
     private Random rand = new Random();
     private Action action;
+    private int hintsLeft = 3;
 
     private JButton btnQuit = new JButton(new ImageIcon("images/quitButton.png"));
     private JButton btnMinimize = new JButton(new ImageIcon("images/minimizeButton.png"));
     private JButton btnMenu = new JButton(new ImageIcon("images/menuButton.png"));
     private JButton btnRestart = new JButton(new ImageIcon("images/restartButton.png"));
     private JButton btnJumpOver = new JButton(new ImageIcon("images/jumpOver.png"));
+    private JButton btnToggleMusic = new JButton(new ImageIcon("images/musicIcon.png"));
+    private JButton btnToggleSound = new JButton(new ImageIcon("images/soundIcon.png"));
     JTextField textField = new JTextField();
     private JTextArea gameLog = new JTextArea();
     private JScrollPane logScroll;
+    
+    private boolean mutedMusic = false;
+    private boolean mutedSound = false;
 
     private JLabel lblText = new JLabel("", SwingConstants.CENTER);
     private JLabel lblScore = new JLabel("Score: " + score, SwingConstants.LEFT);
     private JLabel lblTimer = new JLabel("", SwingConstants.CENTER);
     private JLabel lblEnterIcon = new JLabel(new ImageIcon("images/enterIcon.png"));
+    private JLabel lblHintButton = new JLabel("HINT " + hintsLeft + "/" + hintsLeft, SwingConstants.CENTER);
+    private JLabel lblHint = new JLabel("", SwingConstants.CENTER);
+
+    private JSlider musicVolumeSlider = new JSlider(JSlider.VERTICAL, 0, 35, 35);
+    private JSlider soundVolumeSlider = new JSlider(JSlider.VERTICAL, 0, 50, 50);
 
     @SuppressWarnings("serial")
     public SpellThisGame(Controller controller) {
@@ -61,6 +76,76 @@ public class SpellThisGame extends JPanel implements ActionListener {
         add(btnMenu);
         controller.mainMenuBtnFilter(btnMenu);
         btnMenu.addActionListener(this);
+        
+        add(btnToggleMusic);
+        btnToggleMusic.setContentAreaFilled(false);
+        btnToggleMusic.setBorderPainted(false);
+        btnToggleMusic.setBounds(5, 560, 32, 32);
+        btnToggleMusic.addActionListener(this);
+        btnToggleMusic.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(true);
+                soundVolumeSlider.setVisible(false);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+            }
+        });
+
+        add(btnToggleSound);
+        btnToggleSound.setContentAreaFilled(false);
+        btnToggleSound.setBorderPainted(false);
+        btnToggleSound.setBounds(40, 560, 32, 32);
+        btnToggleSound.addActionListener(this);
+        btnToggleSound.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+                soundVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                soundVolumeSlider.setVisible(false);
+            }
+        });
+
+        add(musicVolumeSlider);
+        musicVolumeSlider.setBounds(8, 460, 32, 100);
+        musicVolumeSlider.setOpaque(false);
+        musicVolumeSlider.addChangeListener(changeEvent -> controller.setMusicVolume(musicVolumeSlider.getValue()));
+        musicVolumeSlider.setVisible(false);
+        musicVolumeSlider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+            }
+        });
+
+        add(soundVolumeSlider);
+        soundVolumeSlider.setBounds(40, 460, 32, 100);
+        soundVolumeSlider.setOpaque(false);
+        soundVolumeSlider.addChangeListener(changeEvent -> controller.setSoundVolume(soundVolumeSlider.getValue()));
+        soundVolumeSlider.setVisible(false);
+        soundVolumeSlider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                soundVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                soundVolumeSlider.setVisible(false);
+            }
+        });
 
         add(btnJumpOver);
         btnJumpOver.setOpaque(false);
@@ -109,6 +194,31 @@ public class SpellThisGame extends JPanel implements ActionListener {
         lblTimer.setForeground(lightGrey);
         lblTimer.setBounds(315, 2, 160, 30);
 
+        add(lblHintButton);
+        lblHintButton.setFont(new Font("Calibri", Font.PLAIN, 24));
+        lblHintButton.setForeground(Color.BLACK);
+        lblHintButton.setBounds(324, 530, 140, 40);
+        lblHintButton.setBorder(new RoundedLineBorder(Color.BLACK, 2, 10, true));
+        lblHintButton.setHorizontalAlignment(JLabel.CENTER);
+        lblHintButton.setVerticalAlignment(JLabel.CENTER);
+        lblHintButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                getHint();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                lblHintButton.setForeground(Color.darkGray);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                lblHintButton.setForeground(Color.BLACK);
+            }
+        });
+
+
         add(textField);
         textField.setOpaque(false);
         textField.setBorder(BorderFactory.createEmptyBorder());
@@ -138,8 +248,25 @@ public class SpellThisGame extends JPanel implements ActionListener {
         logScroll.getVerticalScrollBar().setOpaque(false);
         logScroll.setBounds(590, 367, 206, 229);
 
+        add(lblHint);
+        lblHint.setFont(font);
+        lblHint.setForeground(new Color(48, 108, 48));
+        lblHint.setBounds(186, 260, 400, 40);
+
         timer = new CountDownTimer(2, 0);
         timer.start();
+    }
+
+    private void getHint() {
+        controller.buttonSound();
+        String text = "" + rightAnswer.charAt(0);
+        for (int i = 1; i < rightAnswer.length(); i++) {
+            text += " _";
+        }
+        lblHint.setText(text);
+        hintsLeft -= 1;
+        lblHintButton.setText("HINT " + hintsLeft + "/3");
+        lblHintButton.setVisible(false);
     }
 
     public Action action() { //Method that gives points and checks if the User types in the right answer.
@@ -159,6 +286,10 @@ public class SpellThisGame extends JPanel implements ActionListener {
                         controller.correctSound(true);
                         gameLog.append("Correct!\n");
                         spellThis.newTask();
+                        if(hintsLeft > 0) {
+                            lblHintButton.setVisible(true);
+                        }
+                        lblHint.setText("");
                     } else {
                         controller.correctSound(false);
                         gameLog.append("Incorrect, try again!\n");
@@ -199,6 +330,11 @@ public class SpellThisGame extends JPanel implements ActionListener {
         textField.setEditable(true);
         spellThis.newTask();
         textField.grabFocus();
+        lblTimer.setForeground(lightGrey);
+        hintsLeft = 3;
+        lblHintButton.setVisible(true);
+        lblHintButton.setText("HINT " + hintsLeft + "/" + hintsLeft);
+        lblHint.setText("");
     }
 
     public void setDifficulty(int difficulty) {
@@ -266,7 +402,28 @@ public class SpellThisGame extends JPanel implements ActionListener {
         } else if (e.getSource() == btnRestart) {
             controller.buttonSound();
             restart();
+        } else if (e.getSource() == btnToggleMusic) {
+        controller.buttonSound();
+        controller.toggleMusic();
+        if (!mutedMusic) {
+            btnToggleMusic.setIcon(new ImageIcon("images/musicIconMuted.png"));
+            mutedMusic = true;
+        } else if (mutedMusic) {
+            btnToggleMusic.setIcon(new ImageIcon("images/musicIcon.png"));
+            mutedMusic = false;
         }
+    } else if (e.getSource() == btnToggleSound) {
+        controller.buttonSound();
+        controller.toggleSound();
+        if (!mutedSound) {
+            btnToggleSound.setIcon(new ImageIcon("images/soundIconMuted.png"));
+            mutedSound = true;
+        } else if (mutedSound) {
+            btnToggleSound.setIcon(new ImageIcon("images/soundIcon.png"));
+            mutedSound = false;
+        }
+    }
+        
     }
 
     private class SpellThis {
@@ -373,6 +530,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
     private class CountDownTimer extends Thread {
         private int minutes;
         private int seconds;
+        private boolean ticking = false;
 
         public void decrease5(){
             if(seconds == 0) {
@@ -382,7 +540,7 @@ public class SpellThisGame extends JPanel implements ActionListener {
                     e.printStackTrace();
                 }
             }
-            seconds -= 4; //eftersom timern redan minskar med en varje sekund (annars ser det ut som att det minskar med 6 sekunder)
+            seconds -= 4; 
         }
 
         public CountDownTimer(int minutes, int seconds) {
@@ -402,11 +560,17 @@ public class SpellThisGame extends JPanel implements ActionListener {
                     lblTimer.setText(toString());
                     Thread.sleep(999);
 
-                    if (seconds == 0) {
+                    if (seconds <= 0) {
                         minutes--;
                         seconds = 59;
-                    } else if (seconds != 0) {
+                    } else if (seconds > 0) {
                         seconds--;
+                    }
+
+                    if(!ticking && minutes == 0 && seconds < 11) {
+                        controller.tickingSound();
+                        lblTimer.setForeground(Color.RED);
+                        ticking = true;
                     }
                 } while (minutes >= 0 && seconds >= 0);
                 SwingUtilities.invokeLater(new Runnable() {
@@ -424,5 +588,129 @@ public class SpellThisGame extends JPanel implements ActionListener {
         public String toString() {
             return minutes + " min" + ", " + seconds + " sec";
         }
+    }
+
+    public void setMusicVolumeSlider(int volume) {
+        musicVolumeSlider.setValue(volume);
+    }
+
+    public void setSoundVolumeSlider(int volume) {
+        soundVolumeSlider.setValue(volume);
+    }
+
+    public class RoundedLineBorder extends AbstractBorder {
+        int lineSize, cornerSize;
+        Paint fill;
+        Stroke stroke;
+        private Object aaHint;
+
+        public RoundedLineBorder(Paint fill, int lineSize, int cornerSize) {
+            this.fill = fill;
+            this.lineSize = lineSize;
+            this.cornerSize = cornerSize;
+            stroke = new BasicStroke(lineSize);
+        }
+        public RoundedLineBorder(Paint fill, int lineSize, int cornerSize, boolean antiAlias) {
+            this.fill = fill;
+            this.lineSize = lineSize;
+            this.cornerSize = cornerSize;
+            stroke = new BasicStroke(lineSize);
+            aaHint = antiAlias? RenderingHints.VALUE_ANTIALIAS_ON: RenderingHints.VALUE_ANTIALIAS_OFF;
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c, Insets insets) {
+            int size = Math.max(lineSize, cornerSize);
+            if(insets == null) insets = new Insets(size, size, size, size);
+            else insets.left = insets.top = insets.right = insets.bottom = size;
+            return insets;
+        }
+
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            Graphics2D g2d = (Graphics2D)g;
+            Paint oldPaint = g2d.getPaint();
+            Stroke oldStroke = g2d.getStroke();
+            Object oldAA = g2d.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+            try {
+                g2d.setPaint(fill!=null? fill: c.getForeground());
+                g2d.setStroke(stroke);
+                if(aaHint != null) g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, aaHint);
+                int off = lineSize >> 1;
+                g2d.drawRoundRect(x+off, y+off, width-lineSize, height-lineSize, cornerSize, cornerSize);
+            }
+            finally {
+                g2d.setPaint(oldPaint);
+                g2d.setStroke(oldStroke);
+                if(aaHint != null) g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldAA);
+            }
+        }
+    }
+
+
+    // Test methods
+
+    public void createMockGame(int score) {
+        timer.decrease5();
+        this.score = score;
+        textField.setText("TESTTEXT");
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public JTextField getTextField() {
+        return textField;
+    }
+
+    public void clickMenu() {
+        btnMenu.doClick();
+    }
+
+    public String getRightAnswer() {
+        return rightAnswer;
+    }
+
+    public void inputString(String string) {
+        textField.setText(string);
+        textField.postActionEvent();
+    }
+
+    public int getTimerMinutes() {
+        return timer.minutes;
+    }
+
+    public int getTimerSeconds() {
+        return timer.seconds;
+    }
+
+    public void setTimerZero() {
+        timer.seconds = 0;
+        timer.minutes = 0;
+    }
+
+    public void clickSkip() {
+        btnJumpOver.doClick();
+    }
+
+    public JButton getBtnRestart() {
+        return btnRestart;
+    }
+
+    public JLabel getLblScore() {
+        return lblScore;
+    }
+
+    public JButton getBtnJumpOver() {
+        return btnJumpOver;
+    }
+
+    public JTextArea getGameLog() {
+        return gameLog;
     }
 }

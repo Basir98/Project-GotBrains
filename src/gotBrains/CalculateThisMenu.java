@@ -131,4 +131,18 @@ public class CalculateThisMenu extends JPanel implements ActionListener {
     
   
 
+    // Test methods
+
+    public JButton getBtnStartEasy() {
+        return btnStartEasy;
+    }
+
+    public JButton getBtnStartMedium() {
+        return btnStartMedium;
+    }
+
+    public JButton getBtnStartHard() {
+        return btnStartHard;
+    }
+
 }

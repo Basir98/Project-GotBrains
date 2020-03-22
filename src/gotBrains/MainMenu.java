@@ -1,9 +1,13 @@
 package gotBrains;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Panel that holds the components for the mainmenu.
@@ -24,6 +28,9 @@ public class MainMenu extends JPanel implements ActionListener {
     private JButton btnInfo = new JButton(new ImageIcon("images/icon_quq.png"));
     JTextField fieldUsername = new JTextField();
     private JLabel lblVersion = new JLabel("Version 2.0");
+
+    private JSlider musicVolumeSlider = new JSlider(JSlider.VERTICAL, 0, 35, 35);
+    private JSlider soundVolumeSlider = new JSlider(JSlider.VERTICAL, 0, 50, 50);
 
     private boolean mutedMusic = false;
     private boolean mutedSound = false;
@@ -108,12 +115,70 @@ public class MainMenu extends JPanel implements ActionListener {
         btnToggleMusic.setBorderPainted(false);
         btnToggleMusic.setBounds(5, 560, 32, 32);
         btnToggleMusic.addActionListener(this);
+        btnToggleMusic.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(true);
+                soundVolumeSlider.setVisible(false);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+            }
+        });
 
         add(btnToggleSound);
         btnToggleSound.setContentAreaFilled(false);
         btnToggleSound.setBorderPainted(false);
         btnToggleSound.setBounds(40, 560, 32, 32);
         btnToggleSound.addActionListener(this);
+        btnToggleSound.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+                soundVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                soundVolumeSlider.setVisible(false);
+            }
+        });
+
+        add(musicVolumeSlider);
+        musicVolumeSlider.setBounds(8, 460, 32, 100);
+        musicVolumeSlider.setOpaque(false);
+        musicVolumeSlider.addChangeListener(changeEvent -> controller.setMusicVolume(musicVolumeSlider.getValue()));
+        musicVolumeSlider.setVisible(false);
+        musicVolumeSlider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                musicVolumeSlider.setVisible(false);
+            }
+        });
+
+        add(soundVolumeSlider);
+        soundVolumeSlider.setBounds(40, 460, 32, 100);
+        soundVolumeSlider.setOpaque(false);
+        soundVolumeSlider.addChangeListener(changeEvent -> controller.setSoundVolume(soundVolumeSlider.getValue()));
+        soundVolumeSlider.setVisible(false);
+        soundVolumeSlider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                soundVolumeSlider.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                soundVolumeSlider.setVisible(false);
+            }
+        });
         
         add(btnInfo);
         btnInfo.setContentAreaFilled(false);
@@ -123,7 +188,6 @@ public class MainMenu extends JPanel implements ActionListener {
         
         add(lblVersion);
         lblVersion.setBounds(725, 575, 75, 20);
-
     }
 
     /**
@@ -195,4 +259,63 @@ public class MainMenu extends JPanel implements ActionListener {
         	controller.mainInfoPanel();
         }
     }
+
+    public void setMusicVolumeSlider(int volume) {
+        musicVolumeSlider.setValue(volume);
+    }
+
+    public void setSoundVolumeSlider(int volume) {
+        soundVolumeSlider.setValue(volume);
+    }
+
+    // Test methods
+    public void clickQuit() {
+        btnQuit.doClick();
+    }
+
+    public void clickMinimize() {
+        btnMinimize.doClick();
+    }
+
+    public void clickCalculateThis() {
+        btnCalculateThis.doClick();
+    }
+
+    public void clickMemorizeThis() {
+        btnMemorizeThis.doClick();
+    }
+
+    public void clickSpellThis() {
+        btnSpellThis.doClick();
+    }
+
+    public void clickLeaderboard() {
+        btnLeaderboard.doClick();
+    }
+
+    public void clickToggleMusic() {
+        btnToggleMusic.doClick();
+    }
+
+    public void clickToggleSound() {
+        btnToggleSound.doClick();
+    }
+
+    public void setUsername(String username) {
+        fieldUsername.setText(username);
+        clickCalculateThis();
+    }
+
+    public JButton getBtnSpellThis() {
+        return btnSpellThis;
+    }
+
+    public JButton getBtnCalculateThis() {
+        return btnCalculateThis;
+    }
+
+    public JButton getBtnMemorizeThis() {
+        return btnMemorizeThis;
+    }
+
 }
